@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+:root {
+  --bg-canvas: #050609;
+  --bg-surface: #0b0d13;
+  --border-glass: rgba(255, 255, 255, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: #f8fafc;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+.obsidian-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* GPU-only animations (transform & opacity only, zero layout reflow) */
+@keyframes eq-bounce {
+  0%, 100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-eq-1 {
+  transform-origin: bottom;
+  animation: eq-bounce 0.8s ease-in-out infinite;
+}
+.animate-eq-2 {
+  transform-origin: bottom;
+  animation: eq-bounce 0.65s ease-in-out 0.15s infinite;
+}
+.animate-eq-3 {
+  transform-origin: bottom;
+  animation: eq-bounce 0.9s ease-in-out 0.3s infinite;
+}
+.animate-eq-4 {
+  transform-origin: bottom;
+  animation: eq-bounce 0.72s ease-in-out 0.45s infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+@keyframes shelf-drop {
+  0%, 100% {
+    transform: translate3d(0, 32px, 0) scale(1);
+    opacity: 0;
+  }
+  20% {
+    transform: translate3d(0, 14px, 0) scale(1);
+    opacity: 1;
+  }
+  55% {
+    transform: translate3d(0, -14px, 0) scale(0.86);
+    opacity: 1;
+  }
+  75% {
+    transform: translate3d(0, -18px, 0) scale(0.75);
+    opacity: 0;
+  }
+}
+
+.animate-shelf-drop {
+  animation: shelf-drop 2.8s ease-in-out infinite;
+}
+
+@keyframes dock-bob {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  40% {
+    transform: translate3d(0, -8px, 0) scale(1.14);
+  }
+}
+
+.animate-dock-bob-0 { animation: dock-bob 2.4s ease-in-out 0s infinite; }
+.animate-dock-bob-1 { animation: dock-bob 2.4s ease-in-out 0.3s infinite; }
+.animate-dock-bob-2 { animation: dock-bob 2.4s ease-in-out 0.6s infinite; }
+.animate-dock-bob-3 { animation: dock-bob 2.4s ease-in-out 0.9s infinite; }
+
+@keyframes bar-pulse-x {
+  0%, 100% {
+    transform: scaleX(0.55);
+  }
+  50% {
+    transform: scaleX(0.95);
+  }
+}
+
+.animate-bar-x-1 {
+  transform-origin: left;
+  animation: bar-pulse-x 2.6s ease-in-out infinite;
+}
+.animate-bar-x-2 {
+  transform-origin: left;
+  animation: bar-pulse-x 3.1s ease-in-out 0.4s infinite;
+}
+.animate-bar-x-3 {
+  transform-origin: left;
+  animation: bar-pulse-x 2.3s ease-in-out 0.8s infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050609;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
