@@ -5,14 +5,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Bluetooth,
   Calculator,
-  FileText,
-  Gamepad2,
+  Calendar as CalendarIcon,
+  Check,
+  Clock,
+  Disc3,
   Headphones,
   MessageCircle,
+  Minimize2,
   Music,
   Search,
-  UploadCloud,
-  Volume2,
+  Sparkles,
+  StickyNote,
   Zap,
 } from "lucide-react";
 import type { Lang } from "@/data/wizzlyData";
@@ -31,11 +34,11 @@ export function VisualShowcase({ lang }: { lang: Lang }) {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <DesktopWidgetsCard lang={lang} />
+        <GenieEffectCard lang={lang} />
         <NotchMorphCard lang={lang} />
-        <FileShelfCard lang={lang} />
         <DockGlassCard lang={lang} />
         <SpotlightTypingCard lang={lang} />
-        <MixerAndGameCard lang={lang} />
         <RustEngineCard lang={lang} />
       </div>
     </section>
@@ -70,6 +73,163 @@ function CardShell({
   );
 }
 
+function DesktopWidgetsCard({ lang }: { lang: Lang }) {
+  const [step, setStep] = useState<0 | 1 | 2 | 3>(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setStep((s) => ((s + 1) % 4) as 0 | 1 | 2 | 3);
+    }, 2400);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <CardShell
+      title={lang === "id" ? "4 Native Desktop Widgets" : "4 Native Desktop Widgets"}
+      subtitle={
+        lang === "id"
+          ? "Clock Depth, Vinyl, Calendar .ics & Memo To-Do."
+          : "Depth Clock, Vinyl, .ics Calendar & To-Do Memo."
+      }
+    >
+      <span className="absolute right-3 top-2.5 rounded-full border border-indigo-400/30 bg-indigo-500/15 px-2 py-0.5 font-mono text-[9px] text-indigo-200">
+        Direct2D • Magnetic Snap
+      </span>
+      <AnimatePresence mode="wait">
+        {step === 0 && (
+          <motion.div
+            key="clock"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-col items-center"
+          >
+            <span className="flex items-center gap-1 text-[10px] text-sky-300">
+              <Clock className="h-3 w-3" /> Liquid Glass Clock
+            </span>
+            <span className="mt-0.5 bg-gradient-to-b from-white to-indigo-200/70 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent">
+              09:41
+            </span>
+          </motion.div>
+        )}
+        {step === 1 && (
+          <motion.div
+            key="vinyl"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-3.5 py-2.5"
+          >
+            <div className="animate-spin-slow flex h-10 w-10 items-center justify-center rounded-full border-2 border-zinc-600 bg-zinc-900">
+              <Disc3 className="h-5 w-5 text-indigo-400" />
+            </div>
+            <div className="text-left">
+              <p className="text-xs font-bold text-white">Vinyl Turntable</p>
+              <p className="text-[10px] text-slate-300">Nothing / Glass</p>
+            </div>
+          </motion.div>
+        )}
+        {step === 2 && (
+          <motion.div
+            key="calendar"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-3.5 py-2.5"
+          >
+            <CalendarIcon className="h-6 w-6 text-rose-400" />
+            <div className="text-left">
+              <p className="text-xs font-bold text-white">Calendar & Agenda</p>
+              <p className="text-[10px] text-rose-200">iCal (.ics) Sync Ready</p>
+            </div>
+          </motion.div>
+        )}
+        {step === 3 && (
+          <motion.div
+            key="memo"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-2.5 rounded-2xl border border-amber-300/40 bg-amber-200 px-3.5 py-2.5 text-amber-950"
+          >
+            <StickyNote className="h-5 w-5" />
+            <div className="text-left">
+              <p className="text-xs font-bold">Sticky To-Do</p>
+              <p className="flex items-center gap-1 text-[10px] font-medium">
+                <Check className="h-3 w-3 text-emerald-700" /> Click to check
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </CardShell>
+  );
+}
+
+function GenieEffectCard({ lang }: { lang: Lang }) {
+  const [minimized, setMinimized] = useState(false);
+
+  useEffect(() => {
+    const id = setInterval(() => setMinimized((m) => !m), 2200);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <CardShell
+      title={lang === "id" ? "GPU Genie Effect (VSync)" : "GPU Genie Effect (VSync)"}
+      subtitle={
+        lang === "id"
+          ? "Direct3D11 + DirectComposition • 0 MB saat idle."
+          : "Direct3D11 + DirectComposition • 0 MB idle."
+      }
+    >
+      <span className="absolute left-3 top-2.5 inline-flex items-center gap-1 rounded-full border border-purple-400/30 bg-purple-500/15 px-2 py-0.5 font-mono text-[9px] text-purple-200">
+        <Minimize2 className="h-2.5 w-2.5" /> D3D11 Shader
+      </span>
+
+      <motion.div
+        animate={
+          minimized
+            ? { scaleX: 0.16, scaleY: 0.12, y: 46, skewX: -18, opacity: 0.1 }
+            : { scaleX: 1, scaleY: 1, y: -8, skewX: 0, opacity: 1 }
+        }
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        className="w-40 rounded-xl border border-white/20 bg-gradient-to-b from-slate-800 to-slate-900 p-2 shadow-xl"
+      >
+        <div className="mb-1.5 flex items-center justify-between">
+          <div className="flex gap-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          </div>
+          <span className="text-[8px] font-mono text-slate-400">−</span>
+        </div>
+        <div className="space-y-1">
+          <div className="h-2 w-2/3 rounded bg-white/20" />
+          <div className="h-2 w-full rounded bg-indigo-400/25" />
+          <div className="h-2 w-4/5 rounded bg-white/10" />
+        </div>
+      </motion.div>
+
+      <div className="absolute bottom-2.5 flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-2.5 py-1">
+        <div className="h-5 w-5 overflow-hidden rounded-md">
+          <DockAppSvg id="explorer" />
+        </div>
+        <div className="h-5 w-5 overflow-hidden rounded-md ring-1 ring-purple-400/70">
+          <DockAppSvg id="vscode" />
+        </div>
+        <div className="h-5 w-5 overflow-hidden rounded-md">
+          <DockAppSvg id="spotify" />
+        </div>
+      </div>
+    </CardShell>
+  );
+}
+
 function NotchMorphCard({ lang }: { lang: Lang }) {
   const [phase, setPhase] = useState<0 | 1 | 2>(0);
 
@@ -82,11 +242,11 @@ function NotchMorphCard({ lang }: { lang: Lang }) {
 
   return (
     <CardShell
-      title={lang === "id" ? "Notch, Switcher & Alerts" : "Notch, Switcher & Alerts"}
+      title={lang === "id" ? "Notch, Karaoke & Alerts" : "Notch, Karaoke & Alerts"}
       subtitle={
         lang === "id"
-          ? "Media Switcher, Lirik, TWS Bluetooth & Chat."
-          : "Media Switcher, Lyrics, TWS Bluetooth & Chat."
+          ? "Media Switcher, Floating Karaoke & TWS Bluetooth."
+          : "Media Switcher, Floating Karaoke & TWS Bluetooth."
       }
     >
       <div
@@ -113,7 +273,9 @@ function NotchMorphCard({ lang }: { lang: Lang }) {
               </span>
               <div className="text-left">
                 <p className="text-xs font-semibold text-white">Midnight Obsidian</p>
-                <p className="text-[10px] text-indigo-300">Live Lyrics Synced</p>
+                <p className="flex items-center gap-1 text-[10px] text-pink-300">
+                  <Sparkles className="h-2.5 w-2.5" /> Floating Karaoke
+                </p>
               </div>
               <div className="flex h-4 items-end gap-0.5 pl-1">
                 <span className="animate-eq-1 h-4 w-0.5 rounded-full bg-indigo-400" />
@@ -162,32 +324,9 @@ function NotchMorphCard({ lang }: { lang: Lang }) {
   );
 }
 
-function FileShelfCard({ lang }: { lang: Lang }) {
-  return (
-    <CardShell
-      title={lang === "id" ? "File Shelf & Clip" : "File Shelf & Clip"}
-      subtitle={
-        lang === "id"
-          ? "Drag file transit di Notch + riwayat clipboard."
-          : "Drop files onto Notch + instant clipboard history."
-      }
-    >
-      <div className="absolute top-3 flex items-center gap-2 rounded-b-2xl border border-t-0 border-indigo-400/35 bg-black px-4 py-2">
-        <UploadCloud className="h-4 w-4 text-indigo-400" />
-        <span className="text-[11px] font-semibold text-white">Notch Shelf</span>
-      </div>
-
-      <div className="animate-shelf-drop flex items-center gap-2 rounded-xl border border-indigo-400/40 bg-indigo-950/70 px-3 py-2">
-        <FileText className="h-4 w-4 text-indigo-300" />
-        <span className="text-xs font-medium text-white">Design_Final.zip</span>
-      </div>
-    </CardShell>
-  );
-}
-
 function DockGlassCard({ lang }: { lang: Lang }) {
   const [active, setActive] = useState(0);
-  const styles = ["Frosted", "Liquid", "Matte", "Classic"];
+  const styles = ["Frosted (Adaptive)", "Liquid (Adaptive)", "Matte", "Classic"];
 
   useEffect(() => {
     const id = setInterval(() => setActive((a) => (a + 1) % styles.length), 2400);
@@ -203,15 +342,15 @@ function DockGlassCard({ lang }: { lang: Lang }) {
 
   return (
     <CardShell
-      title={lang === "id" ? "4 Kaca Dock & 4 Gaya Ikon" : "4 Dock Glass & 4 Icon Styles"}
+      title={lang === "id" ? "Auto-Adaptive Dock & Tuck" : "Auto-Adaptive Dock & Tuck"}
       subtitle={
         lang === "id"
-          ? "Frosted/Liquid/Matte/Classic + Live Window Preview."
-          : "Frosted/Liquid/Matte/Classic + Live Window Previews."
+          ? "Kalibrasi wallpaper otomatis + Click-to-Minimize."
+          : "Auto wallpaper tinting + Click-to-Minimize."
       }
     >
       <span className="absolute top-3 rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-sky-300">
-        {styles[active]} Glass
+        {styles[active]}
       </span>
 
       <div className="mt-4 flex items-end gap-2 rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 shadow-xl">
@@ -245,11 +384,11 @@ function SpotlightTypingCard({ lang }: { lang: Lang }) {
 
   return (
     <CardShell
-      title="Spotlight (Alt + Space)"
+      title="Spotlight & Win-Key Launchpad"
       subtitle={
         lang === "id"
-          ? "Cari file lokal, power action & kalkulator cepat."
-          : "Local file search, power actions & instant math."
+          ? "Alt+Space Spotlight + opsi tombol Win untuk Launchpad."
+          : "Alt+Space Spotlight + optional Win-key Launchpad."
       }
     >
       <div className="w-[85%] rounded-2xl border border-white/15 bg-black/90 p-3 shadow-xl">
@@ -277,56 +416,21 @@ function SpotlightTypingCard({ lang }: { lang: Lang }) {
   );
 }
 
-function MixerAndGameCard({ lang }: { lang: Lang }) {
-  const bars = [
-    { name: "Spotify", color: "bg-emerald-400", cls: "animate-bar-x-1" },
-    { name: "Browser", color: "bg-sky-400", cls: "animate-bar-x-2" },
-    { name: "Discord", color: "bg-indigo-400", cls: "animate-bar-x-3" },
-  ];
-
-  return (
-    <CardShell
-      title={lang === "id" ? "Per-App Mixer & Game Mode" : "Per-App Mixer & Game Mode"}
-      subtitle={
-        lang === "id"
-          ? "Volume per aplikasi + auto-hide saat main game."
-          : "Per-app volume sliders + fullscreen game auto-hide."
-      }
-    >
-      <div className="w-[84%] space-y-2.5">
-        {bars.map((bar) => (
-          <div key={bar.name} className="space-y-1">
-            <div className="flex items-center justify-between text-[10px] text-slate-300">
-              <span className="flex items-center gap-1">
-                <Volume2 className="h-3 w-3 text-slate-400" /> {bar.name}
-              </span>
-              <Gamepad2 className="h-3 w-3 text-slate-500" />
-            </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-              <div className={`${bar.cls} h-full w-full rounded-full ${bar.color}`} />
-            </div>
-          </div>
-        ))}
-      </div>
-    </CardShell>
-  );
-}
-
 function RustEngineCard({ lang }: { lang: Lang }) {
   return (
     <CardShell
-      title="Rust + Tauri 2 Engine"
+      title="Rust + Direct2D / D3D11 Engine"
       subtitle={
         lang === "id"
-          ? "Installer 3.4 MB • Hemat RAM • Multi-Monitor."
-          : "3.4 MB Installer • Low RAM • Multi-Monitor."
+          ? "Installer 3.5 MB • ~0% CPU saat idle • Multi-Monitor."
+          : "3.5 MB Installer • ~0% Idle CPU • Multi-Monitor."
       }
     >
       <div className="relative flex items-center justify-center">
         <div className="animate-spin-slow flex h-20 w-20 items-center justify-center rounded-full border border-dashed border-indigo-400/50" />
         <div className="absolute flex h-14 w-14 flex-col items-center justify-center rounded-full bg-gradient-to-br from-emerald-500/25 to-indigo-500/25">
           <Zap className="h-4 w-4 text-emerald-300" />
-          <span className="font-mono text-[11px] font-bold text-white">3.4 MB</span>
+          <span className="font-mono text-[11px] font-bold text-white">3.5 MB</span>
         </div>
       </div>
     </CardShell>

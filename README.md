@@ -16,7 +16,7 @@ Open `http://localhost:3000`.
 ## Updating Download Link & Details
 
 Edit `src/data/wizzlyData.ts`:
-- `WIZZLY_META.downloadUrl`: Set to your GitHub Releases `.exe` URL (or Cloudflare R2 link) for `Wizzly_0.1.0_x64-setup.exe`.
+- `WIZZLY_META.downloadUrl`: Set to your GitHub Releases `.exe` URL (or Cloudflare R2 link) for `Wizzly_0.1.1_x64-setup.exe`.
 - `WIZZLY_META.siteUrl`: Set to your production domain (e.g. `https://wizzly.pages.dev` or your custom domain) so `sitemap.xml`, `robots.txt`, and Open Graph tags point to the right URL.
 
 ## Deploy to Cloudflare Pages (Free)

@@ -5,22 +5,28 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Bluetooth,
   Calculator,
+  Calendar as CalendarIcon,
   Check,
   Clipboard,
   Copy,
+  Disc3,
   FileText,
   Headphones,
   Image as ImageIcon,
+  Layers,
   MessageCircle,
+  Minimize2,
   Music,
   Pause,
   Pin,
   Play,
+  Plus,
   RotateCcw,
   Search,
   SkipBack,
   SkipForward,
   Sparkles,
+  StickyNote,
   Timer,
   UploadCloud,
   Volume2,
@@ -32,6 +38,7 @@ import { DockAppSvg } from "@/components/AppIcons";
 type NotchTab = "media" | "lyrics" | "timer" | "shelf" | "clip";
 type NotchStyle = "notch" | "island";
 type GlassStyle = "frosted" | "liquid" | "matte" | "classic";
+type WidgetTheme = "glass" | "nothing-dark" | "nothing-light" | "notes-yellow";
 
 interface DesktopSandboxProps {
   lang: Lang;
@@ -42,6 +49,7 @@ const SAMPLE_TRACKS = [
     title: "Midnight Obsidian",
     artist: "Nujabes & Chillwave",
     accent: "from-indigo-500/40 via-purple-500/20 to-transparent",
+    vinylAccent: "from-indigo-500 to-purple-600",
     pillDot: "bg-indigo-400",
     lyrics: [
       "Floating above the taskbar glow",
@@ -54,6 +62,7 @@ const SAMPLE_TRACKS = [
     title: "Liquid Glass Horizon",
     artist: "Synthwave Studio",
     accent: "from-emerald-500/35 via-cyan-500/20 to-transparent",
+    vinylAccent: "from-emerald-500 to-cyan-500",
     pillDot: "bg-emerald-400",
     lyrics: [
       "Zero clutter across the open screen",
@@ -71,9 +80,15 @@ const INITIAL_CLIP_ITEMS = [
 ];
 
 const INITIAL_SHELF_FILES = [
-  { id: "s1", name: "Wizzly_Setup.exe", size: "3.4 MB", kind: "app" },
+  { id: "s1", name: "Wizzly_0.1.1_Setup.exe", size: "3.5 MB", kind: "app" },
   { id: "s2", name: "Wallpaper_4K.png", size: "2.1 MB", kind: "img" },
   { id: "s3", name: "Notes.md", size: "14 KB", kind: "doc" },
+];
+
+const INITIAL_TODOS = [
+  { id: "t1", text: "Try Depth Clock & Vinyl widget", done: true },
+  { id: "t2", text: "Sync Google Calendar (.ics)", done: false },
+  { id: "t3", text: "Enable Genie Effect & Win-Key", done: false },
 ];
 
 const DOCK_APPS = [
@@ -106,10 +121,18 @@ function safeEvalMath(input: string): string | null {
 
 export function DesktopSandbox({ lang }: DesktopSandboxProps) {
   const [autoDemo, setAutoDemo] = useState(true);
-  const [notchExpanded, setNotchExpanded] = useState(true);
+  const [notchExpanded, setNotchExpanded] = useState(false);
   const [notchTab, setNotchTab] = useState<NotchTab>("media");
   const [notchStyle, setNotchStyle] = useState<NotchStyle>("notch");
   const [glassStyle, setGlassStyle] = useState<GlassStyle>("frosted");
+
+  const [widgetsVisible, setWidgetsVisible] = useState(true);
+  const [widgetTheme, setWidgetTheme] = useState<WidgetTheme>("glass");
+  const [todos, setTodos] = useState(INITIAL_TODOS);
+  const [memoEditorOpen, setMemoEditorOpen] = useState(false);
+  const [newTodoText, setNewTodoText] = useState("");
+  const [karaokeOpen, setKaraokeOpen] = useState(false);
+  const [genieWindowState, setGenieWindowState] = useState<"hidden" | "open" | "minimized">("hidden");
 
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -145,12 +168,12 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
       if (step === 0) {
         setLiveToast(null);
         setSpotlightOpen(false);
+        setNotchExpanded(false);
+      } else if (step === 1) {
         setNotchExpanded(true);
         setNotchTab("media");
-      } else if (step === 1) {
-        setNotchTab("lyrics");
       } else if (step === 2) {
-        setNotchTab("shelf");
+        setNotchTab("lyrics");
       } else if (step === 3) {
         setNotchExpanded(false);
         setLiveToast({
@@ -161,9 +184,9 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
       } else if (step === 4) {
         setLiveToast(null);
         setNotchExpanded(true);
-        setNotchTab("clip");
+        setNotchTab("shelf");
       } else if (step === 5) {
-        setNotchTab("timer");
+        setNotchTab("clip");
       }
     };
     const id = setInterval(sequence, 3400);
@@ -183,7 +206,7 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
       setLiveToast({
         kind,
         title: "WhatsApp • Raka",
-        subtitle: lang === "id" ? "Wizzly-nya ringan banget!" : "Wizzly feels super snappy!",
+        subtitle: lang === "id" ? "Widget v0.1.1-nya cakep!" : "v0.1.1 widgets look super clean!",
       });
     } else {
       setLiveToast({
@@ -207,6 +230,19 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
     } else if (id === "spotify") {
       setNotchTab("media");
       setNotchExpanded(true);
+    } else if (id === "vscode") {
+      setGenieWindowState((prev) => (prev === "open" ? "minimized" : "open"));
+    }
+  };
+
+  const triggerGenieDemo = () => {
+    stopAutoDemo();
+    setSpotlightOpen(false);
+    setMixerOpen(false);
+    if (genieWindowState === "open") {
+      setGenieWindowState("minimized");
+    } else {
+      setGenieWindowState("open");
     }
   };
 
@@ -226,6 +262,26 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
     );
   };
 
+  const toggleTodo = (id: string) => {
+    stopAutoDemo();
+    setTodos((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
+    );
+  };
+
+  const handleAddTodo = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = newTodoText.trim();
+    if (!trimmed) return;
+    stopAutoDemo();
+    setTodos((prev) => [
+      ...prev.slice(-3),
+      { id: `t-${Date.now()}`, text: trimmed, done: false },
+    ]);
+    setNewTodoText("");
+    setMemoEditorOpen(false);
+  };
+
   const dockGlassClass = useMemo(() => {
     switch (glassStyle) {
       case "liquid":
@@ -239,6 +295,20 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
         return "bg-white/14 border-white/20 shadow-[0_14px_36px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.22)]";
     }
   }, [glassStyle]);
+
+  const cardSurfaceClass = useMemo(() => {
+    switch (widgetTheme) {
+      case "nothing-dark":
+        return "border-white/15 bg-[#121318]/95 text-white";
+      case "nothing-light":
+        return "border-black/10 bg-[#f4f4f6]/95 text-slate-900";
+      case "notes-yellow":
+        return "border-amber-300/40 bg-gradient-to-b from-[#fef3c7] to-[#fde68a] text-amber-950";
+      case "glass":
+      default:
+        return "border-white/20 bg-white/10 text-white backdrop-blur-xl";
+    }
+  }, [widgetTheme]);
 
   const mathResult = useMemo(() => safeEvalMath(spotlightQuery), [spotlightQuery]);
   const filteredApps = useMemo(() => {
@@ -289,6 +359,24 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
               {g}
             </button>
           ))}
+
+          <span className="mx-1 hidden h-4 w-px bg-white/10 sm:inline-block" />
+
+          <button
+            type="button"
+            onClick={() => {
+              stopAutoDemo();
+              setWidgetsVisible((v) => !v);
+            }}
+            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+              widgetsVisible
+                ? "border-sky-400/40 bg-sky-500/15 text-sky-200"
+                : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+            }`}
+          >
+            <Layers className="h-3 w-3" />
+            Widgets
+          </button>
         </div>
 
         <div className="flex flex-wrap items-center gap-1.5">
@@ -310,6 +398,31 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
           </button>
           <button
             type="button"
+            onClick={triggerGenieDemo}
+            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+              genieWindowState === "open"
+                ? "border-purple-400/40 bg-purple-500/20 text-purple-200"
+                : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
+            }`}
+          >
+            <Minimize2 className="h-3 w-3 text-purple-300" /> Genie
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              stopAutoDemo();
+              setKaraokeOpen((v) => !v);
+            }}
+            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+              karaokeOpen
+                ? "border-pink-400/40 bg-pink-500/20 text-pink-200"
+                : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
+            }`}
+          >
+            <Sparkles className="h-3 w-3 text-pink-300" /> Karaoke
+          </button>
+          <button
+            type="button"
             onClick={() => triggerToast("bluetooth")}
             className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-200 transition hover:bg-white/10"
           >
@@ -318,7 +431,7 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
           <button
             type="button"
             onClick={() => triggerToast("whatsapp")}
-            className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-200 transition hover:bg-white/10"
+            className="hidden items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-200 transition hover:bg-white/10 sm:inline-flex"
           >
             <MessageCircle className="h-3 w-3 text-emerald-400" /> Chat
           </button>
@@ -338,12 +451,272 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
 
       {/* Simulated Windows Desktop Frame */}
       <div
-        className="relative h-[420px] w-full overflow-hidden rounded-3xl border border-white/15 bg-[#090b12] shadow-[0_24px_70px_rgba(0,0,0,0.7)] sm:h-[460px]"
+        className="relative h-[490px] w-full overflow-hidden rounded-3xl border border-white/15 bg-[#090b12] shadow-[0_24px_70px_rgba(0,0,0,0.7)] sm:h-[530px]"
         style={{
           backgroundImage:
             "radial-gradient(circle at 20% 25%, rgba(79, 70, 229, 0.36), transparent 48%), radial-gradient(circle at 82% 32%, rgba(14, 165, 233, 0.25), transparent 46%), radial-gradient(circle at 50% 90%, rgba(168, 85, 247, 0.28), transparent 52%), linear-gradient(160deg, #090d1a 0%, #05060b 65%, #0c0a18 100%)",
         }}
       >
+        {/* v0.1.1 Native Desktop Widgets Layer (Direct2D + Magnetic Snap Preview) */}
+        <AnimatePresence>
+          {widgetsVisible && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="pointer-events-none absolute inset-0 z-10 px-4 pb-24 pt-14 sm:px-7"
+            >
+              {/* Desktop Clock Widget (Sonoma / Liquid Glass) */}
+              <div className="mb-3 flex items-start justify-between">
+                <div className="pointer-events-auto select-none">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-indigo-200/75">
+                    Tuesday, Nov 24
+                  </p>
+                  <p className="bg-gradient-to-b from-white via-white/90 to-indigo-200/60 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)] sm:text-6xl">
+                    09:41
+                  </p>
+                </div>
+
+                {/* Quick Widget Theme Switcher Pill */}
+                <div className="pointer-events-auto hidden items-center gap-1 rounded-full border border-white/15 bg-black/45 p-1 backdrop-blur-md sm:flex">
+                  {(
+                    [
+                      { id: "glass", label: "Glass" },
+                      { id: "nothing-dark", label: "Nothing Dark" },
+                      { id: "nothing-light", label: "Light" },
+                      { id: "notes-yellow", label: "Yellow" },
+                    ] as const
+                  ).map((t) => (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => {
+                        stopAutoDemo();
+                        setWidgetTheme(t.id);
+                      }}
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-medium transition ${
+                        widgetTheme === t.id
+                          ? "bg-white text-slate-950"
+                          : "text-slate-300 hover:text-white"
+                      }`}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3 Interactive Widget Cards (Vinyl Turntable, Calendar & Agenda, Sticky Memo To-Do) */}
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                {/* 1. Desktop Vinyl Turntable Music Widget */}
+                <div
+                  className={`pointer-events-auto flex items-center gap-3 rounded-2xl border p-3 shadow-xl transition-colors ${
+                    widgetTheme === "notes-yellow"
+                      ? "border-white/20 bg-white/10 text-white backdrop-blur-xl"
+                      : cardSurfaceClass
+                  }`}
+                >
+                  <div
+                    className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-zinc-700 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black shadow-lg ${
+                      isPlaying ? "animate-spin-slow" : ""
+                    }`}
+                  >
+                    <div
+                      className={`flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br ${track.vinylAccent}`}
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-black" />
+                    </div>
+                    <Disc3 className="pointer-events-none absolute inset-0 h-full w-full text-white/10" />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[9px] font-semibold uppercase tracking-wider opacity-60">
+                        Vinyl Widget
+                      </span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    </div>
+                    <p className="truncate text-xs font-bold">{track.title}</p>
+                    <p className="truncate text-[10px] opacity-70">{track.artist}</p>
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <div className="h-1 flex-1 overflow-hidden rounded-full bg-current/15">
+                        <div className="h-full w-2/5 rounded-full bg-indigo-400" />
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          aria-label="Previous track on vinyl"
+                          onClick={() => {
+                            stopAutoDemo();
+                            setTrackIndex((i) => (i === 0 ? SAMPLE_TRACKS.length - 1 : i - 1));
+                          }}
+                          className="rounded p-0.5 opacity-75 hover:opacity-100"
+                        >
+                          <SkipBack className="h-3 w-3" />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={isPlaying ? "Pause vinyl" : "Play vinyl"}
+                          onClick={() => {
+                            stopAutoDemo();
+                            setIsPlaying((p) => !p);
+                          }}
+                          className="flex h-5 w-5 items-center justify-center rounded-full bg-indigo-500 text-white hover:bg-indigo-400"
+                        >
+                          {isPlaying ? (
+                            <Pause className="h-2.5 w-2.5" />
+                          ) : (
+                            <Play className="ml-0.5 h-2.5 w-2.5" />
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          aria-label="Next track on vinyl"
+                          onClick={() => {
+                            stopAutoDemo();
+                            setTrackIndex((i) => (i + 1) % SAMPLE_TRACKS.length);
+                          }}
+                          className="rounded p-0.5 opacity-75 hover:opacity-100"
+                        >
+                          <SkipForward className="h-3 w-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Desktop Calendar & Agenda Widget */}
+                <div
+                  className={`pointer-events-auto hidden rounded-2xl border p-3 shadow-xl transition-colors lg:block ${
+                    widgetTheme === "notes-yellow"
+                      ? "border-white/20 bg-white/10 text-white backdrop-blur-xl"
+                      : cardSurfaceClass
+                  }`}
+                >
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-rose-400">
+                      <CalendarIcon className="h-3 w-3" /> Nov 2026
+                    </span>
+                    <span className="rounded-full bg-current/10 px-1.5 py-0.5 text-[9px] font-medium opacity-75">
+                      iCal Synced
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-7 gap-0.5 text-center text-[9px] opacity-85">
+                      {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+                        <span key={i} className="font-semibold opacity-50">
+                          {d}
+                        </span>
+                      ))}
+                      {[18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 1].map((day, idx) => (
+                        <span
+                          key={idx}
+                          className={`rounded-full py-0.5 ${
+                            day === 24
+                              ? "bg-rose-500 font-bold text-white"
+                              : idx > 12
+                                ? "opacity-35"
+                                : ""
+                          }`}
+                        >
+                          {day}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="space-y-1 border-l border-current/15 pl-2">
+                      <p className="text-[9px] font-semibold uppercase tracking-wider opacity-60">
+                        Today
+                      </p>
+                      <div className="rounded-lg bg-indigo-500/20 px-1.5 py-1 text-[10px]">
+                        <p className="font-semibold leading-tight">Wizzly v0.1.1</p>
+                        <p className="text-[9px] opacity-75">15:00 • Release</p>
+                      </div>
+                      <div className="rounded-lg bg-emerald-500/20 px-1.5 py-1 text-[10px]">
+                        <p className="font-semibold leading-tight">Design Review</p>
+                        <p className="text-[9px] opacity-75">19:30 • Local</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Desktop Sticky Memo & To-Do List Widget */}
+                <div
+                  className={`pointer-events-auto relative hidden rounded-2xl border p-3 shadow-xl transition-colors sm:block ${cardSurfaceClass}`}
+                >
+                  <div className="mb-1.5 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider opacity-80">
+                      <StickyNote className="h-3 w-3" /> Sticky To-Do
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        stopAutoDemo();
+                        setMemoEditorOpen((v) => !v);
+                      }}
+                      title="Quick Editor Popover"
+                      className="inline-flex items-center gap-0.5 rounded-md bg-current/10 px-1.5 py-0.5 text-[9px] font-semibold transition hover:bg-current/20"
+                    >
+                      <Plus className="h-2.5 w-2.5" /> Edit
+                    </button>
+                  </div>
+
+                  {memoEditorOpen ? (
+                    <form onSubmit={handleAddTodo} className="mt-2 space-y-1.5">
+                      <input
+                        type="text"
+                        value={newTodoText}
+                        onChange={(e) => setNewTodoText(e.target.value)}
+                        placeholder={lang === "id" ? "Tambah item to-do..." : "Add to-do item..."}
+                        className="w-full rounded-lg border border-current/20 bg-black/15 px-2 py-1 text-[11px] placeholder:opacity-60 focus:outline-none"
+                      />
+                      <div className="flex justify-end gap-1">
+                        <button
+                          type="button"
+                          onClick={() => setMemoEditorOpen(false)}
+                          className="rounded px-2 py-0.5 text-[10px] opacity-70 hover:opacity-100"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="rounded bg-indigo-500 px-2 py-0.5 text-[10px] font-semibold text-white"
+                        >
+                          Add
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="space-y-1.5">
+                      {todos.map((item) => (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => toggleTodo(item.id)}
+                          className="flex w-full items-center gap-2 text-left text-[11px] transition hover:opacity-90"
+                        >
+                          <span
+                            className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border ${
+                              item.done
+                                ? "border-emerald-500 bg-emerald-500 text-white"
+                                : "border-current/35"
+                            }`}
+                          >
+                            {item.done && <Check className="h-2.5 w-2.5" />}
+                          </span>
+                          <span className={`truncate ${item.done ? "line-through opacity-50" : ""}`}>
+                            {item.text}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Top-Center Interactive Wizzly Notch */}
         <div
           className={`relative z-30 flex justify-center transition-all duration-300 ${
@@ -540,6 +913,19 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
                           {line}
                         </p>
                       ))}
+                      <div className="pt-1">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            stopAutoDemo();
+                            setKaraokeOpen((v) => !v);
+                          }}
+                          className="inline-flex items-center gap-1 rounded-full border border-pink-400/35 bg-pink-500/15 px-2.5 py-0.5 text-[10px] font-semibold text-pink-200 hover:bg-pink-500/25"
+                        >
+                          <Sparkles className="h-2.5 w-2.5" />
+                          {lang === "id" ? "Buka Floating Karaoke" : "Pop Out Karaoke Window"}
+                        </button>
+                      </div>
                     </motion.div>
                   )}
 
@@ -626,6 +1012,74 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
             )}
           </motion.div>
         </div>
+
+        {/* Floating Karaoke Lyrics Window (v0.1.1 Shadowless 8-way Resizable) */}
+        <AnimatePresence>
+          {karaokeOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: -8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="absolute bottom-24 left-1/2 z-30 w-[86%] max-w-[360px] -translate-x-1/2 rounded-2xl border border-white/15 bg-black/45 px-4 py-3 text-center backdrop-blur-md"
+            >
+              <div className="mb-1 flex items-center justify-between text-[9px] uppercase tracking-widest text-pink-300/80">
+                <span>Floating Karaoke • 8-Way Resize</span>
+                <button
+                  type="button"
+                  onClick={() => setKaraokeOpen(false)}
+                  className="rounded px-1.5 py-0.5 text-slate-300 hover:bg-white/10 hover:text-white"
+                >
+                  ×
+                </button>
+              </div>
+              <p className="text-xs text-slate-400/70">{track.lyrics[0]}</p>
+              <p className="my-0.5 text-sm font-bold text-white drop-shadow-[0_0_12px_rgba(244,114,182,0.55)]">
+                {track.lyrics[1]}
+              </p>
+              <p className="text-xs text-slate-400/70">{track.lyrics[2]}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Genie Effect Demo Window (Direct3D11 + DirectComposition VSync) */}
+        <AnimatePresence>
+          {genieWindowState === "open" && (
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0.14, scaleY: 0.12, y: 210, x: -72, skewX: 16 }}
+              animate={{ opacity: 1, scaleX: 1, scaleY: 1, y: 0, x: 0, skewX: 0 }}
+              exit={{ opacity: 0, scaleX: 0.14, scaleY: 0.1, y: 220, x: -72, skewX: -18 }}
+              transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute left-1/2 top-24 z-30 w-[88%] max-w-[350px] -translate-x-1/2 overflow-hidden rounded-2xl border border-white/20 bg-[#0d111a]/95 shadow-2xl"
+            >
+              <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.04] px-3 py-2">
+                <span className="text-xs font-semibold text-slate-200">
+                  VS Code — Wizzly Genie Effect
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setGenieWindowState("minimized")}
+                    aria-label="Minimize with Genie Effect"
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-400/20 text-xs font-bold text-amber-300 hover:bg-amber-400/35"
+                  >
+                    −
+                  </button>
+                </div>
+              </div>
+              <div className="space-y-2 p-4 text-left">
+                <p className="font-mono text-[11px] text-indigo-300">
+                  native_ui/genie.rs • Direct3D11 + VSync
+                </p>
+                <p className="text-xs text-slate-300">
+                  {lang === "id"
+                    ? "Klik tombol − atau ikon VS Code di Dock untuk melihat animasi Genie melengkung masuk ke koordinat ikon."
+                    : "Click the − button or the VS Code Dock icon to trigger curved Genie suction straight into the Dock slot."}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Center Interactive Spotlight Overlay */}
         <AnimatePresence>
@@ -918,7 +1372,7 @@ function ZeroRerenderDock({
         >
           <Wifi className="h-3.5 w-3.5 text-sky-300" />
           <Volume2 className="h-3.5 w-3.5 text-emerald-300" />
-          <span className="font-mono font-medium">21:15</span>
+          <span className="font-mono font-medium">09:41</span>
         </button>
       </div>
     </div>

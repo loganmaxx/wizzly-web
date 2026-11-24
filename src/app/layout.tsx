@@ -18,18 +18,24 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(WIZZLY_META.siteUrl),
+  alternates: {
+    canonical: "/",
+  },
   title: {
-    default: "Wizzly — Dynamic Island Notch, macOS-style Dock & Spotlight for Windows",
+    default: "Wizzly — Dynamic Island Notch, macOS-style Dock, Widgets & Spotlight for Windows",
     template: "%s | Wizzly",
   },
   description:
-    "Download Wizzly (3.4 MB) untuk Windows 10 & 11. Hadirkan Dynamic Island Notch (Media, Lirik, File Shelf, Clipboard, Pomodoro), macOS-style Dock Liquid Glass, dan Spotlight Alt+Space yang super ringan.",
+    "Download Wizzly v0.1.1 (3.5 MB) untuk Windows 10 & 11. Hadirkan Dynamic Island Notch, Floating Karaoke, macOS-style Dock dengan Genie Effect, 4 Desktop Widgets native (Clock, Vinyl, Calendar, Memo), dan Spotlight Alt+Space.",
   keywords: [
     "Wizzly",
+    "Wizzly v0.1.1",
     "Wizzly download",
     "Windows Dynamic Island",
     "Notch for Windows",
     "macOS Dock for Windows",
+    "Windows Desktop Widgets",
+    "Genie Effect Windows",
     "Windows 11 Dock",
     "Spotlight Windows",
     "Tauri Windows utility",
@@ -42,24 +48,25 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     url: WIZZLY_META.siteUrl,
     siteName: "Wizzly",
-    title: "Wizzly — Dynamic Island Notch, Dock & Spotlight untuk Windows",
+    title: "Wizzly v0.1.1 — Notch, Liquid Dock & Desktop Widgets untuk Windows",
     description:
-      "Ubah tampilan Windows 10/11 jadi lebih produktif dengan Dynamic Island Notch, Dock Liquid Glass 4 tema, dan Spotlight Alt+Space. Ringan hanya 3.4 MB!",
+      "Ubah desktop Windows 10/11 dengan Dynamic Island Notch, Dock Liquid Glass + Genie Effect, 4 Widget Native Direct2D & Spotlight Alt+Space (3.5 MB).",
     images: [
       {
-        url: "/images/wizzly-icon.png",
-        width: 512,
-        height: 512,
-        alt: "Wizzly App Icon",
+        url: "/images/og-cover.png",
+        width: 1200,
+        height: 630,
+        type: "image/png",
+        alt: "Wizzly v0.1.1 — Notch, Liquid Dock, Desktop Widgets & Spotlight for Windows",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wizzly — Dynamic Island Notch & Dock for Windows",
+    title: "Wizzly v0.1.1 — Notch, Liquid Dock & Desktop Widgets for Windows",
     description:
-      "macOS-style Dock, Dynamic Island Notch (Media, File Shelf, Clipboard, Timer) & Spotlight Alt+Space untuk Windows 10/11. Ringan 3.4 MB.",
-    images: ["/images/wizzly-icon.png"],
+      "macOS-style Dock with Genie Effect, Dynamic Island Notch, 4 Native Desktop Widgets & Spotlight Alt+Space for Windows 10/11 (3.5 MB).",
+    images: ["/images/og-cover.png"],
   },
   robots: {
     index: true,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowDownToLine,
@@ -11,6 +11,7 @@ import {
   Copy,
   Cpu,
   Database,
+  Download,
   ExternalLink,
   EyeOff,
   Globe,
@@ -33,13 +34,23 @@ import {
 } from "@/data/wizzlyData";
 import { DesktopSandbox } from "@/components/DesktopSandbox";
 import { VisualShowcase } from "@/components/VisualShowcase";
+import { WhatsNewSection } from "@/components/WhatsNewSection";
 
 const QUICK_SPECS = [
   { icon: Monitor, label: "Windows 10 / 11", sub: "1903+ (x64)" },
-  { icon: Cpu, label: "4 GB RAM", sub: "Rust + Tauri 2" },
-  { icon: HardDrive, label: "3.4 MB", sub: "NSIS Installer" },
+  { icon: Cpu, label: "Direct2D + D3D11", sub: "Rust + Tauri 2" },
+  { icon: HardDrive, label: WIZZLY_META.installerSize, sub: "NSIS Installer" },
   { icon: Globe, label: "ID & EN", sub: "Multi-Monitor" },
 ];
+
+interface DownloadStats {
+  total: number;
+  latest: number;
+  cachedAt: number;
+}
+
+const STATS_CACHE_KEY = "wizzly_gh_download_stats_v1";
+const STATS_CACHE_TTL_MS = 5 * 60 * 1000;
 
 export function WizzlyLanding() {
   const [lang, setLang] = useState<Lang>("id");
@@ -47,6 +58,70 @@ export function WizzlyLanding() {
   const [copiedBinance, setCopiedBinance] = useState(false);
   const [copiedSha, setCopiedSha] = useState(false);
   const [qrisModalOpen, setQrisModalOpen] = useState(false);
+  const [downloadStats, setDownloadStats] = useState<{ total: number; latest: number } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const readCached = (): DownloadStats | null => {
+      try {
+        const raw = localStorage.getItem(STATS_CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw) as DownloadStats;
+        if (typeof parsed.total === "number" && typeof parsed.cachedAt === "number") {
+          return parsed;
+        }
+      } catch {
+        // Ignore storage errors
+      }
+      return null;
+    };
+
+    const cached = readCached();
+    if (cached) {
+      setDownloadStats({ total: cached.total, latest: cached.latest ?? 0 });
+      if (Date.now() - cached.cachedAt < STATS_CACHE_TTL_MS) {
+        return;
+      }
+    }
+
+    fetch("https://api.github.com/repos/loganmaxx/wizzly/releases?per_page=20", {
+      headers: { Accept: "application/vnd.github+json" },
+    })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((releases: Array<{ tag_name?: string; assets?: Array<{ download_count?: number }> }>) => {
+        if (cancelled || !Array.isArray(releases)) return;
+        let total = 0;
+        let latest = 0;
+        for (const rel of releases) {
+          const count = (rel.assets ?? []).reduce(
+            (sum, asset) => sum + (typeof asset.download_count === "number" ? asset.download_count : 0),
+            0
+          );
+          total += count;
+          if (rel.tag_name?.toLowerCase() === `v${WIZZLY_META.version}`.toLowerCase()) {
+            latest = count;
+          }
+        }
+        const nextStats = { total, latest };
+        setDownloadStats(nextStats);
+        try {
+          localStorage.setItem(
+            STATS_CACHE_KEY,
+            JSON.stringify({ ...nextStats, cachedAt: Date.now() })
+          );
+        } catch {
+          // Ignore storage quota errors
+        }
+      })
+      .catch(() => {
+        // Keep cached value if available, or remain hidden gracefully
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleCopySha = () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -93,7 +168,7 @@ export function WizzlyLanding() {
             <span className="text-base font-bold tracking-tight text-white">
               Wizzly
             </span>
-            <span className="hidden rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-slate-300 sm:inline-block">
+            <span className="hidden rounded-full border border-sky-400/30 bg-sky-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-sky-200 sm:inline-block">
               v{WIZZLY_META.version}
             </span>
           </a>
@@ -101,6 +176,9 @@ export function WizzlyLanding() {
           <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
             <a href="#preview" className="transition hover:text-white">
               Demo
+            </a>
+            <a href="#whats-new" className="transition hover:text-white">
+              v{WIZZLY_META.version}
             </a>
             <a href="#features" className="transition hover:text-white">
               {lang === "id" ? "Fitur" : "Features"}
@@ -159,38 +237,59 @@ export function WizzlyLanding() {
             />
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mx-auto inline-flex items-center gap-2 rounded-full border border-indigo-400/25 bg-indigo-500/10 px-3.5 py-1 text-xs font-medium text-indigo-200"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
-            <span>Windows 10 & 11 • {WIZZLY_META.installerSize}</span>
-          </motion.div>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <motion.a
+              href="#whats-new"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="inline-flex items-center gap-2 rounded-full border border-indigo-400/25 bg-indigo-500/10 px-3.5 py-1 text-xs font-medium text-indigo-200 transition hover:bg-indigo-500/20"
+            >
+              <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
+              <span>
+                v{WIZZLY_META.version} • Windows 10 & 11 • {WIZZLY_META.installerSize}
+              </span>
+            </motion.a>
+
+            {downloadStats !== null && (
+              <motion.a
+                href="#download"
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-500/20"
+              >
+                <Download className="h-3.5 w-3.5 text-emerald-400" />
+                <span>
+                  {downloadStats.total.toLocaleString(lang === "id" ? "id-ID" : "en-US")}{" "}
+                  {lang === "id" ? "Unduhan" : "Downloads"}
+                </span>
+              </motion.a>
+            )}
+          </div>
 
           <motion.h1
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.06 }}
-            className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-6xl sm:leading-[1.06]"
+            className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold tracking-tight text-white sm:text-6xl sm:leading-[1.06]"
           >
             Notch,{" "}
             <span className="bg-gradient-to-r from-indigo-400 via-sky-300 to-emerald-300 bg-clip-text text-transparent">
               Liquid Dock
-            </span>{" "}
-            & Spotlight.
+            </span>
+            , Widgets & Spotlight.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.12 }}
-            className="mx-auto mt-3 max-w-xl text-sm text-slate-300 sm:text-base"
+            className="mx-auto mt-3 max-w-2xl text-sm text-slate-300 sm:text-base"
           >
             {lang === "id"
-              ? "Desktop Windows lebih hidup, rapi, dan super ringan."
-              : "A cleaner, faster, alive Windows desktop."}
+              ? "Desktop Windows lebih hidup dengan 4 Widget Native Direct2D, Animasi Genie GPU VSync, Floating Karaoke & Spotlight super ringan."
+              : "A cleaner, faster, alive Windows desktop with 4 Native Direct2D Widgets, GPU VSync Genie Effect, Floating Karaoke & Spotlight."}
           </motion.p>
 
           <motion.div
@@ -204,13 +303,15 @@ export function WizzlyLanding() {
               className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 shadow-[0_12px_40px_rgba(255,255,255,0.2)] transition hover:scale-[1.03]"
             >
               <ArrowDownToLine className="h-4 w-4" />
-              {lang === "id" ? "Download Gratis" : "Download Free"}
+              {lang === "id"
+                ? `Download v${WIZZLY_META.version} Gratis`
+                : `Download v${WIZZLY_META.version} Free`}
             </a>
             <a
-              href="#features"
+              href="#whats-new"
               className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/10"
             >
-              {lang === "id" ? "Lihat Animasi Fitur" : "Explore Features"}
+              {lang === "id" ? `Apa yang Baru di v${WIZZLY_META.version}` : `What's New in v${WIZZLY_META.version}`}
             </a>
             <a
               href={WIZZLY_META.githubUrl}
@@ -234,6 +335,9 @@ export function WizzlyLanding() {
         >
           <DesktopSandbox lang={lang} />
         </motion.section>
+
+        {/* What's New in v0.1.1 & Release Notes */}
+        <WhatsNewSection lang={lang} />
 
         {/* Animated Visual Showcase */}
         <VisualShowcase lang={lang} />
@@ -345,9 +449,20 @@ export function WizzlyLanding() {
             viewport={{ once: true, amount: 0.2 }}
             className="relative overflow-hidden rounded-3xl border border-indigo-400/30 bg-gradient-to-br from-indigo-950/60 via-[#0b0e18] to-[#080a10] p-7 sm:p-8 lg:col-span-7"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-300">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              {lang === "id" ? "Gratis • Semua Fitur Terbuka" : "Free • All Features Unlocked"}
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-300">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                {lang === "id" ? "Gratis • Semua Fitur Terbuka" : "Free • All Features Unlocked"}
+              </div>
+              {downloadStats !== null && (
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-500/15 px-3 py-1 text-xs font-semibold text-sky-200">
+                  <Download className="h-3.5 w-3.5 text-sky-300" />
+                  <span>
+                    {downloadStats.total.toLocaleString(lang === "id" ? "id-ID" : "en-US")}{" "}
+                    {lang === "id" ? "Total Unduhan" : "Total Downloads"}
+                  </span>
+                </div>
+              )}
             </div>
 
             <h2 className="mt-4 text-3xl font-bold text-white">
@@ -355,8 +470,8 @@ export function WizzlyLanding() {
             </h2>
             <p className="mt-2 text-sm text-slate-300">
               {lang === "id"
-                ? "Cukup 3.4 MB untuk Windows 10 & 11. Gratis dipakai, terus hidup lewat dukungan komunitas."
-                : "Just 3.4 MB for Windows 10 & 11. Free to use, sustained by community support."}
+                ? `Cukup ${WIZZLY_META.installerSize} untuk Windows 10 & 11. Gratis dipakai, terus hidup lewat dukungan komunitas.`
+                : `Just ${WIZZLY_META.installerSize} for Windows 10 & 11. Free to use, sustained by community support.`}
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -383,6 +498,13 @@ export function WizzlyLanding() {
             </div>
             <p className="mt-3 font-mono text-xs text-slate-400">
               {WIZZLY_META.installerSize} • x64 • Windows 10 & 11
+              {downloadStats !== null && (
+                <span className="text-sky-300">
+                  {" "}
+                  • v{WIZZLY_META.version}:{" "}
+                  {downloadStats.latest.toLocaleString(lang === "id" ? "id-ID" : "en-US")}×
+                </span>
+              )}
             </p>
             <div className="mt-3 flex items-center justify-between gap-2 rounded-xl border border-white/10 bg-black/30 px-3 py-2">
               <div className="min-w-0">

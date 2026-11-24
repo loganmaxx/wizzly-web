@@ -2,16 +2,17 @@ export type Lang = "id" | "en";
 
 export const WIZZLY_META = {
   name: "Wizzly",
-  version: "0.1.0",
-  installerFile: "Wizzly_0.1.0_x64-setup.exe",
-  installerSize: "3.4 MB",
+  version: "0.1.1",
+  releaseDate: "2026-11-24",
+  installerFile: "Wizzly_0.1.1_x64-setup.exe",
+  installerSize: "3.5 MB",
   binarySize: "7.4 MB",
-  sha256: "57162348b70f7a3cf71b6bb4d41f46898a90b8980d2df70614dbbc6a824a369b",
+  sha256: "c2664a5009f6a90779725dc61e980a01d45a18c70452c85e972570eabc61334c",
   osSupport: "Windows 10 (1903+) & Windows 11 (64-bit)",
-  engine: "Rust + Tauri 2 + Win32 / WinRT",
+  engine: "Rust + Tauri 2 + Direct2D / D3D11",
   downloadUrl:
-    "https://github.com/loganmaxx/wizzly/releases/download/v0.1.0/Wizzly_0.1.0_x64-setup.exe",
-  releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/v0.1.0",
+    "https://github.com/loganmaxx/wizzly/releases/download/V0.1.1/Wizzly_0.1.1_x64-setup.exe",
+  releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/V0.1.1",
   githubUrl: "https://github.com/loganmaxx/wizzly",
   siteUrl: "https://wizzly.web.id",
   donation: {
@@ -19,6 +20,160 @@ export const WIZZLY_META = {
     binancePayId: "977044132",
     qrisImage: "/images/qris.png",
   },
+};
+
+export interface ReleaseNoteItem {
+  title: Record<Lang, string>;
+  detail: Record<Lang, string>;
+}
+
+export interface ReleaseNotes {
+  version: string;
+  date: string;
+  added: ReleaseNoteItem[];
+  changed: ReleaseNoteItem[];
+  fixed: ReleaseNoteItem[];
+}
+
+export const RELEASE_NOTES_V011: ReleaseNotes = {
+  version: "0.1.1",
+  date: "2026-11-24",
+  added: [
+    {
+      title: {
+        id: "Rombakan Halaman Desktop Widget (Widget Gallery & Focused Inspector)",
+        en: "Desktop Widget Page Overhaul (Widget Gallery & Focused Inspector)",
+      },
+      detail: {
+        id: "Tab Widget di Settings kini berupa galeri visual 2×2 ala macOS dengan pratinjau langsung di atas wallpaper aktif, switch ON/OFF mandiri, badge status aktif (0/4–4/4), dan panel inspector terfokus per widget.",
+        en: "Redesigned the Settings Widget tab into a macOS-style 2×2 visual gallery with live miniature previews over your active wallpaper, independent ON/OFF switches, active badge (0/4–4/4), and a focused inspector per widget.",
+      },
+    },
+    {
+      title: {
+        id: "Desktop Clock Widget (Win32 + Direct2D / DirectWrite)",
+        en: "Desktop Clock Widget (Win32 + Direct2D / DirectWrite)",
+      },
+      detail: {
+        id: "Widget jam & tanggal native (~0% CPU saat idle) dengan 3 gaya (Liquid Glass, Glass Card, Sonoma), posisi Kiri/Tengah/Kanan, ukuran 56px–180px, jarak atas 24px–320px, dan Depth Effect PNG transparan.",
+        en: "Native clock & date widget (~0% idle CPU) with 3 styles (Liquid Glass, Glass Card, Sonoma), Left/Center/Right alignment, 56px–180px sizing, 24px–320px top offset, and optional transparent PNG Depth Effect.",
+      },
+    },
+    {
+      title: {
+        id: "Desktop Vinyl Turntable Music Widget",
+        en: "Desktop Vinyl Turntable Music Widget",
+      },
+      detail: {
+        id: "Pemutar musik native selebar 332px dengan piringan vinyl & cover album berputar, progress bar, kontrol Play/Pause/Prev/Next, serta gaya Nothing Light, Nothing Dark, dan Glass.",
+        en: "332px-wide native music widget with spinning vinyl & album art, progress bar, clickable Play/Pause/Prev/Next controls, and Nothing Light, Nothing Dark, or Glass styles.",
+      },
+    },
+    {
+      title: {
+        id: "Desktop Calendar & Agenda Widget",
+        en: "Desktop Calendar & Agenda Widget",
+      },
+      detail: {
+        id: "Kalender bulan ala macOS dalam tata letak Agenda (332px + agenda hari ini) atau Square (kompak), 3 gaya kartu (Glass / Nothing Light / Nothing Dark), agenda lokal, dan sinkronisasi URL iCal (.ics).",
+        en: "Monthly macOS-style calendar in Agenda (332px + today's agenda) or Square (compact) layouts, 3 card styles (Glass / Nothing Light / Nothing Dark), local events, and iCal (.ics) URL sync.",
+      },
+    },
+    {
+      title: {
+        id: "Desktop Sticky Memo & To-Do List Widget",
+        en: "Desktop Sticky Memo & To-Do List Widget",
+      },
+      detail: {
+        id: "Catatan cepat & checklist To-Do List selebar 332px dengan centang item langsung di kartu widget, tersedia dalam gaya Notes Yellow, Glass, Nothing Light, dan Nothing Dark.",
+        en: "332px quick notes & To-Do List desktop widget supporting direct item checking on the card, styled in Notes Yellow, Glass, Nothing Light, or Nothing Dark.",
+      },
+    },
+    {
+      title: {
+        id: "Quick Editor Popover, Magnetic Snap & Depth Layer Ordering",
+        en: "Quick Editor Popover, Magnetic Snap & Depth Layer Ordering",
+      },
+      detail: {
+        id: "Tombol Edit / + saat hover widget Kalender atau Memo membuka editor cepat langsung di desktop, dilengkapi Magnetic Snap antar widget dan z-order di atas lapisan Depth Clock.",
+        en: "Hovering Calendar or Memo reveals an Edit / + quick editor popover directly on the desktop, paired with Magnetic Snap alignment across cards and z-ordering above the Depth Clock layer.",
+      },
+    },
+    {
+      title: {
+        id: "Floating Karaoke Lyrics Window",
+        en: "Floating Karaoke Lyrics Window",
+      },
+      detail: {
+        id: "Mengganti tombol pin pada Wizzly Notch menjadi jendela lirik karaoke mengambang (shadowless) yang mendukung resize bebas 8 arah.",
+        en: "Replaced the pin button on Wizzly Notch with a shadowless floating karaoke lyrics window supporting 8-direction free resizing.",
+      },
+    },
+    {
+      title: {
+        id: "Animasi Genie Effect ala macOS (GPU Direct3D11 + DirectComposition VSync)",
+        en: "macOS-Style Genie Effect (GPU Direct3D11 + DirectComposition VSync)",
+      },
+      detail: {
+        id: "Animasi Minimize & Restore melengkung tepat ke koordinat ikon Dock terkunci VSync monitor dengan 0 MB overhead saat idle, mendukung tombol - titlebar, Auto-Hide Dock, pre-minimized restore, dan popover lembut.",
+        en: "Curved VSync-locked Minimize & Restore animations directly into Dock icon coordinates with 0 MB idle overhead, supporting titlebar '-' button, Auto-Hide Dock, pre-minimized restore, and smooth popovers.",
+      },
+    },
+    {
+      title: {
+        id: "Tab Sidebar Widget, Click-to-Minimize & Tombol Win untuk Launchpad",
+        en: "Widget Sidebar Tab, Click-to-Minimize & Win-Key Launchpad",
+      },
+      detail: {
+        id: "Kategori Widget terpisah di Settings, klik ulang ikon Dock fokus untuk minimize dengan animasi tuck, serta toggle opsional tombol Win untuk membuka Wizzly Launchpad (Win+E/D/R/L & Ctrl+Esc tetap normal).",
+        en: "Dedicated Widget tab in Settings, click-to-minimize focused single-window Dock icons with tuck animation, plus optional Win-key tap to open Wizzly Launchpad (Win+E/D/R/L & Ctrl+Esc preserved).",
+      },
+    },
+  ],
+  changed: [
+    {
+      title: {
+        id: "Auto-Adaptive Wallpaper Backdrop di Dock",
+        en: "Auto-Adaptive Wallpaper Backdrop on Dock",
+      },
+      detail: {
+        id: "Kalibrasi ulang warna wallpaper pada gaya Frosted & Liquid, serta transisi halus kembali ke kaca netral saat ada jendela aplikasi menutupi area Dock.",
+        en: "Recalibrated wallpaper tint in Frosted & Liquid styles and added smooth fade back to neutral glass whenever an app window overlaps the Dock area.",
+      },
+    },
+    {
+      title: {
+        id: "Responsivitas Slider Settings",
+        en: "Settings Slider Responsiveness",
+      },
+      detail: {
+        id: "Debounce penyimpanan konfigurasi dan penjagaan cache Direct2D/wallpaper agar geseran slider ukuran maupun posisi widget jam tetap mulus.",
+        en: "Added config save debouncing and Direct2D/wallpaper cache preservation so dragging clock size or position sliders stays silky smooth.",
+      },
+    },
+  ],
+  fixed: [
+    {
+      title: {
+        id: "Pencegahan Double Start Menu & Toggle Tombol Win",
+        en: "Prevented Double Start Menu & Fixed Win Key Toggle",
+      },
+      detail: {
+        id: "Menekan tombol Win saat Wizzly Launchpad terbuka kini langsung menutup Launchpad tanpa memunculkan Start/Search native Windows secara bersamaan.",
+        en: "Pressing the Win key while Wizzly Launchpad is open now cleanly closes Launchpad without triggering native Windows Start/Search simultaneously.",
+      },
+    },
+    {
+      title: {
+        id: "Toggle Aktif/Nonaktif Wizzly Notch Langsung Berlaku Tanpa Restart",
+        en: "Instant Wizzly Notch Enable/Disable Without Restart",
+      },
+      detail: {
+        id: "Mematikan atau menyalakan Wizzly Notch di Settings langsung diterapkan seketika dan membebaskan memori WebView2 Notch saat dimatikan.",
+        en: "Toggling Wizzly Notch on or off in Settings now applies immediately and frees the Notch WebView2 memory when disabled.",
+      },
+    },
+  ],
 };
 
 export interface FeatureItem {
@@ -34,12 +189,12 @@ export const WIZZLY_FEATURES: FeatureItem[] = [
     id: "notch-media-switcher",
     category: "notch",
     title: {
-      id: "Media Player, Source Switcher & Live Lyrics",
-      en: "Media Player, Source Switcher & Synced Lyrics",
+      id: "Media Player, Source Switcher & Floating Karaoke",
+      en: "Media Player, Source Switcher & Floating Karaoke",
     },
     description: {
-      id: "Kontrol musik dengan seekbar, pilih langsung sumber media aktif (mis. Spotify vs Browser), plus lirik tersinkronisasi real-time.",
-      en: "Playback controls with seekbar, instant active media source switcher (e.g., Spotify vs browser), and real-time synced lyrics.",
+      id: "Kontrol musik dengan seekbar, pilih sumber media aktif (Spotify vs Browser), plus jendela lirik karaoke mengambang yang bisa di-resize 8 arah.",
+      en: "Playback controls with seekbar, instant media source switcher (Spotify vs browser), plus a shadowless 8-way resizable floating karaoke lyrics window.",
     },
     badge: { id: "Notch", en: "Notch" },
   },
@@ -99,27 +254,27 @@ export const WIZZLY_FEATURES: FeatureItem[] = [
     id: "dock-glass",
     category: "dock",
     title: {
-      id: "4 Material Kaca + 4 Gaya Ikon + Toggle Terpisah",
-      en: "4 Glass Styles + 4 Icon Styles + Independent Toggles",
+      id: "Auto-Adaptive Dock, Genie Effect & Click-to-Minimize",
+      en: "Auto-Adaptive Dock, Genie Effect & Click-to-Minimize",
     },
     description: {
-      id: "Material Frosted, Liquid, Matte, Classic + Wallpaper Tint; ikon Windows, Squircle, macOS Pack, atau Normalized. Dock & Notch bisa dinyalakan terpisah.",
-      en: "Frosted, Liquid, Matte, Classic glass + Wallpaper Tint; Windows, Squircle, macOS Pack, or Normalized icons. Toggle Dock & Notch independently.",
+      id: "Material Frosted, Liquid, Matte, Classic dengan adaptasi warna wallpaper otomatis, animasi Genie GPU Direct3D11 VSync, dan klik ulang untuk minimize.",
+      en: "Frosted, Liquid, Matte, Classic glass with adaptive wallpaper backdrop, VSync-locked Direct3D11 Genie Effect, and click-to-minimize.",
     },
     badge: { id: "Dock", en: "Dock" },
   },
   {
-    id: "dock-ux",
-    category: "dock",
+    id: "desktop-widgets",
+    category: "system",
     title: {
-      id: "Live Window Preview, Drag-to-Pin & Drop to Open",
-      en: "Live Window Previews, Drag-to-Pin & Drop to Open",
+      id: "4 Native Desktop Widgets (Direct2D + Magnetic Snap)",
+      en: "4 Native Desktop Widgets (Direct2D + Magnetic Snap)",
     },
     description: {
-      id: "Lihat thumbnail jendela saat hover, seret file langsung ke ikon Dock untuk membuka, plus Downloads Stack & Recycle Bin.",
-      en: "Hover for live window thumbnails, drop files onto Dock icons to open, plus Downloads Stack and Recycle Bin.",
+      id: "Clock dengan Depth Effect, Vinyl Turntable, Calendar & iCal (.ics), serta Sticky Memo To-Do dengan Quick Editor dan Magnetic Snap.",
+      en: "Depth Effect Clock, Vinyl Turntable, Calendar with iCal (.ics) sync, and Sticky Memo To-Do with Quick Editor and Magnetic Snap.",
     },
-    badge: { id: "Dock", en: "Dock" },
+    badge: { id: "Widgets", en: "Widgets" },
   },
   {
     id: "dock-game-multimonitor",
@@ -138,12 +293,12 @@ export const WIZZLY_FEATURES: FeatureItem[] = [
     id: "system-spotlight",
     category: "system",
     title: {
-      id: "Spotlight (Alt+Space), File Search, DND & Per-App Volume",
-      en: "Spotlight (Alt+Space), File Search, DND & Per-App Volume",
+      id: "Spotlight (Alt+Space), Win-Key Launchpad & Per-App Mixer",
+      en: "Spotlight (Alt+Space), Win-Key Launchpad & Per-App Mixer",
     },
     description: {
-      id: "Cari file lokal & aksi daya (Sleep/Lock/Restart), kalkulator instan, Do Not Disturb, Wi-Fi, Bluetooth, dan Per-App Volume Mixer.",
-      en: "Search local files & power actions (Sleep/Lock/Restart), instant calculator, Do Not Disturb, Wi-Fi, Bluetooth, and Per-App Volume Mixer.",
+      id: "Cari file lokal & aksi daya, kalkulator instan, opsi tombol Win untuk Launchpad, Do Not Disturb, Wi-Fi, Bluetooth, dan Per-App Volume Mixer.",
+      en: "Local file search & power actions, instant calculator, optional Win-key Launchpad trigger, DND, Wi-Fi, Bluetooth, and Per-App Volume Mixer.",
     },
     badge: { id: "System", en: "System" },
   },
@@ -154,8 +309,8 @@ export const SYSTEM_REQUIREMENTS = [
     label: { id: "Sistem Operasi", en: "Operating System" },
     value: "Windows 10 (64-bit, build 1903+) / Windows 11",
     detail: {
-      id: "Menggunakan Windows Runtime API (Media, Notifications, Bluetooth)",
-      en: "Uses native Windows Runtime APIs (Media, Notifications, Bluetooth)",
+      id: "Menggunakan Windows Runtime API, Direct2D & Direct3D11/DirectComposition",
+      en: "Uses native Windows Runtime APIs, Direct2D & Direct3D11/DirectComposition",
     },
   },
   {
@@ -170,16 +325,16 @@ export const SYSTEM_REQUIREMENTS = [
     label: { id: "Memori (RAM)", en: "Memory (RAM)" },
     value: "4 GB RAM (Rekomendasi 8 GB+)",
     detail: {
-      id: "Engine Rust + Tauri 2 hemat memori (JS heap dibatasi 80 MB)",
-      en: "Lightweight Rust + Tauri 2 engine (JS heap capped at 80 MB)",
+      id: "Widget native Direct2D ~0% CPU saat idle & Genie Effect 0 MB overhead saat idle",
+      en: "Native Direct2D widgets ~0% idle CPU & Genie Effect 0 MB idle overhead",
     },
   },
   {
     label: { id: "Penyimpanan", en: "Storage" },
     value: "~25 MB Ruang Kosong",
     detail: {
-      id: "Installer NSIS hanya 3.4 MB (binary release 7.4 MB)",
-      en: "NSIS installer is only 3.4 MB (7.4 MB release binary)",
+      id: "Installer NSIS hanya 3.5 MB (rilis v0.1.1)",
+      en: "NSIS installer is only 3.5 MB (v0.1.1 release)",
     },
   },
   {
@@ -196,29 +351,29 @@ export const ROADMAP_ITEMS = [
   {
     done: true,
     title: {
-      id: "Quick Media Source Switcher (Spotify vs Browser) & Live Window Thumbnails",
-      en: "Quick Media Source Switcher (Spotify vs Browser) & Live Window Thumbnails",
+      id: "Desktop Widgets (Clock Depth, Vinyl, Calendar .ics & Memo To-Do)",
+      en: "Desktop Widgets (Depth Clock, Vinyl, .ics Calendar & To-Do Memo)",
     },
   },
   {
     done: true,
     title: {
-      id: "Spotlight Pencarian File Lokal, Power Actions & Do Not Disturb",
-      en: "Spotlight Local File Search, Power Actions & Do Not Disturb",
+      id: "Animasi Genie Effect GPU Direct3D11 VSync & Floating Karaoke",
+      en: "GPU Direct3D11 VSync Genie Effect & Floating Karaoke Lyrics",
     },
   },
   {
     done: true,
     title: {
-      id: "Notch Shelf, Clipboard History, Per-App Mixer & Onboarding 5-Langkah",
-      en: "Notch Shelf, Clipboard History, Per-App Mixer & 5-Step Onboarding",
+      id: "Spotlight File Search, Tombol Win Launchpad & Click-to-Minimize",
+      en: "Spotlight File Search, Win-Key Launchpad & Click-to-Minimize",
     },
   },
   {
     done: true,
     title: {
-      id: "Toggle Dock / Notch Terpisah, Gaya Ikon Windows Asli & Game Auto-Hide",
-      en: "Independent Dock / Notch Toggles, Native Windows Icons & Game Auto-Hide",
+      id: "Notch Shelf, Clipboard History, Per-App Mixer & Game Auto-Hide",
+      en: "Notch Shelf, Clipboard History, Per-App Mixer & Game Auto-Hide",
     },
   },
   {
@@ -251,12 +406,12 @@ export const PRIVACY_ITEMS: PrivacyItem[] = [
   {
     id: "local-clipboard",
     title: {
-      id: "Clipboard & File Shelf Lokal",
-      en: "Local-Only Clipboard & File Shelf",
+      id: "Clipboard, Shelf, Memo & Agenda Lokal",
+      en: "Local-Only Clipboard, Shelf, Memo & Agenda",
     },
     description: {
-      id: "Riwayat Clip (maks. 25 item biasa / 40 total) dan thumbnail disimpan lokal di folder %APPDATA% perangkatmu, bukan ke cloud, dan bisa dihapus 1 klik.",
-      en: "Clipboard history (capped at 25 unpinned / 40 total) and thumbnails are stored strictly in your local %APPDATA% folder, never uploaded, and clearable in 1 click.",
+      id: "Riwayat Clip, thumbnail Shelf, catatan Memo/To-Do, dan agenda kalender lokal disimpan di folder %APPDATA% perangkatmu, bukan ke cloud.",
+      en: "Clipboard history, Shelf thumbnails, Memo/To-Do items, and local calendar events stay strictly in your local %APPDATA% folder, never uploaded.",
     },
   },
   {
@@ -266,8 +421,8 @@ export const PRIVACY_ITEMS: PrivacyItem[] = [
       en: "Local Notification & Media Reading",
     },
     description: {
-      id: "Akses Windows Notification Listener & Media Control hanya dipakai di memori lokal untuk menampilkan pill Notch dan kontrol audio.",
-      en: "Windows Notification Listener & Media Control are processed strictly in local memory to display Notch pills and playback controls.",
+      id: "Akses Windows Notification Listener & Media Control hanya dipakai di memori lokal untuk menampilkan pill Notch, kontrol audio, dan widget Vinyl.",
+      en: "Windows Notification Listener & Media Control are processed strictly in local memory for Notch pills, audio controls, and the Vinyl widget.",
     },
   },
   {
@@ -277,8 +432,8 @@ export const PRIVACY_ITEMS: PrivacyItem[] = [
       en: "Minimal, Transparent Network Calls",
     },
     description: {
-      id: "Permintaan jaringan otomatis hanya ke API publik lrclib.net (judul/artis) saat mencari lirik lagu — tanpa mengirim data pribadi apa pun.",
-      en: "Automatic network requests only query the public lrclib.net API (track title/artist) when fetching lyrics — never sending personal data.",
+      id: "Permintaan jaringan hanya ke API publik lrclib.net (judul/artis) untuk lirik serta URL iCal (.ics) pilihanmu sendiri bila sinkronisasi kalender diaktifkan.",
+      en: "External requests only contact public lrclib.net (track title/artist) for lyrics and your own configured iCal (.ics) URL if calendar sync is enabled.",
     },
   },
 ];
@@ -290,18 +445,28 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Is Wizzly completely free?",
     },
     a: {
-      id: "Ya, Wizzly v0.1.0 gratis untuk diunduh dan digunakan dengan seluruh fitur Notch, Dock, dan Spotlight. Jika dukungan donasi komunitas mencukupi biaya pengembangan dan sertifikat code-signing, Wizzly direncanakan tetap gratis tanpa paywall Pro.",
-      en: "Yes! Wizzly v0.1.0 is free to download and use with full Notch, Dock, and Spotlight features. If community donations support ongoing development and code-signing costs, Wizzly aims to stay free without locking features behind a Pro paywall.",
+      id: "Ya, Wizzly v0.1.1 gratis untuk diunduh dan digunakan dengan seluruh fitur Notch, Dock, Desktop Widgets (Clock, Vinyl, Calendar, Memo), Genie Effect, dan Spotlight. Jika dukungan donasi komunitas mencukupi biaya pengembangan dan sertifikat code-signing, Wizzly direncanakan tetap gratis tanpa paywall Pro.",
+      en: "Yes! Wizzly v0.1.1 is free to download and use with full Notch, Dock, Desktop Widgets (Clock, Vinyl, Calendar, Memo), Genie Effect, and Spotlight features. If community donations cover development and code-signing costs, Wizzly aims to stay free without a Pro paywall.",
     },
   },
   {
     q: {
-      id: "Apakah data clipboard atau notifikasi saya dikirim ke server?",
-      en: "Is my clipboard history or notification data sent to any server?",
+      id: "Apakah Desktop Widgets dan Genie Effect memakan banyak RAM/CPU?",
+      en: "Do the new Desktop Widgets and Genie Effect use a lot of RAM or CPU?",
     },
     a: {
-      id: "Tidak sama sekali. Seluruh riwayat clipboard disimpan lokal di folder %APPDATA% Windows kamu dan notifikasi diproses di memori lokal. Satu-satunya request eksternal otomatis hanyalah pencarian lirik lagu ke lrclib.net.",
-      en: "Never. Clipboard history stays strictly in your local Windows %APPDATA% directory and notifications are read purely in local memory. The only automatic external request is optional lyrics lookup via lrclib.net.",
+      id: "Tidak. Keempat Desktop Widget (Clock, Vinyl, Calendar, Memo) dirender native menggunakan Win32 + Direct2D/DirectWrite tanpa membuka proses WebView2 baru (~0% CPU saat idle). Animasi Genie Effect juga berjalan di GPU Direct3D11 + DirectComposition dengan 0 MB overhead saat idle.",
+      en: "No. All four Desktop Widgets (Clock, Vinyl, Calendar, Memo) are rendered natively via Win32 + Direct2D/DirectWrite without spawning extra WebView2 processes (~0% idle CPU). The Genie Effect runs on Direct3D11 + DirectComposition with 0 MB idle overhead.",
+    },
+  },
+  {
+    q: {
+      id: "Apakah data clipboard, memo, atau notifikasi saya dikirim ke server?",
+      en: "Is my clipboard history, memo, or notification data sent to any server?",
+    },
+    a: {
+      id: "Tidak sama sekali. Seluruh riwayat clipboard, sticky memo, dan agenda lokal disimpan di folder %APPDATA% Windows kamu dan notifikasi diproses di memori lokal. Request eksternal hanya terjadi saat mencari lirik ke lrclib.net atau mengambil URL iCal (.ics) yang kamu masukkan sendiri.",
+      en: "Never. Clipboard history, sticky memos, and local events stay strictly in your local Windows %APPDATA% directory and notifications are read purely in local memory. External requests only happen for optional lrclib.net lyrics lookup or your own configured iCal (.ics) feed.",
     },
   },
   {
@@ -310,18 +475,18 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Does Wizzly use a lot of RAM or lag games?",
     },
     a: {
-      id: "Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron), ukuran installernya hanya 3.4 MB, dan dilengkapi deteksi borderless fullscreen agar otomatis bersembunyi saat bermain game.",
-      en: "No. Wizzly is built with Rust + Tauri 2 (not Electron), the installer is only 3.4 MB, and it includes borderless fullscreen detection so it hides automatically while gaming.",
+      id: "Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron), ukuran installernya hanya 3.5 MB, dan dilengkapi deteksi borderless fullscreen agar otomatis bersembunyi saat bermain game.",
+      en: "No. Wizzly is built with Rust + Tauri 2 (not Electron), the installer is only 3.5 MB, and it includes borderless fullscreen detection so it hides automatically while gaming.",
     },
   },
   {
     q: {
-      id: "Kenapa Windows SmartScreen atau 1–2 scanner VirusTotal (mis. Arctic Wolf / SecureAge) memberi peringatan?",
-      en: "Why do Windows SmartScreen or 1–2 VirusTotal heuristics (e.g. Arctic Wolf / SecureAge) flag the installer?",
+      id: "Kenapa Windows SmartScreen atau 1–2 scanner VirusTotal memberi peringatan?",
+      en: "Why do Windows SmartScreen or 1–2 VirusTotal heuristics flag the installer?",
     },
     a: {
-      id: "Ini adalah false positive umum pada installer NSIS dan binary Rust/Tauri indie yang belum memiliki sertifikat Code Signing berbayar, ditambah penggunaan Win32 API untuk shortcut global (Alt+Space) dan kontrol jendela. Pastikan kamu mengunduh hanya dari GitHub Releases resmi dan verifikasi hash SHA-256 file installer sebelum dijalankan.",
-      en: "This is a common false positive on unsigned NSIS installers and stripped Rust/Tauri binaries using legitimate Win32 APIs for global shortcuts (Alt+Space) and window management. Always download only from official GitHub Releases and verify the installer SHA-256 checksum.",
+      id: "Ini adalah false positive umum pada installer NSIS dan binary Rust/Tauri indie yang belum memiliki sertifikat Code Signing berbayar, ditambah penggunaan Win32 API untuk shortcut global (Alt+Space / tombol Win opsional) dan animasi jendela. Pastikan kamu mengunduh hanya dari GitHub Releases resmi dan verifikasi hash SHA-256 sebelum dijalankan.",
+      en: "This is a common false positive on unsigned NSIS installers and stripped Rust/Tauri binaries using legitimate Win32 APIs for global shortcuts (Alt+Space / optional Win key) and window animations. Always download only from official GitHub Releases and verify the installer SHA-256 checksum.",
     },
   },
 ];
