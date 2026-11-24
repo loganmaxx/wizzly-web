@@ -323,10 +323,10 @@ export const SYSTEM_REQUIREMENTS = [
   },
   {
     label: { id: "Memori (RAM)", en: "Memory (RAM)" },
-    value: "4 GB RAM (Rekomendasi 8 GB+)",
+    value: "~35 MB Core • ~185 MB Total (dengan WebView2 saat Notch aktif)",
     detail: {
-      id: "Widget native Direct2D ~0% CPU saat idle & Genie Effect 0 MB overhead saat idle",
-      en: "Native Direct2D widgets ~0% idle CPU & Genie Effect 0 MB idle overhead",
+      id: "Proses inti Rust hanya ~35 MB (+ ~150 MB WebView2 saat Notch aktif); Widget Direct2D ~0% CPU & Genie 0 MB saat idle",
+      en: "Rust core process uses ~35 MB (+ ~150 MB WebView2 while Notch is active); Direct2D widgets ~0% idle CPU & 0 MB idle Genie",
     },
   },
   {
@@ -475,8 +475,8 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Does Wizzly use a lot of RAM or lag games?",
     },
     a: {
-      id: "Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron), ukuran installernya hanya 3.5 MB, dan dilengkapi deteksi borderless fullscreen agar otomatis bersembunyi saat bermain game.",
-      en: "No. Wizzly is built with Rust + Tauri 2 (not Electron), the installer is only 3.5 MB, and it includes borderless fullscreen detection so it hides automatically while gaming.",
+      id: "Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron) dengan installer hanya 3.5 MB. Di Windows, proses inti Wizzly hanya memakai sekitar ~35 MB RAM (atau total ~185 MB termasuk WebView2 saat Notch aktif, yang otomatis dibebaskan jika Notch dimatikan), dan langsung bersembunyi saat game borderless fullscreen.",
+      en: "No. Wizzly is built with Rust + Tauri 2 (not Electron) with a 3.5 MB installer. On Windows, Wizzly's core process uses around ~35 MB RAM (~185 MB total including WebView2 while Notch is active, freed immediately when Notch is toggled off), and auto-hides during borderless fullscreen games.",
     },
   },
   {

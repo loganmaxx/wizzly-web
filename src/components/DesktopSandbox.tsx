@@ -319,46 +319,50 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
 
   return (
     <div className="w-full">
-      {/* Interactive Toolbar Controls */}
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2.5 rounded-2xl border border-white/10 bg-[#0b0d14] px-3.5 py-2">
+      {/* Apple-Style Segmented Toolbar Controls */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2.5 rounded-2xl border border-white/[0.09] bg-[#161617]/90 px-3.5 py-2.5 backdrop-blur-xl">
         <div className="flex flex-wrap items-center gap-1.5">
-          {(["notch", "island"] as const).map((style) => (
-            <button
-              key={style}
-              type="button"
-              onClick={() => {
-                stopAutoDemo();
-                setNotchStyle(style);
-              }}
-              className={`rounded-lg px-2.5 py-1 text-xs font-medium capitalize transition ${
-                notchStyle === style
-                  ? "bg-white text-slate-950"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
-            >
-              {style}
-            </button>
-          ))}
+          <div className="flex items-center rounded-full bg-black/60 p-0.5">
+            {(["notch", "island"] as const).map((style) => (
+              <button
+                key={style}
+                type="button"
+                onClick={() => {
+                  stopAutoDemo();
+                  setNotchStyle(style);
+                }}
+                className={`rounded-full px-3 py-1 text-xs font-medium capitalize transition ${
+                  notchStyle === style
+                    ? "bg-white text-black shadow-sm"
+                    : "text-[#a1a1a6] hover:text-white"
+                }`}
+              >
+                {style}
+              </button>
+            ))}
+          </div>
 
           <span className="mx-1 h-4 w-px bg-white/10" />
 
-          {(["frosted", "liquid", "matte", "classic"] as const).map((g) => (
-            <button
-              key={g}
-              type="button"
-              onClick={() => {
-                stopAutoDemo();
-                setGlassStyle(g);
-              }}
-              className={`rounded-lg px-2.5 py-1 text-xs font-medium capitalize transition ${
-                glassStyle === g
-                  ? "bg-indigo-500 text-white"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
-            >
-              {g}
-            </button>
-          ))}
+          <div className="flex items-center rounded-full bg-black/60 p-0.5">
+            {(["frosted", "liquid", "matte", "classic"] as const).map((g) => (
+              <button
+                key={g}
+                type="button"
+                onClick={() => {
+                  stopAutoDemo();
+                  setGlassStyle(g);
+                }}
+                className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize transition ${
+                  glassStyle === g
+                    ? "bg-[#0071e3] text-white"
+                    : "text-[#a1a1a6] hover:text-white"
+                }`}
+              >
+                {g}
+              </button>
+            ))}
+          </div>
 
           <span className="mx-1 hidden h-4 w-px bg-white/10 sm:inline-block" />
 
@@ -368,10 +372,10 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
               stopAutoDemo();
               setWidgetsVisible((v) => !v);
             }}
-            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition ${
               widgetsVisible
-                ? "border-sky-400/40 bg-sky-500/15 text-sky-200"
-                : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+                ? "border-[#2997ff]/40 bg-[#0071e3]/15 text-[#2997ff]"
+                : "border-white/10 bg-white/5 text-[#a1a1a6] hover:bg-white/10"
             }`}
           >
             <Layers className="h-3 w-3" />
@@ -383,15 +387,15 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
           <button
             type="button"
             onClick={() => setAutoDemo((v) => !v)}
-            className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition ${
               autoDemo
-                ? "border-emerald-400/40 bg-emerald-500/15 text-emerald-300"
-                : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+                ? "border-emerald-400/35 bg-emerald-500/15 text-emerald-300"
+                : "border-white/10 bg-white/5 text-[#a1a1a6] hover:bg-white/10"
             }`}
           >
             <span
               className={`h-1.5 w-1.5 rounded-full ${
-                autoDemo ? "bg-emerald-400" : "bg-slate-400"
+                autoDemo ? "bg-[#30d158]" : "bg-[#86868b]"
               }`}
             />
             Auto Demo
@@ -399,10 +403,10 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
           <button
             type="button"
             onClick={triggerGenieDemo}
-            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition ${
               genieWindowState === "open"
                 ? "border-purple-400/40 bg-purple-500/20 text-purple-200"
-                : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
+                : "border-white/10 bg-white/5 text-[#f5f5f7] hover:bg-white/10"
             }`}
           >
             <Minimize2 className="h-3 w-3 text-purple-300" /> Genie
@@ -413,10 +417,10 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
               stopAutoDemo();
               setKaraokeOpen((v) => !v);
             }}
-            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-xs font-medium transition ${
               karaokeOpen
                 ? "border-pink-400/40 bg-pink-500/20 text-pink-200"
-                : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
+                : "border-white/10 bg-white/5 text-[#f5f5f7] hover:bg-white/10"
             }`}
           >
             <Sparkles className="h-3 w-3 text-pink-300" /> Karaoke
@@ -424,16 +428,16 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
           <button
             type="button"
             onClick={() => triggerToast("bluetooth")}
-            className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-200 transition hover:bg-white/10"
+            className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#f5f5f7] transition hover:bg-white/10"
           >
-            <Bluetooth className="h-3 w-3 text-sky-400" /> TWS
+            <Bluetooth className="h-3 w-3 text-[#2997ff]" /> TWS
           </button>
           <button
             type="button"
             onClick={() => triggerToast("whatsapp")}
-            className="hidden items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-200 transition hover:bg-white/10 sm:inline-flex"
+            className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#f5f5f7] transition hover:bg-white/10 sm:inline-flex"
           >
-            <MessageCircle className="h-3 w-3 text-emerald-400" /> Chat
+            <MessageCircle className="h-3 w-3 text-[#30d158]" /> Chat
           </button>
           <button
             type="button"
@@ -442,21 +446,23 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
               setMixerOpen(false);
               setSpotlightOpen((v) => !v);
             }}
-            className="inline-flex items-center gap-1 rounded-lg border border-indigo-400/30 bg-indigo-500/15 px-2.5 py-1 text-xs font-medium text-indigo-200 transition hover:bg-indigo-500/25"
+            className="inline-flex items-center gap-1 rounded-full border border-[#2997ff]/35 bg-[#0071e3]/20 px-3 py-1 text-xs font-medium text-[#2997ff] transition hover:bg-[#0071e3]/30"
           >
             <Search className="h-3 w-3" /> Alt + Space
           </button>
         </div>
       </div>
 
-      {/* Simulated Windows Desktop Frame */}
-      <div
-        className="relative h-[490px] w-full overflow-hidden rounded-3xl border border-white/15 bg-[#090b12] shadow-[0_24px_70px_rgba(0,0,0,0.7)] sm:h-[530px]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 25%, rgba(79, 70, 229, 0.36), transparent 48%), radial-gradient(circle at 82% 32%, rgba(14, 165, 233, 0.25), transparent 46%), radial-gradient(circle at 50% 90%, rgba(168, 85, 247, 0.28), transparent 52%), linear-gradient(160deg, #090d1a 0%, #05060b 65%, #0c0a18 100%)",
-        }}
-      >
+      {/* Apple Studio Display Hardware Frame */}
+      <div className="relative rounded-[30px] border border-white/15 bg-gradient-to-b from-[#2c2c2e] via-[#1c1c1e] to-[#121214] p-2 shadow-[0_32px_100px_rgba(0,0,0,0.85),0_0_80px_rgba(0,113,227,0.12)] sm:rounded-[34px] sm:p-3">
+        {/* Simulated Windows Desktop Canvas */}
+        <div
+          className="relative h-[490px] w-full overflow-hidden rounded-[22px] border border-black/80 bg-[#05060a] sm:h-[535px] sm:rounded-[24px]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 18% 22%, rgba(0, 113, 227, 0.34), transparent 48%), radial-gradient(circle at 82% 28%, rgba(56, 189, 248, 0.22), transparent 44%), radial-gradient(circle at 52% 92%, rgba(168, 85, 247, 0.24), transparent 52%), linear-gradient(160deg, #070a16 0%, #030408 65%, #0a0814 100%)",
+          }}
+        >
         {/* v0.1.1 Native Desktop Widgets Layer (Direct2D + Magnetic Snap Preview) */}
         <AnimatePresence>
           {widgetsVisible && (
@@ -1202,6 +1208,13 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
             setMixerOpen((v) => !v);
           }}
         />
+      </div>
+      </div>
+
+      {/* Subtle Studio Display Stand Base */}
+      <div aria-hidden="true" className="mx-auto hidden flex-col items-center sm:flex">
+        <div className="h-6 w-20 bg-gradient-to-b from-[#2c2c2e] to-[#1a1a1c]" />
+        <div className="h-1.5 w-36 rounded-full bg-gradient-to-r from-white/10 via-white/30 to-white/10" />
       </div>
     </div>
   );

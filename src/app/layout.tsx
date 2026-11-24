@@ -92,7 +92,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${jakarta.variable} ${jetbrainsMono.variable} dark`}>
-      <body className="min-h-screen antialiased selection:bg-indigo-500/30 selection:text-white">
+      <body className="min-h-screen bg-black text-[#f5f5f7] antialiased selection:bg-[#0071e3]/40 selection:text-white">
         <JsonLd />
         {children}
       </body>
