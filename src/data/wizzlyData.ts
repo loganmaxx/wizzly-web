@@ -19,8 +19,50 @@ export const WIZZLY_META = {
     paypalUrl: "https://paypal.me/adrn87",
     binancePayId: "977044132",
     qrisImage: "/images/qris.png",
+    codeSigningGoal: {
+      raisedUsd: 0,
+      targetUsd: 200,
+    },
   },
 };
+
+export interface CoffeeTier {
+  id: string;
+  cups: number;
+  label: Record<Lang, string>;
+  idrText: string;
+  usdText: string;
+  tagline: Record<Lang, string>;
+  recommended?: boolean;
+}
+
+export const COFFEE_TIERS: CoffeeTier[] = [
+  {
+    id: "one-coffee",
+    cups: 1,
+    label: { id: "1 Kopi", en: "1 Coffee" },
+    idrText: "Rp 15rb",
+    usdText: "$3",
+    tagline: { id: "Bensin ngoding malam", en: "Fuel a coding session" },
+  },
+  {
+    id: "two-coffees",
+    cups: 2,
+    label: { id: "2 Kopi", en: "2 Coffees" },
+    idrText: "Rp 30rb",
+    usdText: "$5",
+    tagline: { id: "Bantu fix bug & fitur baru", en: "Help ship fixes & features" },
+    recommended: true,
+  },
+  {
+    id: "code-signing",
+    cups: 5,
+    label: { id: "Code Sign", en: "Code Sign" },
+    idrText: "Rp 100rb",
+    usdText: "$15",
+    tagline: { id: "Patungan hilangkan SmartScreen", en: "Fund SmartScreen removal" },
+  },
+];
 
 export interface ReleaseNoteItem {
   title: Record<Lang, string>;

@@ -8,30 +8,32 @@ import {
   CheckCircle2,
   ChevronRight,
   CircleDashed,
+  Coffee,
   Copy,
   Database,
   Download,
   ExternalLink,
   EyeOff,
   Globe,
-  Heart,
   Lock,
   Plus,
-  QrCode,
   ShieldCheck,
   Star,
   Wifi,
 } from "lucide-react";
 import {
+  COFFEE_TIERS,
   FAQ_ITEMS,
   PRIVACY_ITEMS,
   ROADMAP_ITEMS,
   SYSTEM_REQUIREMENTS,
   WIZZLY_META,
+  type CoffeeTier,
   type Lang,
 } from "@/data/wizzlyData";
 import { DesktopSandbox } from "@/components/DesktopSandbox";
 import { AppleHighlightsSection } from "@/components/AppleHighlightsSection";
+import { DonateCard, PostDownloadModal, QrisModal } from "@/components/SupportSection";
 import { VisualShowcase } from "@/components/VisualShowcase";
 import { WhatsNewSection } from "@/components/WhatsNewSection";
 
@@ -47,9 +49,12 @@ const STATS_CACHE_TTL_MS = 5 * 60 * 1000;
 export function WizzlyLanding() {
   const [lang, setLang] = useState<Lang>("id");
   const [openFaqs, setOpenFaqs] = useState<number[]>([0]);
-  const [copiedBinance, setCopiedBinance] = useState(false);
   const [copiedSha, setCopiedSha] = useState(false);
   const [qrisModalOpen, setQrisModalOpen] = useState(false);
+  const [postDownloadOpen, setPostDownloadOpen] = useState(false);
+  const [selectedTier, setSelectedTier] = useState<CoffeeTier>(
+    COFFEE_TIERS.find((t) => t.recommended) ?? COFFEE_TIERS[0]
+  );
   const [downloadStats, setDownloadStats] = useState<{ total: number; latest: number } | null>(
     null
   );
@@ -128,14 +133,6 @@ export function WizzlyLanding() {
     setTimeout(() => setCopiedSha(false), 1800);
   };
 
-  const handleCopyBinance = () => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(WIZZLY_META.donation.binancePayId).catch(() => {});
-    }
-    setCopiedBinance(true);
-    setTimeout(() => setCopiedBinance(false), 1800);
-  };
-
   return (
     <div className="relative min-h-screen overflow-x-clip bg-black text-[#f5f5f7]">
       {/* Subtle Apple Studio Ambient Spotlight */}
@@ -192,6 +189,15 @@ export function WizzlyLanding() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <a
+              href="#donate"
+              className="inline-flex items-center gap-1 rounded-full border border-amber-400/25 bg-amber-500/10 px-2.5 py-1 text-[11px] font-medium text-amber-200 transition hover:bg-amber-500/20"
+            >
+              <Coffee className="h-3 w-3 text-amber-400" />
+              <span className="hidden sm:inline">
+                {lang === "id" ? "Traktir Kopi" : "Buy Coffee"}
+              </span>
+            </a>
             <a
               href={WIZZLY_META.githubUrl}
               target="_blank"
@@ -329,9 +335,21 @@ export function WizzlyLanding() {
             transition={{ duration: 0.6, delay: 0.28 }}
             className="mt-6 text-xs text-[#86868b]"
           >
-            {lang === "id"
-              ? "Rust + Tauri 2 • ~35 MB Core RAM (~185 MB dgn WebView2) • Direct2D & D3D11 • Gratis tanpa paywall"
-              : "Rust + Tauri 2 • ~35 MB Core RAM (~185 MB with WebView2) • Direct2D & D3D11 • Free with no paywall"}
+            {lang === "id" ? (
+              <>
+                Rust + Tauri 2 • ~35 MB Core RAM (~185 MB dgn WebView2) • Direct2D & D3D11 •{" "}
+                <a href="#donate" className="text-amber-300/90 transition hover:text-amber-200 hover:underline">
+                  Gratis, didukung kopi komunitas ☕
+                </a>
+              </>
+            ) : (
+              <>
+                Rust + Tauri 2 • ~35 MB Core RAM (~185 MB with WebView2) • Direct2D & D3D11 •{" "}
+                <a href="#donate" className="text-amber-300/90 transition hover:text-amber-200 hover:underline">
+                  Free, community coffee funded ☕
+                </a>
+              </>
+            )}
           </motion.p>
         </section>
 
@@ -506,6 +524,7 @@ export function WizzlyLanding() {
                 href={WIZZLY_META.downloadUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => setPostDownloadOpen(true)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center gap-2 rounded-full bg-[#0071e3] px-6 py-3.5 text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,113,227,0.35)] transition hover:bg-[#0077ed]"
@@ -559,97 +578,12 @@ export function WizzlyLanding() {
             </div>
           </motion.div>
 
-          <motion.div
-            id="donate"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            className="apple-card flex flex-col justify-between rounded-[30px] p-7 sm:p-8 lg:col-span-5"
-          >
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/25 bg-rose-500/10 px-3 py-1 text-xs font-medium text-rose-300">
-                  <Heart className="h-3.5 w-3.5" />
-                  {lang === "id" ? "Dukung Wizzly" : "Support Wizzly"}
-                </span>
-                <span className="text-[11px] text-[#86868b]">
-                  {lang === "id" ? "Tetap Gratis" : "Keep it Free"}
-                </span>
-              </div>
-              <p className="mt-3 text-xs leading-relaxed text-[#86868b]">
-                {lang === "id"
-                  ? "Bantu pengembangan & biaya sertifikat Code Signing agar Wizzly terus bebas paywall."
-                  : "Help fund development & code-signing certificates so Wizzly remains free for everyone."}
-              </p>
-            </div>
-
-            <div className="mt-5 space-y-2.5">
-              <a
-                href={WIZZLY_META.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-between rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 transition hover:bg-amber-500/15"
-              >
-                <div className="flex items-center gap-3">
-                  <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
-                  <div>
-                    <span className="block text-sm font-semibold text-white">
-                      {lang === "id" ? "Beri Star di GitHub" : "Star on GitHub"}
-                    </span>
-                    <span className="block text-[11px] text-amber-200/80">
-                      {lang === "id" ? "Gratis & sangat membantu!" : "Free & helps a lot!"}
-                    </span>
-                  </div>
-                </div>
-                <ExternalLink className="h-4 w-4 text-amber-300" />
-              </a>
-
-              <button
-                type="button"
-                onClick={() => setQrisModalOpen(true)}
-                className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-left transition hover:bg-white/[0.08]"
-              >
-                <div className="flex items-center gap-3">
-                  <QrCode className="h-5 w-5 text-[#2997ff]" />
-                  <span className="text-sm font-semibold text-white">QRIS Indonesia</span>
-                </div>
-                <span className="rounded-full bg-[#0071e3]/20 px-2.5 py-0.5 text-xs font-medium text-[#2997ff]">
-                  QR
-                </span>
-              </button>
-
-              <a
-                href={WIZZLY_META.donation.paypalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 transition hover:bg-white/[0.08]"
-              >
-                <span className="text-sm font-semibold text-white">PayPal</span>
-                <ExternalLink className="h-4 w-4 text-[#a1a1a6]" />
-              </a>
-
-              <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-                <div>
-                  <p className="text-xs text-[#86868b]">Binance Pay UID</p>
-                  <p className="font-mono text-xs font-semibold text-amber-300">
-                    {WIZZLY_META.donation.binancePayId}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleCopyBinance}
-                  aria-label="Copy Binance Pay UID"
-                  className="inline-flex items-center gap-1 rounded-xl bg-white/10 px-2.5 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
-                >
-                  {copiedBinance ? (
-                    <Check className="h-3.5 w-3.5 text-[#30d158]" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5" />
-                  )}
-                </button>
-              </div>
-            </div>
-          </motion.div>
+          <DonateCard
+            lang={lang}
+            selectedTier={selectedTier}
+            onSelectTier={setSelectedTier}
+            onOpenQris={() => setQrisModalOpen(true)}
+          />
         </section>
 
         {/* Apple-Style 2-Column FAQ */}
@@ -784,6 +718,13 @@ export function WizzlyLanding() {
             </div>
             <div className="flex items-center gap-5">
               <a
+                href="#donate"
+                className="inline-flex items-center gap-1 text-amber-300 transition hover:text-amber-200"
+              >
+                <Coffee className="h-3.5 w-3.5" />
+                {lang === "id" ? "Traktir Kopi" : "Buy Me a Coffee"}
+              </a>
+              <a
                 href={WIZZLY_META.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -807,42 +748,20 @@ export function WizzlyLanding() {
         </div>
       </footer>
 
-      {/* QRIS Modal */}
-      <AnimatePresence>
-        {qrisModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setQrisModalOpen(false)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-xl"
-          >
-            <motion.div
-              initial={{ scale: 0.94, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.94, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="apple-card w-full max-w-sm rounded-[28px] p-6 text-center shadow-2xl"
-            >
-              <h4 className="text-lg font-semibold text-white">Scan QRIS Wizzly</h4>
-              <div className="mt-4 overflow-hidden rounded-2xl bg-white p-3">
-                <img
-                  src={WIZZLY_META.donation.qrisImage}
-                  alt="QRIS Donasi Wizzly"
-                  className="mx-auto h-auto w-full max-w-[260px] rounded-xl object-contain"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={() => setQrisModalOpen(false)}
-                className="mt-5 w-full rounded-full bg-[#0071e3] py-2.5 text-sm font-medium text-white transition hover:bg-[#0077ed]"
-              >
-                {lang === "id" ? "Tutup" : "Close"}
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <PostDownloadModal
+        open={postDownloadOpen}
+        onClose={() => setPostDownloadOpen(false)}
+        lang={lang}
+        selectedTier={selectedTier}
+        onSelectTier={setSelectedTier}
+      />
+
+      <QrisModal
+        open={qrisModalOpen}
+        onClose={() => setQrisModalOpen(false)}
+        lang={lang}
+        selectedTier={selectedTier}
+      />
     </div>
   );
 }
