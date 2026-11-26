@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Wizzly",
   },
   description:
-    "Download Wizzly v0.1.1 (3.5 MB) untuk Windows 10 & 11. Hadirkan Dynamic Island Notch, Floating Karaoke, macOS-style Dock dengan Genie Effect, 4 Desktop Widgets native (Clock, Vinyl, Calendar, Memo), dan Spotlight Alt+Space.",
+    "Download Wizzly v0.1.1 (3.5 MB) for Windows 10 & 11. Brings a Dynamic Island Notch, Floating Karaoke, macOS-style Dock with Genie Effect, 4 Native Direct2D Desktop Widgets (Clock, Vinyl, Calendar, Memo), and Alt+Space Spotlight.",
   keywords: [
     "Wizzly",
     "Wizzly v0.1.1",
@@ -44,13 +44,13 @@ export const metadata: Metadata = {
   creator: "Adrian",
   openGraph: {
     type: "website",
-    locale: "id_ID",
-    alternateLocale: ["en_US"],
+    locale: "en_US",
+    alternateLocale: ["id_ID"],
     url: WIZZLY_META.siteUrl,
     siteName: "Wizzly",
-    title: "Wizzly v0.1.1 — Notch, Liquid Dock & Desktop Widgets untuk Windows",
+    title: "Wizzly v0.1.1 — Notch, Liquid Dock & Desktop Widgets for Windows",
     description:
-      "Ubah desktop Windows 10/11 dengan Dynamic Island Notch, Dock Liquid Glass + Genie Effect, 4 Widget Native Direct2D & Spotlight Alt+Space (3.5 MB).",
+      "Transform your Windows 10/11 desktop with Dynamic Island Notch, Liquid Glass Dock + Genie Effect, 4 Native Direct2D Widgets & Alt+Space Spotlight (3.5 MB).",
     images: [
       {
         url: "/images/og-cover.png",
@@ -91,7 +91,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${jakarta.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" className={`${jakarta.variable} ${jetbrainsMono.variable} dark`}>
       <body className="min-h-screen bg-black text-[#f5f5f7] antialiased selection:bg-[#0071e3]/40 selection:text-white">
         <JsonLd />
         {children}

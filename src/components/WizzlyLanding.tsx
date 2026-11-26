@@ -47,7 +47,7 @@ const STATS_CACHE_KEY = "wizzly_gh_download_stats_v1";
 const STATS_CACHE_TTL_MS = 5 * 60 * 1000;
 
 export function WizzlyLanding() {
-  const [lang, setLang] = useState<Lang>("id");
+  const [lang, setLang] = useState<Lang>("en");
   const [openFaqs, setOpenFaqs] = useState<number[]>([0]);
   const [copiedSha, setCopiedSha] = useState(false);
   const [qrisModalOpen, setQrisModalOpen] = useState(false);
