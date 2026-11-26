@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowDownToLine,
+  ArrowRight,
   Check,
   CheckCircle2,
   ChevronRight,
@@ -32,8 +33,7 @@ import {
   type Lang,
 } from "@/data/wizzlyData";
 import { DesktopSandbox } from "@/components/DesktopSandbox";
-import { AppleHighlightsSection } from "@/components/AppleHighlightsSection";
-import { DonateCard, PostDownloadModal, QrisModal } from "@/components/SupportSection";
+import { DonateShowcase, PostDownloadModal, QrisModal } from "@/components/SupportSection";
 import { VisualShowcase } from "@/components/VisualShowcase";
 import { WhatsNewSection } from "@/components/WhatsNewSection";
 
@@ -133,55 +133,52 @@ export function WizzlyLanding() {
     setTimeout(() => setCopiedSha(false), 1800);
   };
 
+  const { raisedUsd, targetUsd } = WIZZLY_META.donation.codeSigningGoal;
+
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-black text-[#f5f5f7]">
-      {/* Subtle Apple Studio Ambient Spotlight */}
+    <div className="relative min-h-screen overflow-x-clip bg-[#070708] text-[#fafafa]">
+      {/* Subtle Architectural Grid Wash at Top */}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[680px]"
+        className="bg-architectural-grid pointer-events-none fixed inset-x-0 top-0 -z-10 h-[620px]"
         style={{
-          background:
-            "radial-gradient(ellipse 65% 48% at 50% 0%, rgba(0, 113, 227, 0.2), rgba(99, 102, 241, 0.08) 48%, transparent 75%)",
+          maskImage: "radial-gradient(ellipse 72% 65% at 50% 0%, black 20%, transparent 78%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 72% 65% at 50% 0%, black 20%, transparent 78%)",
         }}
       />
 
-      {/* Sticky Apple Product Navigation Bar */}
-      <header className="apple-glass sticky top-0 z-50 border-b border-white/[0.08]">
-        <div className="mx-auto flex h-[52px] max-w-6xl items-center justify-between px-4 sm:px-6">
+      {/* Minimalist Sticky Navigation */}
+      <header className="studio-nav sticky top-0 z-50 border-b border-white/[0.07]">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
           <a href="#" className="flex items-center gap-2.5">
             <img
               src="/images/wizzly-icon.png"
               alt="Wizzly Logo"
-              width={26}
-              height={26}
-              className="h-6.5 w-6.5 rounded-lg border border-white/15"
+              width={24}
+              height={24}
+              className="h-6 w-6 rounded-md border border-white/15"
             />
-            <span className="text-[17px] font-semibold tracking-tight text-white">
+            <span className="text-[15px] font-semibold tracking-tight text-white">
               Wizzly
             </span>
-            <span className="hidden rounded-full border border-white/10 bg-white/[0.06] px-2 py-0.5 font-mono text-[10px] font-medium text-[#a1a1a6] sm:inline-block">
+            <span className="hidden rounded border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 font-mono text-[10px] text-zinc-400 sm:inline-block">
               v{WIZZLY_META.version}
             </span>
           </a>
 
-          <nav className="hidden items-center gap-6 text-xs font-normal text-[#a1a1a6] md:flex">
+          <nav className="hidden items-center gap-7 text-xs font-medium text-zinc-400 md:flex">
             <a href="#preview" className="transition hover:text-white">
-              Demo
-            </a>
-            <a href="#highlights" className="transition hover:text-white">
-              {lang === "id" ? "Sorotan" : "Highlights"}
-            </a>
-            <a href="#whats-new" className="transition hover:text-white">
-              v{WIZZLY_META.version}
+              Sandbox
             </a>
             <a href="#features" className="transition hover:text-white">
               {lang === "id" ? "Fitur" : "Features"}
             </a>
-            <a href="#specs" className="transition hover:text-white">
-              {lang === "id" ? "Spesifikasi" : "Tech Specs"}
+            <a href="#whats-new" className="transition hover:text-white">
+              {lang === "id" ? "Rilis" : "Changelog"}
             </a>
-            <a href="#privacy" className="transition hover:text-white">
-              {lang === "id" ? "Privasi" : "Privacy"}
+            <a href="#specs" className="transition hover:text-white">
+              {lang === "id" ? "Spesifikasi" : "Specs"}
             </a>
             <a href="#faq" className="transition hover:text-white">
               FAQ
@@ -189,36 +186,28 @@ export function WizzlyLanding() {
           </nav>
 
           <div className="flex items-center gap-2">
+            {/* Signature Stand-Out Donate Pill in Navbar */}
             <a
               href="#donate"
-              className="inline-flex items-center gap-1 rounded-full border border-amber-400/25 bg-amber-500/10 px-2.5 py-1 text-[11px] font-medium text-amber-200 transition hover:bg-amber-500/20"
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/45 bg-amber-400/12 px-3 py-1.5 text-[11px] font-semibold text-amber-300 shadow-[0_0_20px_-6px_rgba(245,158,11,0.45)] transition hover:border-amber-400/70 hover:bg-amber-400/20"
             >
               <Coffee className="h-3 w-3 text-amber-400" />
-              <span className="hidden sm:inline">
-                {lang === "id" ? "Traktir Kopi" : "Buy Coffee"}
-              </span>
+              <span>{lang === "id" ? "Donasi" : "Donate"}</span>
             </a>
-            <a
-              href={WIZZLY_META.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium text-[#f5f5f7] transition hover:bg-white/10 sm:inline-flex"
-            >
-              <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-              Star
-            </a>
+
             <button
               type="button"
               onClick={() => setLang((prev) => (prev === "id" ? "en" : "id"))}
-              className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium text-[#f5f5f7] transition hover:bg-white/10"
+              className="inline-flex items-center gap-1 rounded-full border border-white/[0.09] bg-white/[0.03] px-2.5 py-1.5 font-mono text-[10px] font-medium text-zinc-300 transition hover:border-white/20 hover:text-white"
               aria-label="Switch language"
             >
-              <Globe className="h-3 w-3 text-[#2997ff]" />
+              <Globe className="h-3 w-3 text-zinc-400" />
               {lang.toUpperCase()}
             </button>
+
             <a
               href="#download"
-              className="inline-flex items-center gap-1 rounded-full bg-[#0071e3] px-3.5 py-1 text-xs font-medium text-white transition hover:bg-[#0077ed]"
+              className="inline-flex items-center gap-1 rounded-full bg-white px-3.5 py-1.5 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200"
             >
               {lang === "id" ? "Unduh" : "Download"}
             </a>
@@ -226,69 +215,49 @@ export function WizzlyLanding() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 pb-28 pt-14 sm:px-6 sm:pt-20">
-        {/* Apple Keynote Hero */}
-        <section className="text-center">
+      <main className="mx-auto max-w-6xl px-4 pb-28 pt-16 sm:px-6 sm:pt-24">
+        {/* Minimalist Editorial Hero */}
+        <section className="mx-auto max-w-4xl text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="animate-float-slow mx-auto mb-6 flex h-18 w-18 items-center justify-center rounded-[22px] border border-white/20 bg-[#161617] shadow-[0_0_60px_rgba(0,113,227,0.38)]"
-          >
-            <img
-              src="/images/wizzly-icon.png"
-              alt="Wizzly"
-              width={52}
-              height={52}
-              className="h-13 w-13 rounded-2xl"
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-2"
+            className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/[0.09] bg-[#0e0e11] px-3.5 py-1 text-xs text-zinc-400"
           >
-            <a
-              href="#whats-new"
-              className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-[#161617] px-3.5 py-1 text-xs font-medium text-[#a1a1a6] transition hover:border-white/25 hover:text-white"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#2997ff]" />
-              <span>
-                Wizzly v{WIZZLY_META.version} • Windows 10 & 11 • {WIZZLY_META.installerSize}
-              </span>
-            </a>
-
+            <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            <span className="font-mono text-[11px] text-zinc-300">
+              v{WIZZLY_META.version}
+            </span>
+            <span className="text-zinc-600">•</span>
+            <span>Windows 10 & 11</span>
+            <span className="text-zinc-600">•</span>
+            <span className="font-mono text-[11px]">{WIZZLY_META.installerSize}</span>
             {downloadStats !== null && (
-              <a
-                href="#download"
-                className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 transition hover:bg-emerald-500/20"
-              >
-                <Download className="h-3 w-3" />
-                <span>
-                  {downloadStats.total.toLocaleString(lang === "id" ? "id-ID" : "en-US")}{" "}
-                  {lang === "id" ? "Unduhan" : "Downloads"}
+              <>
+                <span className="text-zinc-600">•</span>
+                <span className="inline-flex items-center gap-1 font-mono text-[11px] text-zinc-200">
+                  <Download className="h-3 w-3 text-zinc-400" />
+                  {downloadStats.total.toLocaleString(lang === "id" ? "id-ID" : "en-US")}
                 </span>
-              </a>
+              </>
             )}
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-6 max-w-4xl text-4xl font-semibold leading-[1.04] tracking-[-0.04em] text-[#f5f5f7] sm:text-6xl lg:text-[5rem]"
+            transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-7 text-4xl font-semibold leading-[1.04] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.65rem]"
           >
             {lang === "id" ? (
               <>
                 Desktop Windows,{" "}
-                <span className="apple-titanium-gradient">didefinisikan ulang.</span>
+                <span className="text-zinc-500">lebih rapi dan hidup.</span>
               </>
             ) : (
               <>
                 Windows desktop,{" "}
-                <span className="apple-titanium-gradient">reimagined.</span>
+                <span className="text-zinc-500">refined to the pixel.</span>
               </>
             )}
           </motion.h1>
@@ -296,129 +265,186 @@ export function WizzlyLanding() {
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.14 }}
-            className="mx-auto mt-5 max-w-2xl text-base font-normal leading-relaxed text-[#a1a1a6] sm:text-xl"
+            transition={{ duration: 0.45, delay: 0.12 }}
+            className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-zinc-400 sm:text-lg"
           >
             {lang === "id"
-              ? "Dynamic Island Notch, Liquid Dock dengan Genie Effect GPU VSync, 4 Desktop Widgets native Direct2D, Floating Karaoke & Spotlight — hanya 3.5 MB."
-              : "Dynamic Island Notch, Liquid Dock with GPU VSync Genie Effect, 4 Native Direct2D Desktop Widgets, Floating Karaoke & Spotlight — in just 3.5 MB."}
+              ? "Dynamic Island Notch, Liquid Dock dengan Genie Effect GPU VSync, 4 Native Direct2D Widgets, Floating Karaoke, dan Alt+Space Spotlight — dibangun dengan Rust."
+              : "Dynamic Island Notch, Liquid Dock with GPU VSync Genie Effect, 4 Native Direct2D Widgets, Floating Karaoke, and Alt+Space Spotlight — engineered in Rust."}
           </motion.p>
 
+          {/* Primary Actions */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3.5"
+            transition={{ duration: 0.45, delay: 0.18 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
           >
             <a
-              href="#download"
-              className="inline-flex items-center gap-2 rounded-full bg-[#0071e3] px-7 py-3 text-sm font-medium text-white shadow-[0_10px_35px_rgba(0,113,227,0.38)] transition hover:scale-[1.02] hover:bg-[#0077ed]"
+              href={WIZZLY_META.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setPostDownloadOpen(true)}
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-[0_12px_32px_-10px_rgba(255,255,255,0.35)] transition hover:bg-zinc-200 active:scale-[0.99]"
             >
               <ArrowDownToLine className="h-4 w-4" />
               {lang === "id"
                 ? `Download v${WIZZLY_META.version} Gratis`
                 : `Download v${WIZZLY_META.version} Free`}
             </a>
+
             <a
-              href="#whats-new"
-              className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-medium text-[#2997ff] transition hover:bg-white/[0.08]"
+              href="#preview"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.03] px-5 py-3 text-sm font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
             >
-              {lang === "id" ? `Yang Baru di v${WIZZLY_META.version}` : `What's New in v${WIZZLY_META.version}`}
-              <ChevronRight className="h-4 w-4" />
+              {lang === "id" ? "Coba Live Sandbox" : "Try Live Sandbox"}
+              <ChevronRight className="h-4 w-4 text-zinc-400" />
+            </a>
+
+            <a
+              href={WIZZLY_META.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] px-4 py-3 text-sm font-medium text-zinc-400 transition hover:border-white/20 hover:text-white"
+            >
+              <Star className="h-3.5 w-3.5" />
+              GitHub
             </a>
           </motion.div>
 
-          {/* Subtle Apple Micro-Specs Line */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.28 }}
-            className="mt-6 text-xs text-[#86868b]"
+          {/* Tasteful Stand-Out Above-the-Fold Donation Callout Strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="mt-7 flex justify-center"
           >
-            {lang === "id" ? (
-              <>
-                Rust + Tauri 2 • ~35 MB Core RAM (~185 MB dgn WebView2) • Direct2D & D3D11 •{" "}
-                <a href="#donate" className="text-amber-300/90 transition hover:text-amber-200 hover:underline">
-                  Gratis, didukung kopi komunitas ☕
-                </a>
-              </>
-            ) : (
-              <>
-                Rust + Tauri 2 • ~35 MB Core RAM (~185 MB with WebView2) • Direct2D & D3D11 •{" "}
-                <a href="#donate" className="text-amber-300/90 transition hover:text-amber-200 hover:underline">
-                  Free, community coffee funded ☕
-                </a>
-              </>
-            )}
-          </motion.p>
+            <a
+              href="#donate"
+              className="group inline-flex flex-wrap items-center justify-center gap-2.5 rounded-full border border-amber-400/35 bg-amber-400/[0.08] px-4 py-2 text-xs text-amber-200/95 transition hover:border-amber-400/60 hover:bg-amber-400/[0.14]"
+            >
+              <span className="inline-flex items-center gap-1.5 font-semibold text-amber-300">
+                <Coffee className="h-3.5 w-3.5" />
+                {lang === "id" ? "100% Gratis & Independen" : "100% Free & Community Funded"}
+              </span>
+              <span className="hidden text-amber-400/40 sm:inline">•</span>
+              <span className="text-zinc-300">
+                {lang === "id"
+                  ? `Bantu target Code Signing ($${raisedUsd}/$${targetUsd})`
+                  : `Help fund Code Signing ($${raisedUsd}/$${targetUsd})`}
+              </span>
+              <span className="inline-flex items-center gap-0.5 font-semibold text-amber-300">
+                {lang === "id" ? "Traktir Kopi" : "Support"}
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </a>
+          </motion.div>
         </section>
 
-        {/* Interactive Desktop Studio Display Stage */}
+        {/* Architectural Metric Strip */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.28 }}
+          className="mt-14 grid grid-cols-2 divide-y divide-white/[0.07] border-y border-white/[0.07] sm:grid-cols-4 sm:divide-x sm:divide-y-0"
+        >
+          {[
+            {
+              value: WIZZLY_META.installerSize,
+              label: lang === "id" ? "Ukuran Installer" : "Installer Size",
+            },
+            {
+              value: "~35 MB",
+              label: lang === "id" ? "RAM Proses Inti Rust" : "Rust Core Memory",
+            },
+            {
+              value: "~0%",
+              label: lang === "id" ? "CPU Widget saat Idle" : "Direct2D Idle CPU",
+            },
+            {
+              value: "100%",
+              label: lang === "id" ? "Lokal & Tanpa Akun" : "Local-First & Free",
+            },
+          ].map((stat) => (
+            <div key={stat.label} className="px-4 py-5 text-center">
+              <p className="font-mono text-xl font-semibold tracking-tight tabular-nums text-white sm:text-2xl">
+                {stat.value}
+              </p>
+              <p className="mt-1 text-xs text-zinc-500">{stat.label}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Interactive Desktop Sandbox */}
         <motion.section
           id="preview"
-          initial={{ opacity: 0, y: 26 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 scroll-mt-20"
+          transition={{ duration: 0.55, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-12 scroll-mt-24"
         >
           <DesktopSandbox lang={lang} />
         </motion.section>
 
-        {/* Apple Highlights Carousel */}
-        <AppleHighlightsSection lang={lang} />
-
-        {/* v0.1.1 Interactive 2x2 Widget Gallery & Release Notes */}
-        <WhatsNewSection lang={lang} />
-
-        {/* Apple Bento Grid Showcase */}
+        {/* Unified Minimalist Capabilities Bento */}
         <VisualShowcase lang={lang} />
 
-        {/* Apple-Style Tech Specs & Roadmap */}
-        <section id="specs" className="mt-28 scroll-mt-20 sm:mt-36">
+        {/* STAND-OUT Flagship Donation & Patronage Showcase */}
+        <DonateShowcase
+          lang={lang}
+          selectedTier={selectedTier}
+          onSelectTier={setSelectedTier}
+          onOpenQris={() => setQrisModalOpen(true)}
+        />
+
+        {/* Changelog & 2x2 Widget Gallery */}
+        <WhatsNewSection lang={lang} />
+
+        {/* Technical Specifications & Roadmap */}
+        <section id="specs" className="mt-28 scroll-mt-24 sm:mt-36">
           <div className="mb-10 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2997ff]">
-              {lang === "id" ? "Spesifikasi Teknis" : "Tech Specs"}
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
+              {lang === "id" ? "Spesifikasi Teknis" : "Technical Specifications"}
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-[#f5f5f7] sm:text-5xl">
-              {lang === "id" ? "Ringan di setiap angka." : "Lightweight by every measure."}
+            <h2 className="mt-2.5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
+              {lang === "id" ? "Ringan di setiap angka." : "Lightweight by design."}
             </h2>
           </div>
 
-          <div className="apple-card overflow-hidden rounded-[28px] px-6 py-2 sm:px-8">
+          <div className="surface-card overflow-hidden rounded-3xl px-6 py-1 sm:px-8">
             {SYSTEM_REQUIREMENTS.map((spec, idx) => (
               <div
                 key={spec.label.en}
                 className={`grid gap-2 py-5 sm:grid-cols-12 sm:items-center ${
-                  idx !== SYSTEM_REQUIREMENTS.length - 1 ? "border-b border-white/[0.08]" : ""
+                  idx !== SYSTEM_REQUIREMENTS.length - 1 ? "border-b border-white/[0.06]" : ""
                 }`}
               >
-                <div className="text-xs font-semibold uppercase tracking-wider text-[#86868b] sm:col-span-4">
+                <div className="font-mono text-[11px] uppercase tracking-wider text-zinc-500 sm:col-span-4">
                   {spec.label[lang]}
                 </div>
                 <div className="sm:col-span-8">
-                  <p className="text-sm font-semibold text-[#f5f5f7] sm:text-base">
-                    {spec.value}
-                  </p>
-                  <p className="mt-0.5 text-xs text-[#86868b]">{spec.detail[lang]}</p>
+                  <p className="text-sm font-semibold text-white sm:text-base">{spec.value}</p>
+                  <p className="mt-0.5 text-xs text-zinc-400">{spec.detail[lang]}</p>
                 </div>
               </div>
             ))}
           </div>
 
+          {/* Minimalist Roadmap Strip */}
           <div className="mt-6 flex flex-wrap items-center gap-2">
             {ROADMAP_ITEMS.map((item) => (
               <span
                 key={item.title.en}
                 className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs ${
                   item.done
-                    ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-200"
-                    : "border-amber-400/20 bg-amber-500/10 text-amber-200"
+                    ? "border-white/[0.08] bg-[#0e0e11] text-zinc-300"
+                    : "border-white/20 bg-white/[0.06] text-white"
                 }`}
               >
                 {item.done ? (
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#30d158]" />
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
                 ) : (
-                  <CircleDashed className="h-3.5 w-3.5 text-amber-400" />
+                  <CircleDashed className="h-3.5 w-3.5 text-zinc-400" />
                 )}
                 {item.title[lang]}
               </span>
@@ -426,49 +452,39 @@ export function WizzlyLanding() {
           </div>
         </section>
 
-        {/* Apple Privacy Centerpiece */}
-        <section id="privacy" className="mt-28 scroll-mt-20 sm:mt-36">
-          <div className="mb-12 flex flex-col items-center text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-[#161617] shadow-[0_0_40px_rgba(48,209,88,0.18)]">
-              <Lock className="h-6 w-6 text-[#30d158]" />
-            </div>
-            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#30d158]">
+        {/* Local-First Privacy */}
+        <section id="privacy" className="mt-28 scroll-mt-24 sm:mt-36">
+          <div className="mb-10 max-w-2xl">
+            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
+              <Lock className="h-3.5 w-3.5 text-zinc-400" />
               {lang === "id" ? "Privasi & Transparansi" : "Privacy & Transparency"}
-            </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-[#f5f5f7] sm:text-5xl">
-              {lang === "id"
-                ? "Semua data tetap di PC kamu."
-                : "Your data stays on your PC."}
+            </div>
+            <h2 className="mt-2.5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
+              {lang === "id" ? "Semua data tetap di PC kamu." : "Your data stays on your PC."}
             </h2>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {PRIVACY_ITEMS.map((item, idx) => {
               const Icon =
-                idx === 0
-                  ? EyeOff
-                  : idx === 1
-                    ? Database
-                    : idx === 2
-                      ? ShieldCheck
-                      : Wifi;
+                idx === 0 ? EyeOff : idx === 1 ? Database : idx === 2 ? ShieldCheck : Wifi;
               return (
                 <motion.div
                   key={item.id}
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.35, delay: idx * 0.05 }}
-                  className="apple-card flex items-start gap-4 rounded-[24px] p-6"
+                  transition={{ duration: 0.35, delay: idx * 0.04 }}
+                  className="surface-card flex items-start gap-4 rounded-3xl p-6"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#30d158]/15 text-[#30d158]">
-                    <Icon className="h-5 w-5" />
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-zinc-200">
+                    <Icon className="h-4.5 w-4.5" />
                   </span>
                   <div>
-                    <h3 className="text-base font-semibold text-[#f5f5f7]">
+                    <h3 className="text-sm font-semibold text-white sm:text-base">
                       {item.title[lang]}
                     </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-[#86868b] sm:text-sm">
+                    <p className="mt-1 text-xs leading-relaxed text-zinc-400 sm:text-sm">
                       {item.description[lang]}
                     </p>
                   </div>
@@ -478,129 +494,132 @@ export function WizzlyLanding() {
           </div>
         </section>
 
-        {/* Flagship Download & Donate */}
-        <section
-          id="download"
-          className="mt-28 grid gap-5 scroll-mt-20 sm:mt-36 lg:grid-cols-12"
-        >
+        {/* Clean Flagship Download Section */}
+        <section id="download" className="mt-28 scroll-mt-24 sm:mt-36">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            className="relative overflow-hidden rounded-[30px] border border-white/15 bg-gradient-to-br from-[#0e172a] via-[#101014] to-[#08080a] p-7 sm:p-10 lg:col-span-7"
+            className="surface-card overflow-hidden rounded-[28px] p-7 sm:p-10 lg:p-12"
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#0071e3]/20 blur-3xl"
-            />
-
-            <div className="relative z-10 flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
-                <ShieldCheck className="h-3.5 w-3.5" />
-                {lang === "id" ? "Gratis • Semua Fitur Terbuka" : "Free • All Features Unlocked"}
-              </div>
-              {downloadStats !== null && (
-                <div className="inline-flex items-center gap-1.5 rounded-full border border-[#2997ff]/30 bg-[#0071e3]/15 px-3 py-1 text-xs font-medium text-[#2997ff]">
-                  <Download className="h-3.5 w-3.5" />
-                  <span>
-                    {downloadStats.total.toLocaleString(lang === "id" ? "id-ID" : "en-US")}{" "}
-                    {lang === "id" ? "Total Unduhan" : "Total Downloads"}
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-7">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-zinc-300">
+                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                    {lang === "id" ? "Gratis • Semua Fitur Terbuka" : "Free • All Features Unlocked"}
                   </span>
+                  {downloadStats !== null && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-zinc-400">
+                      <Download className="h-3 w-3" />
+                      {downloadStats.total.toLocaleString(lang === "id" ? "id-ID" : "en-US")}{" "}
+                      {lang === "id" ? "unduhan" : "downloads"}
+                    </span>
+                  )}
                 </div>
-              )}
-            </div>
 
-            <h2 className="relative z-10 mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-              Wizzly v{WIZZLY_META.version}
-            </h2>
-            <p className="relative z-10 mt-2 max-w-md text-sm leading-relaxed text-[#a1a1a6]">
-              {lang === "id"
-                ? `Hanya ${WIZZLY_META.installerSize} untuk Windows 10 & 11 (64-bit). Gratis dipakai selamanya, didukung oleh komunitas.`
-                : `Just ${WIZZLY_META.installerSize} for Windows 10 & 11 (64-bit). Free to use, sustained by community support.`}
-            </p>
-
-            <div className="relative z-10 mt-7 flex flex-wrap items-center gap-3">
-              <motion.a
-                href={WIZZLY_META.downloadUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setPostDownloadOpen(true)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 rounded-full bg-[#0071e3] px-6 py-3.5 text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,113,227,0.35)] transition hover:bg-[#0077ed]"
-              >
-                <ArrowDownToLine className="h-4 w-4" />
-                {WIZZLY_META.installerFile}
-              </motion.a>
-              <a
-                href={WIZZLY_META.releaseUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-5 py-3.5 text-xs font-medium text-[#f5f5f7] transition hover:bg-white/10"
-              >
-                <span>GitHub Releases</span>
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            </div>
-
-            <p className="relative z-10 mt-4 font-mono text-xs text-[#86868b]">
-              {WIZZLY_META.installerSize} • x64 • Windows 10 & 11
-              {downloadStats !== null && (
-                <span className="text-[#2997ff]">
-                  {" "}
-                  • v{WIZZLY_META.version}:{" "}
-                  {downloadStats.latest.toLocaleString(lang === "id" ? "id-ID" : "en-US")}×
-                </span>
-              )}
-            </p>
-
-            <div className="relative z-10 mt-4 flex items-center justify-between gap-2 rounded-2xl border border-white/[0.08] bg-black/50 px-3.5 py-2.5">
-              <div className="min-w-0">
-                <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#86868b]">
-                  SHA-256 Checksum
-                </span>
-                <p className="truncate font-mono text-[11px] text-[#a1a1a6]">
-                  {WIZZLY_META.sha256}
+                <h2 className="mt-5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                  {lang === "id"
+                    ? `Download Wizzly v${WIZZLY_META.version}`
+                    : `Download Wizzly v${WIZZLY_META.version}`}
+                </h2>
+                <p className="mt-2 max-w-lg text-sm leading-relaxed text-zinc-400">
+                  {lang === "id"
+                    ? `Installer ${WIZZLY_META.installerSize} untuk Windows 10 & 11 (64-bit). Verifikasi SHA-256 tersedia untuk keamanan penuh.`
+                    : `${WIZZLY_META.installerSize} installer for Windows 10 & 11 (64-bit). Verify the SHA-256 checksum anytime.`}
                 </p>
+
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  <a
+                    href={WIZZLY_META.downloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setPostDownloadOpen(true)}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-200 active:scale-[0.99]"
+                  >
+                    <ArrowDownToLine className="h-4 w-4" />
+                    {WIZZLY_META.installerFile}
+                  </a>
+                  <a
+                    href={WIZZLY_META.releaseUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.03] px-5 py-3.5 text-xs font-medium text-zinc-200 transition hover:border-white/25 hover:text-white"
+                  >
+                    <span>GitHub Releases</span>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={handleCopySha}
-                aria-label="Copy SHA-256 checksum"
-                className="shrink-0 rounded-xl bg-white/10 p-2 text-white transition hover:bg-white/20"
-              >
-                {copiedSha ? (
-                  <Check className="h-3.5 w-3.5 text-[#30d158]" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
-              </button>
+
+              <div className="space-y-3 lg:col-span-5">
+                {/* SHA-256 Verification Box */}
+                <div className="rounded-2xl border border-white/[0.08] bg-black/50 p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                      SHA-256 Checksum
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleCopySha}
+                      aria-label="Copy SHA-256 checksum"
+                      className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium text-zinc-200 transition hover:bg-white/12"
+                    >
+                      {copiedSha ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-400" />
+                          {lang === "id" ? "Disalin" : "Copied"}
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          {lang === "id" ? "Salin" : "Copy"}
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="mt-2 break-all font-mono text-[11px] leading-relaxed text-zinc-400">
+                    {WIZZLY_META.sha256}
+                  </p>
+                </div>
+
+                {/* Subtle Warm-Gold Support Bridge */}
+                <a
+                  href="#donate"
+                  className="group flex items-center justify-between gap-3 rounded-2xl border border-amber-400/30 bg-amber-400/[0.07] px-4 py-3.5 transition hover:border-amber-400/55 hover:bg-amber-400/[0.12]"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Coffee className="h-4 w-4 shrink-0 text-amber-400" />
+                    <div>
+                      <p className="text-xs font-semibold text-amber-200">
+                        {lang === "id" ? "Gratis selamanya — traktir kopi dev?" : "Free forever — buy the dev a coffee?"}
+                      </p>
+                      <p className="text-[11px] text-zinc-400">
+                        {lang === "id"
+                          ? "QRIS • PayPal • Binance Pay"
+                          : "QRIS • PayPal • Binance Pay"}
+                      </p>
+                    </div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-amber-300 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </div>
             </div>
           </motion.div>
-
-          <DonateCard
-            lang={lang}
-            selectedTier={selectedTier}
-            onSelectTier={setSelectedTier}
-            onOpenQris={() => setQrisModalOpen(true)}
-          />
         </section>
 
-        {/* Apple-Style 2-Column FAQ */}
-        <section id="faq" className="mt-28 scroll-mt-20 sm:mt-36">
+        {/* Minimalist 2-Column FAQ */}
+        <section id="faq" className="mt-28 scroll-mt-24 sm:mt-36">
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-            {/* Left Sticky Editorial Column */}
-            <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2997ff]">
-                FAQ
-              </p>
-              <h2 className="mt-2 text-3xl font-semibold tracking-[-0.03em] text-[#f5f5f7] sm:text-4xl">
-                {lang === "id" ? "Pertanyaan yang sering diajukan." : "Questions & Answers."}
+            <div className="lg:sticky lg:top-24 lg:col-span-4 lg:self-start">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">FAQ</p>
+              <h2 className="mt-2.5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                {lang === "id" ? "Pertanyaan umum." : "Questions & answers."}
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#86868b]">
+              <p className="mt-3 text-sm leading-relaxed text-zinc-400">
                 {lang === "id"
-                  ? "Jawaban singkat seputar lisensi gratis, performa Direct2D, privasi data lokal, dan keamanan installer."
-                  : "Quick answers on free access, Direct2D performance, local-first privacy, and installer verification."}
+                  ? "Ringkasan seputar lisensi gratis, performa Direct2D, privasi lokal, dan verifikasi SmartScreen."
+                  : "Quick clarity on free access, Direct2D performance, local privacy, and installer security."}
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -611,7 +630,7 @@ export function WizzlyLanding() {
                       prev.length === FAQ_ITEMS.length ? [] : FAQ_ITEMS.map((_, i) => i)
                     )
                   }
-                  className="rounded-full border border-white/12 bg-[#161617] px-4 py-1.5 text-xs font-medium text-[#f5f5f7] transition hover:border-white/25 hover:bg-[#1d1d1f]"
+                  className="rounded-full border border-white/10 bg-[#0e0e11] px-4 py-1.5 text-xs font-medium text-zinc-200 transition hover:border-white/25 hover:text-white"
                 >
                   {openFaqs.length === FAQ_ITEMS.length
                     ? lang === "id"
@@ -625,7 +644,7 @@ export function WizzlyLanding() {
                   href={`${WIZZLY_META.githubUrl}/issues`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-medium text-[#2997ff] transition hover:underline"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-zinc-400 transition hover:text-white"
                 >
                   {lang === "id" ? "Tanya di GitHub" : "Ask on GitHub"}
                   <ChevronRight className="h-3.5 w-3.5" />
@@ -633,8 +652,7 @@ export function WizzlyLanding() {
               </div>
             </div>
 
-            {/* Right Accordion Card */}
-            <div className="apple-card overflow-hidden rounded-[28px] px-6 py-2 sm:px-8 lg:col-span-8">
+            <div className="surface-card overflow-hidden rounded-3xl px-6 py-1 sm:px-8 lg:col-span-8">
               {FAQ_ITEMS.map((item, idx) => {
                 const isOpen = openFaqs.includes(idx);
                 const toggleFaq = () => {
@@ -646,7 +664,7 @@ export function WizzlyLanding() {
                   <div
                     key={item.q.en}
                     className={
-                      idx !== FAQ_ITEMS.length - 1 ? "border-b border-white/[0.08]" : ""
+                      idx !== FAQ_ITEMS.length - 1 ? "border-b border-white/[0.06]" : ""
                     }
                   >
                     <button
@@ -656,18 +674,18 @@ export function WizzlyLanding() {
                       className="group flex w-full items-center justify-between gap-4 py-5 text-left"
                     >
                       <div className="flex items-baseline gap-3.5">
-                        <span className="font-mono text-xs font-medium text-[#86868b]">
+                        <span className="font-mono text-[11px] text-zinc-600">
                           {String(idx + 1).padStart(2, "0")}
                         </span>
-                        <span className="text-sm font-semibold text-[#f5f5f7] transition group-hover:text-white sm:text-base">
+                        <span className="text-sm font-medium text-zinc-200 transition group-hover:text-white sm:text-base">
                           {item.q[lang]}
                         </span>
                       </div>
                       <span
                         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
                           isOpen
-                            ? "border-white/20 bg-white text-black"
-                            : "border-white/10 bg-white/[0.04] text-[#a1a1a6] group-hover:border-white/20 group-hover:text-white"
+                            ? "border-white bg-white text-zinc-950"
+                            : "border-white/10 bg-white/[0.03] text-zinc-400 group-hover:border-white/25 group-hover:text-white"
                         }`}
                       >
                         <Plus
@@ -686,7 +704,7 @@ export function WizzlyLanding() {
                           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
-                          <p className="pb-6 pl-8 pr-6 text-xs leading-relaxed text-[#a1a1a6] sm:text-sm">
+                          <p className="pb-5 pl-8 pr-6 text-xs leading-relaxed text-zinc-400 sm:text-sm">
                             {item.a[lang]}
                           </p>
                         </motion.div>
@@ -700,10 +718,10 @@ export function WizzlyLanding() {
         </section>
       </main>
 
-      {/* Apple-Style Minimal Footer */}
-      <footer className="border-t border-white/[0.08] bg-[#0a0a0c] py-8">
+      {/* Minimalist Architectural Footer */}
+      <footer className="border-t border-white/[0.07] bg-[#070708] py-8">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-[#86868b]">
+          <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-zinc-500">
             <div className="flex items-center gap-2">
               <img
                 src="/images/wizzly-icon.png"
@@ -719,10 +737,10 @@ export function WizzlyLanding() {
             <div className="flex items-center gap-5">
               <a
                 href="#donate"
-                className="inline-flex items-center gap-1 text-amber-300 transition hover:text-amber-200"
+                className="inline-flex items-center gap-1.5 font-medium text-amber-300 transition hover:text-amber-200"
               >
                 <Coffee className="h-3.5 w-3.5" />
-                {lang === "id" ? "Traktir Kopi" : "Buy Me a Coffee"}
+                {lang === "id" ? "Traktir Kopi" : "Donate"}
               </a>
               <a
                 href={WIZZLY_META.githubUrl}
@@ -740,7 +758,7 @@ export function WizzlyLanding() {
               >
                 Releases
               </a>
-              <a href="#download" className="text-[#2997ff] transition hover:underline">
+              <a href="#download" className="font-mono text-zinc-300 transition hover:text-white">
                 v{WIZZLY_META.version}
               </a>
             </div>
