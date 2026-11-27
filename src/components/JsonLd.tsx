@@ -10,7 +10,7 @@ export function JsonLd() {
     softwareVersion: WIZZLY_META.version,
     fileSize: WIZZLY_META.installerSize,
     description:
-      "Wizzly brings a macOS-style Dock with GPU Genie Effect & Spaces Switcher, Dynamic Island Notch with Media, Floating Karaoke Lyrics, Prayer Times, Live Mic/Camera Privacy Indicators, File Shelf, Clipboard History & Pomodoro, 4 Native Direct2D Desktop Widgets (Clock, Vinyl, Calendar, Memo), plus Alt+Space Spotlight and In-App Auto-Updater to Windows 10 and Windows 11.",
+      "Wizzly brings a macOS-style Dock with GPU Genie Effect & Spaces Switcher, Dynamic Island Notch with Media, Floating Karaoke Lyrics, Prayer Times, Live Mic/Camera Privacy Indicators, File Shelf, Clipboard History & Pomodoro, 4 Native Direct2D Desktop Widgets (Clock, Vinyl, Calendar, Memo), plus Alt+Space Spotlight to Windows 10 and Windows 11.",
     url: WIZZLY_META.siteUrl,
     downloadUrl: WIZZLY_META.downloadUrl,
     image: `${WIZZLY_META.siteUrl}/images/wizzly-icon.png`,
@@ -28,7 +28,7 @@ export function JsonLd() {
       "4 Native Win32 Direct2D Desktop Widgets: Depth Clock, Vinyl Turntable, Calendar with iCal (.ics) sync & Sticky Memo To-Do with Magnetic Snap",
       "Dynamic Island Notch with Media Player (incl. Winamp), Manual Lyrics Picker, Floating Karaoke Lyrics Window, Prayer Times & Adhan Reminders, Live Mic/Camera Privacy Indicators, File Shelf, Clipboard History & Pomodoro Timer",
       "Alt + Space Spotlight Launcher, optional Win-Key Launchpad trigger, Per-App Volume Mixer & Do Not Disturb",
-      "Signed In-App Auto-Updater, Community Localization (locales/*.json), Multi-Monitor support & Borderless Fullscreen Game Detection",
+      "Community Localization (locales/*.json), Multi-Monitor support & Borderless Fullscreen Game Detection",
     ],
   };
 

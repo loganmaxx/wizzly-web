@@ -2,17 +2,17 @@ export type Lang = "id" | "en";
 
 export const WIZZLY_META = {
   name: "Wizzly",
-  version: "0.1.2",
-  releaseDate: "2026-11-26",
-  installerFile: "Wizzly_0.1.2_x64-setup.exe",
-  installerSize: "4.7 MB",
+  version: "0.1.3",
+  releaseDate: "2026-11-27",
+  installerFile: "Wizzly_0.1.3_x64-setup.exe",
+  installerSize: "3.9 MB",
   binarySize: "7.4 MB",
-  sha256: "3785bfa71e67dfae50fec4ca1d33cbda58493b28c06229aa5fc76a3da37dea9b",
+  sha256: "dfdfdc39925b9f452b22dd3e4677c973a666cff6711e3bbfc38f808f5e534eef",
   osSupport: "Windows 10 (1903+) & Windows 11 (64-bit)",
   engine: "Rust + Tauri 2 + Direct2D / D3D11",
   downloadUrl:
-    "https://github.com/loganmaxx/wizzly/releases/download/v0.1.2/Wizzly_0.1.2_x64-setup.exe",
-  releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/v0.1.2",
+    "https://github.com/loganmaxx/wizzly/releases/download/v0.1.3/Wizzly_0.1.3_x64-setup.exe",
+  releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/v0.1.3",
   githubUrl: "https://github.com/loganmaxx/wizzly",
   siteUrl: "https://wizzly.web.id",
   donation: {
@@ -23,6 +23,29 @@ export const WIZZLY_META = {
       raisedUsd: 5,
       targetUsd: 200,
     },
+  },
+};
+
+export const V012_SECURITY_ANNOUNCEMENT = {
+  badge: {
+    id: "Pengumuman Penting • Pengguna v0.1.2",
+    en: "Important Notice • v0.1.2 Users",
+  },
+  title: {
+    id: "Wajib Update ke v0.1.3 — Auto-Update Dihapus karena False Positive Microsoft Defender",
+    en: "Please Update to v0.1.3 — Auto-Updater Removed Due to Microsoft Defender False Positive",
+  },
+  body: {
+    id: "Pada Wizzly v0.1.2 sebelumnya, fitur In-App Auto-Updater dianggap malware (false positive) oleh Microsoft Defender sehingga membuat aplikasi berhenti berjalan. Di versi 0.1.3 ini, fitur auto-update telah dihapus sepenuhnya agar Wizzly bisa berjalan kembali dengan lebih lancar dan aman. Silakan unduh dan pasang ulang v0.1.3 sekarang.",
+    en: "In Wizzly v0.1.2, the built-in In-App Auto-Updater was falsely flagged as malware by Microsoft Defender, causing the app to stop running. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly and reliably. Please download and update to v0.1.3 now.",
+  },
+  ctaDownload: {
+    id: "Update ke v0.1.3",
+    en: "Update to v0.1.3",
+  },
+  ctaChangelog: {
+    id: "Lihat Changelog",
+    en: "View Changelog",
   },
 };
 
@@ -72,18 +95,252 @@ export interface ReleaseNoteItem {
 export interface ReleaseNotes {
   version: string;
   date: string;
+  withdrawn?: boolean;
+  notice?: {
+    tone: "warning" | "info";
+    title: Record<Lang, string>;
+    detail: Record<Lang, string>;
+  };
   summary: Record<Lang, string>;
   added: ReleaseNoteItem[];
   changed: ReleaseNoteItem[];
   fixed: ReleaseNoteItem[];
 }
 
+export const RELEASE_NOTES_V013: ReleaseNotes = {
+  version: "0.1.3",
+  date: "2026-11-27",
+  notice: {
+    tone: "warning",
+    title: {
+      id: "Pengumuman untuk Pengguna v0.1.2 — Auto-Update Dihapus",
+      en: "Notice for v0.1.2 Users — Auto-Updater Removed",
+    },
+    detail: {
+      id: "Fitur auto-update pada v0.1.2 sebelumnya dianggap malware (false positive) oleh Microsoft Defender sehingga membuat aplikasi berhenti berjalan. Di v0.1.3, auto-update telah dihapus sepenuhnya agar Wizzly bisa berjalan lebih lancar. Wajib update ke versi 0.1.3 ini.",
+      en: "The auto-updater in v0.1.2 was falsely flagged as malware by Microsoft Defender, causing the app to stop running. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly. Please update to v0.1.3.",
+    },
+  },
+  summary: {
+    id: "Menghapus In-App Auto-Updater untuk mengatasi false positive Microsoft Defender dari v0.1.2, sekaligus membawa seluruh fitur baru: Jadwal Sholat & Adzan, Privacy Mic/Kamera, Spaces Switcher, Winamp, dan lokalisasi komunitas.",
+    en: "Removes the In-App Auto-Updater to resolve Microsoft Defender false positives from v0.1.2, while shipping Prayer Times & Adhan reminders, live Mic/Camera privacy indicators, Spaces Switcher, Winamp support, and community locales.",
+  },
+  added: [
+    {
+      title: {
+        id: "Jadwal Sholat & Pengingat Adzan di Wizzly Notch",
+        en: "Prayer Times & Adhan Reminders in Wizzly Notch",
+      },
+      detail: {
+        id: "Tab Prayer Times di Notch & sub-tab Prayer di Settings (perhitungan lokal via adhan) untuk 5 waktu sholat, Sunrise, tanggal Hijriah, countdown & progress bar, metode Auto/Kemenag/MWL/ISNA/Umm Al-Qura, mazhab Shafi/Hanafi, mode pill ringkas, pengingat suara, pencarian kota, deteksi lokasi otomatis, serta koordinat manual.",
+        en: "Dedicated Prayer Times tab in Notch & Prayer sub-tab in Settings powered locally by adhan: 5 daily prayers, Sunrise, Hijri date, countdown & progress bar, Auto/Kemenag/MWL/ISNA/Umm Al-Qura methods, Shafi/Hanafi madhab, compact pill mode, sound reminders, city search, auto-location, and manual coordinates.",
+      },
+    },
+    {
+      title: {
+        id: "Mode Auto-Hide Seragam (Smart / Always / Never) untuk Dock & Notch",
+        en: "Uniform Auto-Hide (Smart / Always / Never) for Dock & Notch",
+      },
+      detail: {
+        id: "Mode Smart Dock tetap tampil rapi di desktop di atas Depth Clock & widget, mengalah di bawah jendela maximized, dan naik saat kursor menyentuh tepi bawah layar. Auto-Hide Notch kini memiliki 3 mode seragam (Smart, Always, Never).",
+        en: "Refined Smart Dock auto-hide (stays on desktop above Depth Clock & widgets, yields cleanly beneath maximized windows, rises on bottom-edge hover), plus unified 3-mode Auto-Hide for Notch (Smart, Always, Never).",
+      },
+    },
+    {
+      title: {
+        id: "Pemilih & Ganti Lirik Manual di Notch & Karaoke Mode",
+        en: "Manual Lyrics Picker in Notch & Karaoke Mode",
+      },
+      detail: {
+        id: "Tombol Ganti Lirik / Change Lyrics dengan pencarian kandidat LRCLIB (badge SYNC/TEXT/INST, durasi) serta penyimpanan pilihan lirik per lagu yang tersinkronisasi antara Notch dan Karaoke Mode.",
+        en: "Added a Change Lyrics search picker backed by LRCLIB (SYNC/TEXT/INST badges, duration) with per-track saved overrides synced across Notch and Karaoke Mode.",
+      },
+    },
+    {
+      title: {
+        id: "Indikator Aplikasi Berkedip (HSHELL_FLASH) & Deteksi UAC",
+        en: "Window Attention Flash (HSHELL_FLASH) & Background UAC Detection",
+      },
+      detail: {
+        id: "Animasi pantul & titik amber berkedip pada ikon Dock, auto-peek Dock sementara, alert Notch click-to-focus, serta pemantauan prompt UAC (consent.exe) di background saat Taskbar dalam mode Hide Total.",
+        en: "Dock icon bounce + flashing amber indicator, temporary Dock auto-peek, click-to-focus Notch alert, and background UAC prompt (consent.exe) detection when the Windows Taskbar is set to Hide Total.",
+      },
+    },
+    {
+      title: {
+        id: "Dukungan Media & Cover Art Winamp (Winamp v1.x)",
+        en: "Classic Winamp (Winamp v1.x) Media & Cover Art Support",
+      },
+      detail: {
+        id: "Integrasi pemutar Winamp klasik via Win32 IPC lengkap dengan judul, artis, kontrol Play/Pause/Next/Prev/Seek, durasi, timeline, dan ekstraksi cover art (ID3v2, FLAC, Shell Thumbnail, folder art).",
+        en: "Classic Winamp integration via Win32 IPC with title, artist, Play/Pause/Next/Prev/Seek, duration, timeline, and cover art extraction from ID3v2 tags, FLAC metadata, Windows Shell Thumbnails, and local folder art.",
+      },
+    },
+    {
+      title: {
+        id: "Opsi Tampilkan / Sembunyikan Jam di Notch",
+        en: "Show / Hide Notch Clock Option",
+      },
+      detail: {
+        id: "Toggle baru di Settings → Notch untuk menampilkan atau menyembunyikan jam digital pada pill Notch sesuai preferensi.",
+        en: "Added a toggle in Settings → Notch to show or hide the digital clock in the compact Notch pill.",
+      },
+    },
+    {
+      title: {
+        id: "Virtual Desktops / Spaces Switcher di Dock",
+        en: "Virtual Desktops / Spaces Switcher in Dock",
+      },
+      detail: {
+        id: "Tombol ikon monitor di pojok kanan Dock dengan popover Spaces untuk berpindah desktop (klik / scroll wheel), membuat & menutup desktop, serta membuka Task View (Win + Tab).",
+        en: "Dedicated monitor button on the right side of the Dock with a Spaces popover to switch desktops (click or scroll wheel), create/close desktops, and open Task View (Win + Tab).",
+      },
+    },
+    {
+      title: {
+        id: "OSD Volume & Kecerahan Eksklusif di Wizzly Notch",
+        en: "Exclusive Volume & Brightness OSD in Wizzly Notch",
+      },
+      detail: {
+        id: "Penyembunyian OSD bawaan Windows 11 yang lebih akurat & responsif, lengkap dengan toggle Notifikasi Volume & Kecerahan di Notch pada Settings.",
+        en: "Faster, more accurate native Windows 11 flyout suppression paired with a dedicated Volume & Brightness OSD in Notch toggle in Settings.",
+      },
+    },
+    {
+      title: {
+        id: "Sistem Lokalisasi Komunitas & Bahasa Eksternal (locales/*.json)",
+        en: "Community Localization & External Languages (locales/*.json)",
+      },
+      detail: {
+        id: "Dukungan file bahasa eksternal di %AppData%\\com.wizzly.app\\locales\\*.json lengkap dengan Import JSON..., Locales Folder, Reload, kredit penerjemah, dan deteksi otomatis bahasa Windows.",
+        en: "External language file support in %AppData%\\com.wizzly.app\\locales\\*.json with Import JSON..., Locales Folder, Reload, translator credits, and automatic Windows locale detection.",
+      },
+    },
+  ],
+  changed: [
+    {
+      title: {
+        id: "Penghapusan In-App Auto-Updater (Bebas False Positive Microsoft Defender)",
+        en: "Removed In-App Auto-Updater (Microsoft Defender False-Positive Fix)",
+      },
+      detail: {
+        id: "Menghapus modul pembaruan otomatis (tauri-plugin-updater) dari build v0.1.2 yang sebelumnya dianggap malware oleh Microsoft Defender dan membuat aplikasi berhenti berjalan. Pembaruan kini dilakukan secara aman via installer resmi GitHub Releases.",
+        en: "Completely removed the built-in auto-updater (tauri-plugin-updater) from the withdrawn v0.1.2 build that triggered Microsoft Defender false positives and stopped the app. Updates are now distributed cleanly via official GitHub Releases.",
+      },
+    },
+    {
+      title: {
+        id: "Optimasi Performa CPU & GPU WebView2 (Idle ~0% CPU)",
+        en: "WebView2 CPU/GPU & Backend Idle Performance Optimizations (~0% Idle CPU)",
+      },
+      detail: {
+        id: "Mengganti efek berat (backdrop-filter: blur, live blur wallpaper, drop-shadow per ikon, SVG noise inline) dengan tekstur noise PNG statis & pre-blur wallpaper sekali di canvas, memindahkan magnifikasi Dock ke rAF DOM (~60 FPS), serta melonggarkan polling Win32 saat idle.",
+        en: "Replaced expensive live effects (backdrop-filter: blur, live wallpaper blur, per-icon drop-shadow, inline SVG noise) with static PNG noise & one-time canvas pre-blur, moved Dock magnification to rAF-batched DOM transforms (~60 FPS), and reduced idle Win32 polling.",
+      },
+    },
+    {
+      title: {
+        id: "Live Privacy Indicators (Mikrofon & Kamera Aktif) di Notch",
+        en: "Live Privacy Indicators (Active Mic & Camera) in Wizzly Notch",
+      },
+      detail: {
+        id: "Indikator titik berdenyut oranye (Mic) & hijau (Kamera) secara real-time di pill Notch, alert animasi instan beserta nama aplikasi yang mengakses, dan badge ringkas saat Notch expanded.",
+        en: "Real-time pulsing orange (Mic) & green (Camera) indicators in the compact Notch pill, instant animated alerts naming the active app, and compact header badges when expanded.",
+      },
+    },
+    {
+      title: {
+        id: "Animasi Event Hardware, Ring Baterai Bluetooth & Equalizer WASAPI",
+        en: "Richer Hardware Event Animations, Bluetooth Battery Ring & WASAPI Equalizer",
+      },
+      detail: {
+        id: "Animasi pengisian daya, alert baterai penuh/lemah/Battery Saver, persentase perangkat Bluetooth dengan Circular SVG Battery Ring & ikon perangkat, deteksi perpindahan output audio anti-bentrok, equalizer audio WASAPI reaktif asli, serta animasi Volume/Brightness/Wi-Fi dinamis.",
+        en: "Charging animation, Full/Low/Battery Saver alerts, Bluetooth battery readout with Circular SVG Ring & device icons, clash-free audio output switch detection, real WASAPI reactive equalizer, and dynamic Volume, Brightness & Wi-Fi animations.",
+      },
+    },
+    {
+      title: {
+        id: "Penyempurnaan Start / Launchpad Popover 5×3",
+        en: "Refined 5×3 Start / Launchpad Popover",
+      },
+      detail: {
+        id: "Tata letak 5×3 yang lebih lega, kontras lebih baik di atas jendela aplikasi lain, rendering WebView2 lebih ringan, serta fallback inisial otomatis saat ikon gagal dimuat.",
+        en: "Roomier 5×3 grid layout, improved contrast over background windows, lighter WebView2 rendering, and automatic initial fallback when an icon fails to load.",
+      },
+    },
+  ],
+  fixed: [
+    {
+      title: {
+        id: "Aplikasi Berhenti Berjalan / Diblokir Microsoft Defender di v0.1.2",
+        en: "App Stopped Running / Flagged by Microsoft Defender in v0.1.2",
+      },
+      detail: {
+        id: "Menghapus komponen auto-updater yang memicu deteksi malware (false positive) pada Microsoft Defender sehingga Wizzly v0.1.3 kembali berjalan stabil dan lancar.",
+        en: "Removed the auto-updater component that triggered Microsoft Defender malware false positives, allowing Wizzly v0.1.3 to run reliably without interruption.",
+      },
+    },
+    {
+      title: {
+        id: "Auto-Hide Dock Mode Smart & Deteksi Fullscreen Saat Taskbar Tersembunyi",
+        en: "Smart Auto-Hide Dock Focus Switching & False Fullscreen Detection",
+      },
+      detail: {
+        id: "Dock mode Smart kini muncul andal saat berpindah fokus antar aplikasi maximized (mis. VS Code → Spotify) dan memperbaiki false positive fullscreen ketika Taskbar disembunyikan.",
+        en: "Smart Auto-Hide Dock now reliably appears when switching focus between maximized apps (e.g. VS Code → Spotify) and no longer falsely triggers fullscreen mode when the Taskbar is hidden.",
+      },
+    },
+    {
+      title: {
+        id: "Akurasi Pencocokan Lirik & Retry Cover Art SMTC + Fallback iTunes",
+        en: "Lyrics Matching Accuracy & SMTC Album Art Retry with iTunes Fallback",
+      },
+      detail: {
+        id: "Meningkatkan akurasi pencocokan judul Remastered / Mix / Radio Edit / Live agar tidak salah lagu, serta menambahkan retry otomatis dan fallback iTunes Search untuk cover art Notch.",
+        en: "Improved lyrics matching for Remastered / Mix / Radio Edit / Live titles so mismatched songs no longer load, and added automatic SMTC thumbnail retries with iTunes Search fallback.",
+      },
+    },
+    {
+      title: {
+        id: "Dialog Extract ZIP & Windows Shell Wizard di Bawah OSD Suppressor",
+        en: "Extract ZIP & Windows Shell Wizards Under OSD Suppressor",
+      },
+      detail: {
+        id: "Dialog Extract ZIP Windows Explorer dan wizard shell lainnya tidak lagi ikut tersembunyi saat OSD Suppressor aktif.",
+        en: "Windows Explorer Extract ZIP dialogs and other shell wizards are no longer hidden while the native OSD suppressor is enabled.",
+      },
+    },
+    {
+      title: {
+        id: "Material Kaca Launchpad, Depth Clock DND & Ikon UWP Minimize",
+        en: "Launchpad Glass Surface, DND Quiet Moments & Minimized UWP Icons",
+      },
+      detail: {
+        id: "Memperbaiki garis horizontal berulang & kaca Launchpad, mencegah DND menyala otomatis saat Depth Clock aktif serta membersihkan Quiet Moments Windows saat dimatikan, dan menjaga ikon aplikasi sistem/UWP tetap tampil di Dock saat di-minimize.",
+        en: "Fixed Launchpad glass material & repeating line artifact, prevented unwanted DND activation with Depth Clock and properly cleared Windows Quiet Moments on turn-off, and kept minimized system/UWP app icons visible in the Dock.",
+      },
+    },
+  ],
+};
+
 export const RELEASE_NOTES_V012: ReleaseNotes = {
   version: "0.1.2",
   date: "2026-11-26",
+  withdrawn: true,
+  notice: {
+    tone: "warning",
+    title: {
+      id: "Rilis v0.1.2 Ditarik — Segera Update ke v0.1.3",
+      en: "v0.1.2 Withdrawn — Please Update to v0.1.3",
+    },
+    detail: {
+      id: "Fitur In-App Auto-Updater di v0.1.2 terdeteksi sebagai malware (false positive) oleh Microsoft Defender sehingga aplikasi berhenti berjalan. Gunakan v0.1.3 yang telah menghapus auto-update dan menyertakan semua fitur v0.1.2.",
+      en: "The In-App Auto-Updater in v0.1.2 was falsely flagged as malware by Microsoft Defender, causing the app to stop running. Use v0.1.3, which removes auto-update while keeping every v0.1.2 feature.",
+    },
+  },
   summary: {
-    id: "Jadwal Sholat & Adzan di Notch, In-App Auto-Updater, indikator privasi Mic/Kamera, Spaces Switcher, Winamp, dan sistem lokalisasi komunitas.",
-    en: "Prayer Times & Adhan reminders in Notch, In-App Auto-Updater, live Mic/Camera privacy indicators, Spaces Switcher, Winamp, and community locales.",
+    id: "(Ditarik — digantikan oleh v0.1.3) Jadwal Sholat & Adzan di Notch, indikator privasi Mic/Kamera, Spaces Switcher, Winamp, dan sistem lokalisasi komunitas.",
+    en: "(Withdrawn — superseded by v0.1.3) Prayer Times & Adhan reminders in Notch, live Mic/Camera privacy indicators, Spaces Switcher, Winamp, and community locales.",
   },
   added: [
     {
@@ -389,6 +646,7 @@ export const RELEASE_NOTES_V011: ReleaseNotes = {
 };
 
 export const RELEASE_NOTES_HISTORY: ReleaseNotes[] = [
+  RELEASE_NOTES_V013,
   RELEASE_NOTES_V012,
   RELEASE_NOTES_V011,
 ];
@@ -550,8 +808,8 @@ export const SYSTEM_REQUIREMENTS = [
     label: { id: "Penyimpanan", en: "Storage" },
     value: "~25 MB Ruang Kosong",
     detail: {
-      id: `Installer NSIS hanya ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}) dengan In-App Auto-Updater`,
-      en: `NSIS installer is only ${WIZZLY_META.installerSize} (v${WIZZLY_META.version} release) with signed In-App Auto-Updater`,
+      id: `Installer NSIS hanya ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}), build bersih tanpa auto-updater`,
+      en: `NSIS installer is only ${WIZZLY_META.installerSize} (v${WIZZLY_META.version} release), clean build without auto-updater`,
     },
   },
   {
@@ -589,8 +847,8 @@ export const ROADMAP_ITEMS = [
   {
     done: true,
     title: {
-      id: "Notch Shelf, Prayer Times, Privacy Mic/Cam, Auto-Updater & Spaces",
-      en: "Notch Shelf, Prayer Times, Mic/Cam Privacy, Auto-Updater & Spaces",
+      id: "Notch Shelf, Prayer Times, Privacy Mic/Cam, Winamp & Spaces",
+      en: "Notch Shelf, Prayer Times, Mic/Cam Privacy, Winamp & Spaces",
     },
   },
   {
@@ -694,6 +952,16 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
     a: {
       id: `Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron) dengan installer hanya ${WIZZLY_META.installerSize}. Di Windows, proses inti Wizzly hanya memakai sekitar ~35 MB RAM (atau total ~185 MB termasuk WebView2 saat Notch aktif, yang otomatis dibebaskan jika Notch dimatikan), dan langsung bersembunyi saat game borderless fullscreen.`,
       en: `No. Wizzly is built with Rust + Tauri 2 (not Electron) with a ${WIZZLY_META.installerSize} installer. On Windows, Wizzly's core process uses around ~35 MB RAM (~185 MB total including WebView2 while Notch is active, freed immediately when Notch is toggled off), and auto-hides during borderless fullscreen games.`,
+    },
+  },
+  {
+    q: {
+      id: "Kenapa Wizzly v0.1.2 berhenti berjalan / dianggap malware oleh Microsoft Defender?",
+      en: "Why did Wizzly v0.1.2 stop running or get flagged by Microsoft Defender?",
+    },
+    a: {
+      id: "Pada v0.1.2 sebelumnya, modul In-App Auto-Updater (tauri-plugin-updater) pada installer unsigned memicu false positive dari Microsoft Defender sehingga aplikasi dihentikan secara otomatis. Di v0.1.3, fitur auto-update telah dihapus sepenuhnya agar Wizzly bisa berjalan lancar dan aman. Silakan unduh dan perbarui ke Wizzly v0.1.3.",
+      en: "In v0.1.2, the built-in In-App Auto-Updater (tauri-plugin-updater) inside an unsigned installer triggered a Microsoft Defender false positive, causing Windows to block or stop the app. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly. Please download and update to Wizzly v0.1.3.",
     },
   },
   {

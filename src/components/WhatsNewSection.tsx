@@ -8,6 +8,7 @@ import {
   Clock,
   Disc3,
   LayoutGrid,
+  ShieldAlert,
   Sparkles,
   StickyNote,
   Wrench,
@@ -72,13 +73,21 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
                   setSelectedVersion(rel.version);
                   setActiveTab("added");
                 }}
-                className={`rounded-md px-2.5 py-1 font-mono text-xs transition ${
+                className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 font-mono text-xs transition ${
                   rel.version === activeRelease.version
                     ? "bg-white font-semibold text-zinc-950"
                     : "text-zinc-400 hover:text-white"
                 }`}
               >
                 v{rel.version}
+                {rel.withdrawn && (
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${
+                      rel.version === activeRelease.version ? "bg-rose-500" : "bg-rose-400/80"
+                    }`}
+                    title={lang === "id" ? "Ditarik — update ke v0.1.3" : "Withdrawn — update to v0.1.3"}
+                  />
+                )}
               </button>
             ))}
           </div>
@@ -128,7 +137,7 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
                         transition={{ duration: 0.18 }}
                       >
                         <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400">
-                          Nov 26
+                          Nov 27
                         </p>
                         <p className="text-2xl font-bold tracking-tight tabular-nums text-white">
                           09:41
@@ -164,7 +173,7 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
                         className="flex items-center gap-1.5 rounded-lg border border-white/12 bg-white/[0.08] px-2 py-1.5 backdrop-blur-md"
                       >
                         <CalendarIcon className="h-3.5 w-3.5 shrink-0 text-rose-400" />
-                        <span className="truncate text-[9px] font-medium text-white">Nov 26</span>
+                        <span className="truncate text-[9px] font-medium text-white">Nov 27</span>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -250,6 +259,20 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
           viewport={{ once: true, amount: 0.15 }}
           className="surface-card flex flex-col rounded-3xl p-6 lg:col-span-7"
         >
+          {activeRelease.notice && (
+            <div className="mb-4 flex items-start gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/[0.08] p-3.5">
+              <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-rose-300" />
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-rose-100">
+                  {activeRelease.notice.title[lang]}
+                </p>
+                <p className="mt-1 text-[11px] leading-relaxed text-zinc-300">
+                  {activeRelease.notice.detail[lang]}
+                </p>
+              </div>
+            </div>
+          )}
+
           <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-1 rounded-xl border border-white/[0.07] bg-black/50 p-1">
               {(

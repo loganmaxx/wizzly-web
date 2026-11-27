@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     template: "%s | Wizzly",
   },
   description:
-    "Download Wizzly v0.1.2 (4.7 MB) for Windows 10 & 11. Brings a Dynamic Island Notch with Prayer Times & Live Privacy Indicators, macOS-style Dock with Genie Effect & Spaces Switcher, 4 Native Direct2D Desktop Widgets, and Alt+Space Spotlight.",
+    "Download Wizzly v0.1.3 (3.9 MB) for Windows 10 & 11. Brings a Dynamic Island Notch with Prayer Times & Live Privacy Indicators, macOS-style Dock with Genie Effect & Spaces Switcher, 4 Native Direct2D Desktop Widgets, and Alt+Space Spotlight.",
   keywords: [
     "Wizzly",
-    "Wizzly v0.1.2",
+    "Wizzly v0.1.3",
     "Wizzly download",
     "Windows Dynamic Island",
     "Notch for Windows",
@@ -48,24 +48,24 @@ export const metadata: Metadata = {
     alternateLocale: ["id_ID"],
     url: WIZZLY_META.siteUrl,
     siteName: "Wizzly",
-    title: "Wizzly v0.1.2 — Notch, Liquid Dock & Desktop Widgets for Windows",
+    title: "Wizzly v0.1.3 — Notch, Liquid Dock & Desktop Widgets for Windows",
     description:
-      "Transform your Windows 10/11 desktop with Dynamic Island Notch, Prayer Times, Liquid Glass Dock + Genie Effect, 4 Native Direct2D Widgets & Alt+Space Spotlight (4.7 MB).",
+      "Transform your Windows 10/11 desktop with Dynamic Island Notch, Prayer Times, Liquid Glass Dock + Genie Effect, 4 Native Direct2D Widgets & Alt+Space Spotlight (3.9 MB).",
     images: [
       {
         url: "/images/og-cover.png",
         width: 1200,
         height: 630,
         type: "image/png",
-        alt: "Wizzly v0.1.2 — Notch, Liquid Dock, Desktop Widgets & Spotlight for Windows",
+        alt: "Wizzly v0.1.3 — Notch, Liquid Dock, Desktop Widgets & Spotlight for Windows",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wizzly v0.1.2 — Notch, Liquid Dock & Desktop Widgets for Windows",
+    title: "Wizzly v0.1.3 — Notch, Liquid Dock & Desktop Widgets for Windows",
     description:
-      "macOS-style Dock with Genie Effect, Dynamic Island Notch with Prayer Times, 4 Native Desktop Widgets & Spotlight Alt+Space for Windows 10/11 (4.7 MB).",
+      "macOS-style Dock with Genie Effect, Dynamic Island Notch with Prayer Times, 4 Native Desktop Widgets & Spotlight Alt+Space for Windows 10/11 (3.9 MB).",
     images: ["/images/og-cover.png"],
   },
   robots: {

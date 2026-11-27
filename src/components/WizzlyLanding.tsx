@@ -18,6 +18,7 @@ import {
   Globe,
   Lock,
   Plus,
+  ShieldAlert,
   ShieldCheck,
   Star,
   Wifi,
@@ -28,6 +29,7 @@ import {
   PRIVACY_ITEMS,
   ROADMAP_ITEMS,
   SYSTEM_REQUIREMENTS,
+  V012_SECURITY_ANNOUNCEMENT,
   WIZZLY_META,
   type CoffeeTier,
   type Lang,
@@ -215,7 +217,65 @@ export function WizzlyLanding() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 pb-28 pt-16 sm:px-6 sm:pt-24">
+      <main className="mx-auto max-w-6xl px-4 pb-28 pt-8 sm:px-6 sm:pt-12">
+        {/* Important v0.1.2 Microsoft Defender & Auto-Updater Removal Announcement */}
+        <motion.section
+          aria-label={V012_SECURITY_ANNOUNCEMENT.badge[lang]}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="relative mb-12 overflow-hidden rounded-2xl border border-rose-500/30 bg-gradient-to-r from-rose-500/[0.11] via-rose-950/[0.22] to-[#0e0e11] p-4 shadow-[0_18px_50px_-24px_rgba(244,63,94,0.45)] sm:mb-16 sm:p-5"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-rose-400/60 to-transparent"
+          />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex items-start gap-3.5">
+              <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-rose-400/30 bg-rose-500/15 text-rose-300">
+                <ShieldAlert className="h-4.5 w-4.5" />
+              </span>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/35 bg-rose-500/15 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-rose-200">
+                    <span className="h-1.5 w-1.5 rounded-full bg-rose-400" />
+                    {V012_SECURITY_ANNOUNCEMENT.badge[lang]}
+                  </span>
+                  <span className="font-mono text-[10px] text-zinc-400">
+                    v0.1.2 → v{WIZZLY_META.version}
+                  </span>
+                </div>
+                <h2 className="mt-2 text-sm font-semibold text-white sm:text-[15px]">
+                  {V012_SECURITY_ANNOUNCEMENT.title[lang]}
+                </h2>
+                <p className="mt-1 max-w-3xl text-xs leading-relaxed text-zinc-300 sm:text-[13px]">
+                  {V012_SECURITY_ANNOUNCEMENT.body[lang]}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex shrink-0 flex-wrap items-center gap-2 pl-12.5 lg:pl-0">
+              <a
+                href={WIZZLY_META.downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setPostDownloadOpen(true)}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200 active:scale-[0.99]"
+              >
+                <ArrowDownToLine className="h-3.5 w-3.5" />
+                {V012_SECURITY_ANNOUNCEMENT.ctaDownload[lang]}
+              </a>
+              <a
+                href="#whats-new"
+                className="inline-flex items-center gap-1 rounded-full border border-white/14 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
+              >
+                {V012_SECURITY_ANNOUNCEMENT.ctaChangelog[lang]}
+                <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
+              </a>
+            </div>
+          </div>
+        </motion.section>
+
         {/* Minimalist Editorial Hero */}
         <section className="mx-auto max-w-4xl text-center">
           <motion.div
