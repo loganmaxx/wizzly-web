@@ -13,11 +13,12 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
-import { RELEASE_NOTES_V011, type Lang } from "@/data/wizzlyData";
+import { RELEASE_NOTES_HISTORY, type Lang } from "@/data/wizzlyData";
 
 type NoteTab = "added" | "changed" | "fixed";
 
 export function WhatsNewSection({ lang }: { lang: Lang }) {
+  const [selectedVersion, setSelectedVersion] = useState(RELEASE_NOTES_HISTORY[0].version);
   const [activeTab, setActiveTab] = useState<NoteTab>("added");
   const [enabledWidgets, setEnabledWidgets] = useState({
     clock: true,
@@ -25,6 +26,10 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
     calendar: true,
     memo: true,
   });
+
+  const activeRelease =
+    RELEASE_NOTES_HISTORY.find((r) => r.version === selectedVersion) ??
+    RELEASE_NOTES_HISTORY[0];
 
   const activeCount = Object.values(enabledWidgets).filter(Boolean).length;
 
@@ -34,10 +39,10 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
 
   const items =
     activeTab === "added"
-      ? RELEASE_NOTES_V011.added
+      ? activeRelease.added
       : activeTab === "changed"
-        ? RELEASE_NOTES_V011.changed
-        : RELEASE_NOTES_V011.fixed;
+        ? activeRelease.changed
+        : activeRelease.fixed;
 
   return (
     <section id="whats-new" className="mt-28 scroll-mt-24 sm:mt-36">
@@ -45,21 +50,42 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
         <div className="max-w-2xl">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
             {lang === "id"
-              ? `Catatan Rilis • v${RELEASE_NOTES_V011.version}`
-              : `Changelog • v${RELEASE_NOTES_V011.version}`}
+              ? `Catatan Rilis • v${activeRelease.version}`
+              : `Changelog • v${activeRelease.version}`}
           </p>
           <h2 className="mt-2.5 text-3xl font-semibold tracking-[-0.03em] text-white sm:text-5xl">
-            {lang === "id" ? "Apa yang baru di v0.1.1." : "What's new in v0.1.1."}
+            {lang === "id"
+              ? `Apa yang baru di v${activeRelease.version}.`
+              : `What's new in v${activeRelease.version}.`}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-zinc-400 sm:text-base">
-            {lang === "id"
-              ? "Galeri Widget 2×2 dengan pratinjau wallpaper langsung, animasi Genie GPU Direct3D11 VSync, dan Floating Karaoke."
-              : "Visual 2×2 Widget Gallery with live wallpaper preview, VSync-locked Direct3D11 Genie animations, and Floating Karaoke."}
+            {activeRelease.summary[lang]}
           </p>
         </div>
-        <span className="shrink-0 rounded-lg border border-white/[0.08] bg-[#0e0e11] px-3 py-1.5 font-mono text-xs text-zinc-400">
-          v{RELEASE_NOTES_V011.version} • {RELEASE_NOTES_V011.date}
-        </span>
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1 rounded-lg border border-white/[0.08] bg-[#0e0e11] p-1">
+            {RELEASE_NOTES_HISTORY.map((rel) => (
+              <button
+                key={rel.version}
+                type="button"
+                onClick={() => {
+                  setSelectedVersion(rel.version);
+                  setActiveTab("added");
+                }}
+                className={`rounded-md px-2.5 py-1 font-mono text-xs transition ${
+                  rel.version === activeRelease.version
+                    ? "bg-white font-semibold text-zinc-950"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                v{rel.version}
+              </button>
+            ))}
+          </div>
+          <span className="rounded-lg border border-white/[0.08] bg-[#0e0e11] px-3 py-1.5 font-mono text-xs text-zinc-400">
+            {activeRelease.date}
+          </span>
+        </div>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-12">
@@ -102,7 +128,7 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
                         transition={{ duration: 0.18 }}
                       >
                         <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400">
-                          Nov 24
+                          Nov 26
                         </p>
                         <p className="text-2xl font-bold tracking-tight tabular-nums text-white">
                           09:41
@@ -138,7 +164,7 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
                         className="flex items-center gap-1.5 rounded-lg border border-white/12 bg-white/[0.08] px-2 py-1.5 backdrop-blur-md"
                       >
                         <CalendarIcon className="h-3.5 w-3.5 shrink-0 text-rose-400" />
-                        <span className="truncate text-[9px] font-medium text-white">Nov 24</span>
+                        <span className="truncate text-[9px] font-medium text-white">Nov 26</span>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -232,24 +258,24 @@ export function WhatsNewSection({ lang }: { lang: Lang }) {
                     id: "added",
                     label:
                       lang === "id"
-                        ? `Baru (${RELEASE_NOTES_V011.added.length})`
-                        : `Added (${RELEASE_NOTES_V011.added.length})`,
+                        ? `Baru (${activeRelease.added.length})`
+                        : `Added (${activeRelease.added.length})`,
                     icon: Sparkles,
                   },
                   {
                     id: "changed",
                     label:
                       lang === "id"
-                        ? `Ditingkatkan (${RELEASE_NOTES_V011.changed.length})`
-                        : `Improved (${RELEASE_NOTES_V011.changed.length})`,
+                        ? `Ditingkatkan (${activeRelease.changed.length})`
+                        : `Improved (${activeRelease.changed.length})`,
                     icon: Zap,
                   },
                   {
                     id: "fixed",
                     label:
                       lang === "id"
-                        ? `Diperbaiki (${RELEASE_NOTES_V011.fixed.length})`
-                        : `Fixed (${RELEASE_NOTES_V011.fixed.length})`,
+                        ? `Diperbaiki (${activeRelease.fixed.length})`
+                        : `Fixed (${activeRelease.fixed.length})`,
                     icon: Wrench,
                   },
                 ] as const

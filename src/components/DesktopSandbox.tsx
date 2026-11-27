@@ -80,7 +80,7 @@ const INITIAL_CLIP_ITEMS = [
 ];
 
 const INITIAL_SHELF_FILES = [
-  { id: "s1", name: "Wizzly_0.1.1_Setup.exe", size: "3.5 MB", kind: "app" },
+  { id: "s1", name: "Wizzly_0.1.2_Setup.exe", size: "4.7 MB", kind: "app" },
   { id: "s2", name: "Wallpaper_4K.png", size: "2.1 MB", kind: "img" },
   { id: "s3", name: "Notes.md", size: "14 KB", kind: "doc" },
 ];
@@ -208,7 +208,7 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
       setLiveToast({
         kind,
         title: "WhatsApp • Raka",
-        subtitle: lang === "id" ? "Widget v0.1.1-nya cakep!" : "v0.1.1 widgets look super clean!",
+        subtitle: lang === "id" ? "Update v0.1.2-nya mantap!" : "v0.1.2 update feels super smooth!",
       });
     } else {
       setLiveToast({
@@ -477,7 +477,7 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
                 <div className="mb-3 flex items-start justify-between">
                   <div className="pointer-events-auto select-none">
                     <p className="font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-zinc-400">
-                      Tuesday, Nov 24
+                      Thursday, Nov 26
                     </p>
                     <p className="bg-gradient-to-b from-white via-white/95 to-white/55 bg-clip-text text-5xl font-bold tracking-tight text-transparent tabular-nums sm:text-6xl">
                       09:41
@@ -619,7 +619,7 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
                           <span
                             key={idx}
                             className={`rounded-full py-0.5 ${
-                              day === 24
+                              day === 26
                                 ? "bg-white font-bold text-zinc-950"
                                 : idx > 12
                                   ? "opacity-30"
@@ -635,7 +635,7 @@ export function DesktopSandbox({ lang }: DesktopSandboxProps) {
                           Today
                         </p>
                         <div className="rounded-lg bg-current/[0.08] px-1.5 py-1 text-[10px]">
-                          <p className="font-semibold leading-tight">Wizzly v0.1.1</p>
+                          <p className="font-semibold leading-tight">Wizzly v0.1.2</p>
                           <p className="text-[9px] opacity-65">15:00 • Release</p>
                         </div>
                         <div className="rounded-lg bg-current/[0.06] px-1.5 py-1 text-[10px]">

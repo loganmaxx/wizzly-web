@@ -269,8 +269,8 @@ export function WizzlyLanding() {
             className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-zinc-400 sm:text-lg"
           >
             {lang === "id"
-              ? "Dynamic Island Notch, Liquid Dock dengan Genie Effect GPU VSync, 4 Native Direct2D Widgets, Floating Karaoke, dan Alt+Space Spotlight — dibangun dengan Rust."
-              : "Dynamic Island Notch, Liquid Dock with GPU VSync Genie Effect, 4 Native Direct2D Widgets, Floating Karaoke, and Alt+Space Spotlight — engineered in Rust."}
+              ? "Dynamic Island Notch (dengan Jadwal Sholat & Privacy Mic/Kamera), Liquid Dock + Spaces & Genie Effect GPU VSync, 4 Native Direct2D Widgets, dan Alt+Space Spotlight — dibangun dengan Rust."
+              : "Dynamic Island Notch (with Prayer Times & Mic/Camera Privacy), Liquid Dock with Spaces & GPU VSync Genie Effect, 4 Native Direct2D Widgets, and Alt+Space Spotlight — engineered in Rust."}
           </motion.p>
 
           {/* Primary Actions */}

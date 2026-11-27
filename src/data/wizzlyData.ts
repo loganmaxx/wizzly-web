@@ -2,17 +2,17 @@ export type Lang = "id" | "en";
 
 export const WIZZLY_META = {
   name: "Wizzly",
-  version: "0.1.1",
-  releaseDate: "2026-11-24",
-  installerFile: "Wizzly_0.1.1_x64-setup.exe",
-  installerSize: "3.5 MB",
+  version: "0.1.2",
+  releaseDate: "2026-11-26",
+  installerFile: "Wizzly_0.1.2_x64-setup.exe",
+  installerSize: "4.7 MB",
   binarySize: "7.4 MB",
-  sha256: "c2664a5009f6a90779725dc61e980a01d45a18c70452c85e972570eabc61334c",
+  sha256: "3785bfa71e67dfae50fec4ca1d33cbda58493b28c06229aa5fc76a3da37dea9b",
   osSupport: "Windows 10 (1903+) & Windows 11 (64-bit)",
   engine: "Rust + Tauri 2 + Direct2D / D3D11",
   downloadUrl:
-    "https://github.com/loganmaxx/wizzly/releases/download/V0.1.1/Wizzly_0.1.1_x64-setup.exe",
-  releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/V0.1.1",
+    "https://github.com/loganmaxx/wizzly/releases/download/v0.1.2/Wizzly_0.1.2_x64-setup.exe",
+  releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/v0.1.2",
   githubUrl: "https://github.com/loganmaxx/wizzly",
   siteUrl: "https://wizzly.web.id",
   donation: {
@@ -20,7 +20,7 @@ export const WIZZLY_META = {
     binancePayId: "977044132",
     qrisImage: "/images/qris.png",
     codeSigningGoal: {
-      raisedUsd: 0,
+      raisedUsd: 5,
       targetUsd: 200,
     },
   },
@@ -72,14 +72,184 @@ export interface ReleaseNoteItem {
 export interface ReleaseNotes {
   version: string;
   date: string;
+  summary: Record<Lang, string>;
   added: ReleaseNoteItem[];
   changed: ReleaseNoteItem[];
   fixed: ReleaseNoteItem[];
 }
 
+export const RELEASE_NOTES_V012: ReleaseNotes = {
+  version: "0.1.2",
+  date: "2026-11-26",
+  summary: {
+    id: "Jadwal Sholat & Adzan di Notch, In-App Auto-Updater, indikator privasi Mic/Kamera, Spaces Switcher, Winamp, dan sistem lokalisasi komunitas.",
+    en: "Prayer Times & Adhan reminders in Notch, In-App Auto-Updater, live Mic/Camera privacy indicators, Spaces Switcher, Winamp, and community locales.",
+  },
+  added: [
+    {
+      title: {
+        id: "Jadwal Sholat & Pengingat Adzan di Wizzly Notch",
+        en: "Prayer Times & Adhan Reminders in Wizzly Notch",
+      },
+      detail: {
+        id: "Tab Prayer Times di Notch & sub-tab Prayer di Settings (perhitungan lokal via adhan) untuk 5 waktu sholat, Sunrise, tanggal Hijriah, countdown & progress bar, metode Kemenag/MWL/ISNA/Umm Al-Qura, mazhab Shafi/Hanafi, mode pill ringkas, pengingat suara, pencarian kota, deteksi lokasi otomatis, serta koordinat manual.",
+        en: "Dedicated Prayer Times tab in Notch & Prayer sub-tab in Settings powered locally by adhan: 5 daily prayers, Sunrise, Hijri date, countdown & progress bar, Kemenag/MWL/ISNA/Umm Al-Qura methods, Shafi/Hanafi madhab, compact pill mode, sound reminders, city search, auto-location, and manual coordinates.",
+      },
+    },
+    {
+      title: {
+        id: "In-App Auto-Updater & Notifikasi Update di Notch",
+        en: "In-App Auto-Updater & Notch Update Notifications",
+      },
+      detail: {
+        id: "Pembaruan otomatis bertanda tangan dari GitHub Releases (latest.json) dalam mode NSIS passive dengan pemulihan Taskbar & widget bersih sebelum restart, kartu Software Update di Settings → About, dan notifikasi pill interaktif di Notch.",
+        en: "Signed updates via GitHub Releases (latest.json) in NSIS passive mode with clean Taskbar & widget restoration before restart, a Software Update card in Settings → About, and interactive Notch update pills.",
+      },
+    },
+    {
+      title: {
+        id: "Mode Auto-Hide Seragam (Smart / Always / Never) untuk Dock & Notch",
+        en: "Uniform Auto-Hide (Smart / Always / Never) for Dock & Notch",
+      },
+      detail: {
+        id: "Mode Smart Dock tetap tampil rapi di desktop di atas Depth Clock, mengalah di bawah jendela maximized, dan muncul saat kursor menyentuh tepi bawah layar, dilengkapi opsi seragam Smart / Always / Never untuk Notch.",
+        en: "Improved Smart Dock auto-hide (stays on desktop above Depth Clock, yields cleanly beneath maximized windows, raises on bottom-edge hover), isolated hidden owners, and unified notchAutoHideMode (Smart, Always, Never).",
+      },
+    },
+    {
+      title: {
+        id: "Pemilih & Ganti Lirik Manual di Notch & Karaoke Mode",
+        en: "Manual Lyrics Picker in Notch & Karaoke Mode",
+      },
+      detail: {
+        id: "Tombol Ganti Lirik / Change Lyrics dengan pencarian kandidat LRCLIB (badge SYNC/TEXT/INST, durasi) serta penyimpanan pilihan lirik per lagu.",
+        en: "Added a Change Lyrics search picker backed by LRCLIB (SYNC/TEXT/INST badges, duration) with per-track saved overrides.",
+      },
+    },
+    {
+      title: {
+        id: "Indikator Aplikasi Berkedip (HSHELL_FLASH) & Deteksi UAC",
+        en: "Window Attention Flash (HSHELL_FLASH) & Background UAC Detection",
+      },
+      detail: {
+        id: "Pantulan & indikator amber pada ikon Dock, auto-peek sementara, alert Notch click-to-focus, serta deteksi prompt UAC (consent.exe) di background saat Taskbar Windows disembunyikan.",
+        en: "Dock icon bounce + amber flashing indicator, temporary Dock auto-peek, Notch click-to-focus alert, and background consent.exe UAC prompt detection when the Windows Taskbar is hidden.",
+      },
+    },
+    {
+      title: {
+        id: "Dukungan Media & Cover Art Winamp (Winamp v1.x)",
+        en: "Winamp Media & Cover Art Support",
+      },
+      detail: {
+        id: "Integrasi Winamp klasik via Win32 IPC lengkap dengan judul/artis, kontrol Play/Pause/Next/Prev/Seek, dan ekstraksi cover art (ID3v2, FLAC, Shell Thumbnail, folder art).",
+        en: "Classic Winamp integration via Win32 IPC with title/artist, playback/seek controls, and cover art extraction (ID3v2, FLAC, Shell Thumbnail, folder art).",
+      },
+    },
+    {
+      title: {
+        id: "Toggle Jam di Notch & OSD Volume/Kecerahan Eksklusif",
+        en: "Show/Hide Notch Clock & Exclusive Volume/Brightness OSD",
+      },
+      detail: {
+        id: "Kontrol tampilkan/sembunyikan jam pada pill Notch (notchShowClock) serta penyembunyian OSD bawaan Windows 11 yang lebih akurat (SetWinEventHook + DWM cloak).",
+        en: "Added clock toggle in Notch Settings (notchShowClock) and improved Windows 11 native OSD suppression (SetWinEventHook + DWM cloak) with exclusive Notch OSD.",
+      },
+    },
+    {
+      title: {
+        id: "Spaces / Virtual Desktops Switcher di Dock",
+        en: "Spaces / Virtual Desktops Switcher in Dock",
+      },
+      detail: {
+        id: "Pindah, scroll-cycle, buat, tutup Virtual Desktop, atau buka Task View langsung dari pojok kanan Dock.",
+        en: "Switch, scroll-cycle, create, close, and open Task View directly from the Dock via showSpacesButton.",
+      },
+    },
+    {
+      title: {
+        id: "Sistem Lokalisasi Komunitas (locales/*.json)",
+        en: "Community Localization System (locales/*.json)",
+      },
+      detail: {
+        id: "Skema terjemahan JSON terpusat (en.json, id.json), panduan kontributor (locales/README.md), Import JSON... langsung dari folder eksternal, kredit penerjemah, dan deteksi bahasa Windows otomatis.",
+        en: "Unified JSON translation schema (en.json, id.json), contributor guide (locales/README.md), live external folder loading, Import JSON..., translator credits, and automatic Windows locale detection.",
+      },
+    },
+  ],
+  changed: [
+    {
+      title: {
+        id: "Optimasi Performa CPU & GPU WebView2 saat Idle",
+        en: "CPU/GPU & Idle Performance Optimizations",
+      },
+      detail: {
+        id: "Mengganti backdrop-filter: blur live & SVG turbulence dengan static 64×64 noise + wallpaper pre-blurred, memindahkan magnifikasi Dock ke rAF DOM transforms, dan melonggarkan polling backend saat idle.",
+        en: "Replaced heavy live backdrop-filter: blur and SVG turbulence with static 64×64 noise + pre-blurred wallpaper, moved Dock magnification to rAF DOM transforms, and throttled idle backend pollers.",
+      },
+    },
+    {
+      title: {
+        id: "Live Privacy Indicators (Mikrofon & Kamera)",
+        en: "Live Privacy Indicators (Mic & Camera)",
+      },
+      detail: {
+        id: "Pemantauan capture WASAPI & layanan kamera real-time dengan indikator berkedip di Notch dan notifikasi aplikasi yang mengaksesnya.",
+        en: "Real-time WASAPI capture & camera service monitoring with pulsing Notch indicators and app alerts.",
+      },
+    },
+    {
+      title: {
+        id: "Animasi Event Hardware, Ring Bluetooth & Equalizer WASAPI",
+        en: "Hardware Event Animations, Bluetooth Ring & WASAPI Equalizer",
+      },
+      detail: {
+        id: "Animasi pengisian baterai emerald & alert baterai, persentase perangkat Bluetooth dengan circular SVG ring, equalizer audio WASAPI real-time, serta animasi Volume/Brightness/Wi-Fi dinamis.",
+        en: "Emerald charging surge & battery alerts, Bluetooth device battery levels with circular SVG ring, real-time WASAPI audio equalizer, and dynamic Volume/Brightness/Wi-Fi animations.",
+      },
+    },
+  ],
+  fixed: [
+    {
+      title: {
+        id: "Fokus Mode Smart Dock & Ikon Aplikasi UWP Minimize",
+        en: "Smart Dock Auto-Hide Focus Switching & Minimized UWP Icons",
+      },
+      detail: {
+        id: "Perpindahan fokus antar aplikasi maximized di mode Smart kini berjalan mulus dan ikon aplikasi UWP yang di-minimize tampil benar di Dock.",
+        en: "Improved Smart Dock auto-hide focus switching between maximized windows and fixed minimized UWP app icons in the Dock.",
+      },
+    },
+    {
+      title: {
+        id: "Pencocokan Lirik, Fallback Cover Art SMTC & Dialog Extract ZIP",
+        en: "Lyrics Matching, SMTC Cover Art Fallback & Extract ZIP Dialog",
+      },
+      detail: {
+        id: "Meningkatkan akurasi lirik lagu Remastered/Mix, retry & fallback iTunes untuk cover art SMTC, serta memastikan wizard Extract ZIP Windows Explorer tetap terlihat di bawah OSD suppressor.",
+        en: "Improved remastered/mix lyrics matching accuracy, added SMTC album art retry/iTunes fallback, and preserved Windows Explorer Extract ZIP wizard visibility under the OSD suppressor.",
+      },
+    },
+    {
+      title: {
+        id: "Tampilan Kaca Launchpad, Depth Clock & DND Quiet Moments",
+        en: "Launchpad Glass Surface, Depth Clock & DND Quiet Moments",
+      },
+      detail: {
+        id: "Memperbaiki rendering kaca Launchpad, mencegah Focus Assist/DND aktif otomatis saat Depth Clock berjalan, serta memastikan DND Quiet Moments dapat dimatikan dengan bersih.",
+        en: "Fixed Launchpad glass surface rendering, prevented unwanted Focus Assist DND triggers from Depth Clock, and fixed DND Quiet Moments turn-off.",
+      },
+    },
+  ],
+};
+
 export const RELEASE_NOTES_V011: ReleaseNotes = {
   version: "0.1.1",
   date: "2026-11-24",
+  summary: {
+    id: "Galeri Widget 2×2 dengan pratinjau wallpaper langsung, 4 Native Desktop Widgets, animasi Genie GPU Direct3D11 VSync, dan Floating Karaoke.",
+    en: "Visual 2×2 Widget Gallery with live wallpaper preview, 4 Native Desktop Widgets, VSync-locked Direct3D11 Genie animations, and Floating Karaoke.",
+  },
   added: [
     {
       title: {
@@ -217,6 +387,11 @@ export const RELEASE_NOTES_V011: ReleaseNotes = {
     },
   ],
 };
+
+export const RELEASE_NOTES_HISTORY: ReleaseNotes[] = [
+  RELEASE_NOTES_V012,
+  RELEASE_NOTES_V011,
+];
 
 export interface FeatureItem {
   id: string;
@@ -375,8 +550,8 @@ export const SYSTEM_REQUIREMENTS = [
     label: { id: "Penyimpanan", en: "Storage" },
     value: "~25 MB Ruang Kosong",
     detail: {
-      id: "Installer NSIS hanya 3.5 MB (rilis v0.1.1)",
-      en: "NSIS installer is only 3.5 MB (v0.1.1 release)",
+      id: `Installer NSIS hanya ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}) dengan In-App Auto-Updater`,
+      en: `NSIS installer is only ${WIZZLY_META.installerSize} (v${WIZZLY_META.version} release) with signed In-App Auto-Updater`,
     },
   },
   {
@@ -414,8 +589,8 @@ export const ROADMAP_ITEMS = [
   {
     done: true,
     title: {
-      id: "Notch Shelf, Clipboard History, Per-App Mixer & Game Auto-Hide",
-      en: "Notch Shelf, Clipboard History, Per-App Mixer & Game Auto-Hide",
+      id: "Notch Shelf, Prayer Times, Privacy Mic/Cam, Auto-Updater & Spaces",
+      en: "Notch Shelf, Prayer Times, Mic/Cam Privacy, Auto-Updater & Spaces",
     },
   },
   {
@@ -487,8 +662,8 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Is Wizzly completely free?",
     },
     a: {
-      id: "Ya, Wizzly v0.1.1 gratis untuk diunduh dan digunakan dengan seluruh fitur Notch, Dock, Desktop Widgets (Clock, Vinyl, Calendar, Memo), Genie Effect, dan Spotlight. Jika dukungan donasi komunitas mencukupi biaya pengembangan dan sertifikat code-signing, Wizzly direncanakan tetap gratis tanpa paywall Pro.",
-      en: "Yes! Wizzly v0.1.1 is free to download and use with full Notch, Dock, Desktop Widgets (Clock, Vinyl, Calendar, Memo), Genie Effect, and Spotlight features. If community donations cover development and code-signing costs, Wizzly aims to stay free without a Pro paywall.",
+      id: `Ya, Wizzly v${WIZZLY_META.version} gratis untuk diunduh dan digunakan dengan seluruh fitur Notch (termasuk Prayer Times & Live Privacy Indicators), Dock + Spaces Switcher, Desktop Widgets (Clock, Vinyl, Calendar, Memo), Genie Effect, dan Spotlight. Jika dukungan donasi komunitas mencukupi biaya pengembangan dan sertifikat code-signing, Wizzly direncanakan tetap gratis tanpa paywall Pro.`,
+      en: `Yes! Wizzly v${WIZZLY_META.version} is free to download and use with full Notch (including Prayer Times & Live Privacy Indicators), Dock + Spaces Switcher, Desktop Widgets (Clock, Vinyl, Calendar, Memo), Genie Effect, and Spotlight features. If community donations cover development and code-signing costs, Wizzly aims to stay free without a Pro paywall.`,
     },
   },
   {
@@ -517,8 +692,8 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Does Wizzly use a lot of RAM or lag games?",
     },
     a: {
-      id: "Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron) dengan installer hanya 3.5 MB. Di Windows, proses inti Wizzly hanya memakai sekitar ~35 MB RAM (atau total ~185 MB termasuk WebView2 saat Notch aktif, yang otomatis dibebaskan jika Notch dimatikan), dan langsung bersembunyi saat game borderless fullscreen.",
-      en: "No. Wizzly is built with Rust + Tauri 2 (not Electron) with a 3.5 MB installer. On Windows, Wizzly's core process uses around ~35 MB RAM (~185 MB total including WebView2 while Notch is active, freed immediately when Notch is toggled off), and auto-hides during borderless fullscreen games.",
+      id: `Tidak. Wizzly dibangun memakai Rust + Tauri 2 (bukan Electron) dengan installer hanya ${WIZZLY_META.installerSize}. Di Windows, proses inti Wizzly hanya memakai sekitar ~35 MB RAM (atau total ~185 MB termasuk WebView2 saat Notch aktif, yang otomatis dibebaskan jika Notch dimatikan), dan langsung bersembunyi saat game borderless fullscreen.`,
+      en: `No. Wizzly is built with Rust + Tauri 2 (not Electron) with a ${WIZZLY_META.installerSize} installer. On Windows, Wizzly's core process uses around ~35 MB RAM (~185 MB total including WebView2 while Notch is active, freed immediately when Notch is toggled off), and auto-hides during borderless fullscreen games.`,
     },
   },
   {
