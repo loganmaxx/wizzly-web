@@ -18,8 +18,15 @@ import {
   Star,
   X,
 } from "lucide-react";
-import { COFFEE_TIERS, WIZZLY_META, type CoffeeTier, type Lang } from "@/data/wizzlyData";
+import {
+  COFFEE_TIERS,
+  WIZZLY_META,
+  type CoffeeTier,
+  type Lang,
+  type SupporterWallItem,
+} from "@/data/wizzlyData";
 import { DirectContactStrip, DonorConnectPanel } from "@/components/DonorConnectPanel";
+import { formatUsdAmount, type WizzlyMilestoneData } from "@/lib/supabase";
 
 function useCopyBinance() {
   const [copied, setCopied] = useState(false);
@@ -93,6 +100,8 @@ interface SupportProps {
   selectedTier: CoffeeTier;
   onSelectTier: (tier: CoffeeTier) => void;
   onOpenQris: () => void;
+  milestone?: WizzlyMilestoneData;
+  supporters?: SupporterWallItem[];
 }
 
 export function DonateShowcase({
@@ -100,10 +109,13 @@ export function DonateShowcase({
   selectedTier,
   onSelectTier,
   onOpenQris,
+  milestone,
+  supporters,
 }: SupportProps) {
   const { copied: copiedBinance, copy: handleCopyBinance } = useCopyBinance();
 
-  const { raisedUsd, targetUsd } = WIZZLY_META.donation.codeSigningGoal;
+  const raisedUsd = milestone?.raisedUsd ?? WIZZLY_META.donation.codeSigningGoal.raisedUsd;
+  const targetUsd = milestone?.targetUsd ?? WIZZLY_META.donation.codeSigningGoal.targetUsd;
   const progressPct = Math.min(100, Math.max(4, Math.round((raisedUsd / targetUsd) * 100)));
 
   return (
@@ -167,7 +179,8 @@ export function DonateShowcase({
                   </span>
                 </div>
                 <span className="font-mono text-xs font-semibold tabular-nums text-amber-300">
-                  ${raisedUsd} <span className="text-zinc-500">/ ${targetUsd} USD</span>
+                  ${formatUsdAmount(raisedUsd)}{" "}
+                  <span className="text-zinc-500">/ ${formatUsdAmount(targetUsd)} USD</span>
                 </span>
               </div>
 
@@ -177,6 +190,12 @@ export function DonateShowcase({
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
+
+              {milestone?.note?.[lang] && (
+                <p className="mt-2.5 text-[11px] leading-relaxed text-amber-200/90">
+                  {milestone.note[lang]}
+                </p>
+              )}
 
               <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[11px] text-zinc-400">
                 <span className="inline-flex items-center gap-1.5">
@@ -342,7 +361,7 @@ export function DonateShowcase({
           </div>
         </div>
 
-        <DonorConnectPanel lang={lang} selectedTier={selectedTier} />
+        <DonorConnectPanel lang={lang} selectedTier={selectedTier} supporters={supporters} />
       </motion.div>
     </section>
   );

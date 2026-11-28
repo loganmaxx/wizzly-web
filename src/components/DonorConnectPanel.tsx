@@ -249,9 +249,14 @@ export function DirectContactStrip({
 interface DonorConnectPanelProps {
   lang: Lang;
   selectedTier: CoffeeTier;
+  supporters?: SupporterWallItem[];
 }
 
-export function DonorConnectPanel({ lang, selectedTier }: DonorConnectPanelProps) {
+export function DonorConnectPanel({
+  lang,
+  selectedTier,
+  supporters,
+}: DonorConnectPanelProps) {
   const [name, setName] = useState("");
   const [channel, setChannel] = useState<DonationChannel>("qris");
   const [customAmount, setCustomAmount] = useState("");
@@ -478,7 +483,7 @@ export function DonorConnectPanel({ lang, selectedTier }: DonorConnectPanelProps
 
   const combinedWallItems: Array<SupporterWallItem & { pendingLocal?: boolean }> = [
     ...localSubmissions,
-    ...SUPPORTER_WALL_ITEMS,
+    ...(supporters ?? SUPPORTER_WALL_ITEMS),
   ];
 
   return (

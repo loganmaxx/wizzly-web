@@ -27,7 +27,6 @@ import {
   COFFEE_TIERS,
   FAQ_ITEMS,
   PRIVACY_ITEMS,
-  ROADMAP_ITEMS,
   SYSTEM_REQUIREMENTS,
   V012_SECURITY_ANNOUNCEMENT,
   WIZZLY_META,
@@ -38,6 +37,8 @@ import { DesktopSandbox } from "@/components/DesktopSandbox";
 import { DonateShowcase, PostDownloadModal, QrisModal } from "@/components/SupportSection";
 import { VisualShowcase } from "@/components/VisualShowcase";
 import { WhatsNewSection } from "@/components/WhatsNewSection";
+import { formatUsdAmount } from "@/lib/supabase";
+import { useWizzlyLiveData } from "@/lib/wizzlyLive";
 
 interface DownloadStats {
   total: number;
@@ -151,7 +152,8 @@ export function WizzlyLanding() {
     setTimeout(() => setCopiedSha(false), 1800);
   };
 
-  const { raisedUsd, targetUsd } = WIZZLY_META.donation.codeSigningGoal;
+  const { milestone, supporters, roadmapItems } = useWizzlyLiveData();
+  const { raisedUsd, targetUsd } = milestone;
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-[#070708] text-[#fafafa]">
@@ -409,8 +411,8 @@ export function WizzlyLanding() {
               <span className="hidden text-amber-400/40 sm:inline">•</span>
               <span className="text-zinc-300">
                 {lang === "id"
-                  ? `Bantu target Code Signing ($${raisedUsd}/$${targetUsd})`
-                  : `Help fund Code Signing ($${raisedUsd}/$${targetUsd})`}
+                  ? `Bantu target Code Signing ($${formatUsdAmount(raisedUsd)}/$${formatUsdAmount(targetUsd)})`
+                  : `Help fund Code Signing ($${formatUsdAmount(raisedUsd)}/$${formatUsdAmount(targetUsd)})`}
               </span>
               <span className="inline-flex items-center gap-0.5 font-semibold text-amber-300">
                 {lang === "id" ? "Traktir Kopi" : "Support"}
@@ -474,6 +476,8 @@ export function WizzlyLanding() {
           selectedTier={selectedTier}
           onSelectTier={setSelectedTier}
           onOpenQris={() => setQrisModalOpen(true)}
+          milestone={milestone}
+          supporters={supporters}
         />
 
         {/* Changelog & 2x2 Widget Gallery */}
@@ -511,9 +515,9 @@ export function WizzlyLanding() {
 
           {/* Minimalist Roadmap Strip */}
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            {ROADMAP_ITEMS.map((item) => (
+            {roadmapItems.map((item, idx) => (
               <span
-                key={item.title.en}
+                key={item.id ?? `${item.title.en}-${idx}`}
                 className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs ${
                   item.done
                     ? "border-white/[0.08] bg-[#0e0e11] text-zinc-300"
