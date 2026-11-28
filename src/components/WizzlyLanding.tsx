@@ -272,27 +272,18 @@ export function WizzlyLanding() {
 
             <div className="flex shrink-0 flex-wrap items-center gap-2 pl-12.5 lg:pl-0">
               <a
-                href={WIZZLY_META.msStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200 active:scale-[0.99]"
-              >
-                <MicrosoftStoreIcon className="h-3.5 w-3.5" />
-                {V012_SECURITY_ANNOUNCEMENT.ctaMsStore[lang]}
-              </a>
-              <a
                 href={WIZZLY_META.downloadUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setPostDownloadOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-white/[0.06] px-3.5 py-2 text-xs font-medium text-white transition hover:border-white/30 hover:bg-white/[0.12] active:scale-[0.99]"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200 active:scale-[0.99]"
               >
                 <ArrowDownToLine className="h-3.5 w-3.5" />
                 {V012_SECURITY_ANNOUNCEMENT.ctaDownload[lang]}
               </a>
               <a
                 href="#whats-new"
-                className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 text-xs font-medium text-zinc-300 transition hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
+                className="inline-flex items-center gap-1 rounded-full border border-white/14 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
               >
                 {V012_SECURITY_ANNOUNCEMENT.ctaChangelog[lang]}
                 <ChevronRight className="h-3.5 w-3.5 text-zinc-400" />
@@ -313,16 +304,6 @@ export function WizzlyLanding() {
             <span className="font-mono text-[11px] text-zinc-200">
               v{WIZZLY_META.version}
             </span>
-            <span className="text-zinc-600">•</span>
-            <a
-              href={WIZZLY_META.msStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-medium text-sky-300 transition hover:text-sky-200"
-            >
-              <MicrosoftStoreIcon className="h-3 w-3" />
-              <span>Microsoft Store</span>
-            </a>
             <span className="text-zinc-600">•</span>
             <span>Windows 10 & 11</span>
             <span className="text-zinc-600">•</span>
@@ -376,31 +357,24 @@ export function WizzlyLanding() {
             className="mt-8 flex flex-wrap items-center justify-center gap-3"
           >
             <a
-              href={WIZZLY_META.msStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-[0_12px_32px_-10px_rgba(255,255,255,0.35)] transition hover:bg-zinc-200 active:scale-[0.99]"
-            >
-              <MicrosoftStoreIcon className="h-4 w-4" />
-              {lang === "id" ? "Unduh di Microsoft Store" : "Get on Microsoft Store"}
-            </a>
-
-            <a
               href={WIZZLY_META.downloadUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setPostDownloadOpen(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-white/[0.16] bg-white/[0.06] px-5 py-3 text-sm font-medium text-white transition hover:border-white/30 hover:bg-white/[0.11] active:scale-[0.99]"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-zinc-950 shadow-[0_12px_32px_-10px_rgba(255,255,255,0.35)] transition hover:bg-zinc-200 active:scale-[0.99]"
             >
-              <ArrowDownToLine className="h-4 w-4 text-zinc-300" />
+              <ArrowDownToLine className="h-4 w-4" />
               {lang === "id"
-                ? `Download .exe (${WIZZLY_META.installerSize})`
-                : `Download .exe (${WIZZLY_META.installerSize})`}
+                ? `Download v${WIZZLY_META.version} Gratis`
+                : `Download v${WIZZLY_META.version} Free`}
+              <span className="rounded-full bg-zinc-950/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-zinc-800">
+                {lang === "id" ? "Disarankan" : "Recommended"}
+              </span>
             </a>
 
             <a
               href="#preview"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.02] px-4 py-3 text-sm font-medium text-zinc-300 transition hover:border-white/25 hover:bg-white/[0.06] hover:text-white"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.03] px-5 py-3 text-sm font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
             >
               {lang === "id" ? "Coba Live Sandbox" : "Try Live Sandbox"}
               <ChevronRight className="h-4 w-4 text-zinc-400" />
@@ -610,14 +584,13 @@ export function WizzlyLanding() {
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-7">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 font-mono text-[11px] text-sky-200">
-                    <MicrosoftStoreIcon className="h-3 w-3" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 font-mono text-[11px] text-emerald-200">
+                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
                     {lang === "id"
-                      ? `Resmi di Microsoft Store • v${WIZZLY_META.version}`
-                      : `Official on Microsoft Store • v${WIZZLY_META.version}`}
+                      ? `Disarankan • Installer Web (.exe)`
+                      : `Recommended • Direct Web Installer (.exe)`}
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-zinc-300">
-                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
                     {lang === "id" ? "Gratis • Semua Fitur Terbuka" : "Free • All Features Unlocked"}
                   </span>
                   {downloadStats !== null && (
@@ -636,39 +609,52 @@ export function WizzlyLanding() {
                 </h2>
                 <p className="mt-2 max-w-lg text-sm leading-relaxed text-zinc-400">
                   {lang === "id"
-                    ? `Disarankan lewat Microsoft Store (bebas SmartScreen & update otomatis) atau unduh installer langsung ${WIZZLY_META.installerSize} untuk Windows 10 & 11 (64-bit) lengkap dengan verifikasi SHA-256.`
-                    : `Recommended via the Microsoft Store (zero SmartScreen warnings & automatic updates), or download the direct ${WIZZLY_META.installerSize} Windows 10 & 11 (64-bit) installer with SHA-256 verification.`}
+                    ? `Sangat disarankan mengunduh langsung lewat web (${WIZZLY_META.installerSize}, Windows 10 & 11 64-bit) untuk stabilitas terbaik dan Dock langsung muncul saat PC dinyalakan. Verifikasi SHA-256 tersedia.`
+                    : `Downloading directly via the web (${WIZZLY_META.installerSize}, Windows 10 & 11 64-bit) is strongly recommended for the best stability and reliable Dock auto-start on boot. Verify the SHA-256 checksum anytime.`}
                 </p>
 
                 <div className="mt-7 flex flex-wrap items-center gap-3">
-                  <a
-                    href={WIZZLY_META.msStoreUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-200 active:scale-[0.99]"
-                  >
-                    <MicrosoftStoreIcon className="h-4 w-4" />
-                    {lang === "id" ? "Dapatkan di Microsoft Store" : "Get from Microsoft Store"}
-                  </a>
                   <a
                     href={WIZZLY_META.downloadUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setPostDownloadOpen(true)}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-5 py-3.5 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/[0.11] active:scale-[0.99]"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-zinc-950 transition hover:bg-zinc-200 active:scale-[0.99]"
                   >
-                    <ArrowDownToLine className="h-4 w-4 text-zinc-300" />
+                    <ArrowDownToLine className="h-4 w-4" />
                     {WIZZLY_META.installerFile}
                   </a>
                   <a
                     href={WIZZLY_META.releaseUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.02] px-4 py-3.5 text-xs font-medium text-zinc-300 transition hover:border-white/25 hover:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.03] px-5 py-3.5 text-xs font-medium text-zinc-200 transition hover:border-white/25 hover:text-white"
                   >
                     <span>GitHub Releases</span>
                     <ExternalLink className="h-3.5 w-3.5" />
                   </a>
+                  <a
+                    href={WIZZLY_META.msStoreUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] bg-white/[0.02] px-4 py-3.5 text-xs font-medium text-zinc-400 transition hover:border-white/20 hover:text-zinc-200"
+                  >
+                    <MicrosoftStoreIcon className="h-3.5 w-3.5" />
+                    <span>{lang === "id" ? "Microsoft Store (Alternatif)" : "Microsoft Store (Alt)"}</span>
+                  </a>
+                </div>
+
+                {/* Note about Microsoft Store stability & startup behavior */}
+                <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-amber-400/20 bg-amber-400/[0.05] px-4 py-3 text-xs leading-relaxed text-zinc-300">
+                  <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" />
+                  <p>
+                    <span className="font-semibold text-amber-200">
+                      {lang === "id" ? "Catatan Microsoft Store: " : "Microsoft Store Note: "}
+                    </span>
+                    {lang === "id"
+                      ? "Versi Microsoft Store saat ini kurang stabil dan Dock tidak langsung muncul saat PC pertama kali dihidupkan. Gunakan installer web (.exe) di atas untuk pengalaman yang lebih lancar."
+                      : "The Microsoft Store build is currently less stable and the Dock does not appear immediately on first PC startup. Use the direct web (.exe) installer above for the smoothest experience."}
+                  </p>
                 </div>
               </div>
 

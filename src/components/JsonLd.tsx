@@ -12,8 +12,8 @@ export function JsonLd() {
     description:
       "Wizzly brings a macOS-style Dock with GPU Genie Effect & Spaces Switcher, Dynamic Island Notch with Media, Floating Karaoke Lyrics, Prayer Times, Live Mic/Camera Privacy Indicators, File Shelf, Clipboard History & Pomodoro, 4 Native Direct2D Desktop Widgets (Clock, Vinyl, Calendar, Memo), plus Alt+Space Spotlight to Windows 10 and Windows 11.",
     url: WIZZLY_META.siteUrl,
-    downloadUrl: WIZZLY_META.msStoreUrl,
-    sameAs: [WIZZLY_META.msStoreUrl, WIZZLY_META.githubUrl],
+    downloadUrl: WIZZLY_META.downloadUrl,
+    sameAs: [WIZZLY_META.githubUrl, WIZZLY_META.msStoreUrl],
     image: `${WIZZLY_META.siteUrl}/images/wizzly-icon.png`,
     author: {
       "@type": "Person",

@@ -35,20 +35,20 @@ export const V012_SECURITY_ANNOUNCEMENT = {
     en: "Important Notice • v0.1.2 Users",
   },
   title: {
-    id: "Wajib Update ke v0.1.3 — Kini Tersedia di Microsoft Store & Auto-Update Dihapus",
-    en: "Please Update to v0.1.3 — Now on Microsoft Store & Auto-Updater Removed",
+    id: "Wajib Update ke v0.1.3 via Web — Auto-Update Dihapus (False Positive Defender)",
+    en: "Please Update to v0.1.3 via Web — Auto-Updater Removed (Defender False Positive)",
   },
   body: {
-    id: "Pada Wizzly v0.1.2 sebelumnya, fitur In-App Auto-Updater dianggap malware (false positive) oleh Microsoft Defender sehingga aplikasi berhenti berjalan. Di v0.1.3, auto-update telah dihapus sepenuhnya dan Wizzly kini resmi tersedia di Microsoft Store (bebas SmartScreen & update otomatis lewat Store). Segera perbarui ke v0.1.3 agar berjalan lebih lancar.",
-    en: "In Wizzly v0.1.2, the built-in In-App Auto-Updater was falsely flagged as malware by Microsoft Defender, causing the app to stop running. In v0.1.3, auto-update has been completely removed and Wizzly is now officially on the Microsoft Store (no SmartScreen warnings & automatic Store updates). Please update to v0.1.3 now.",
+    id: "Pada Wizzly v0.1.2, fitur auto-update dianggap malware (false positive) oleh Microsoft Defender sehingga aplikasi berhenti berjalan. Di v0.1.3, auto-update telah dihapus agar berjalan lancar. Sangat disarankan download langsung lewat web (.exe) — versi Microsoft Store saat ini kurang stabil dan Dock tidak langsung muncul saat PC pertama kali dinyalakan.",
+    en: "In Wizzly v0.1.2, the auto-updater was falsely flagged as malware by Microsoft Defender, causing the app to stop running. In v0.1.3, auto-update has been removed for smooth operation. Downloading directly via the web (.exe) is strongly recommended — the Microsoft Store build is currently less stable and the Dock may not appear immediately on first PC startup.",
+  },
+  ctaDownload: {
+    id: "Unduh via Web (Disarankan)",
+    en: "Download via Web (Recommended)",
   },
   ctaMsStore: {
     id: "Microsoft Store",
     en: "Microsoft Store",
-  },
-  ctaDownload: {
-    id: "Unduh .exe",
-    en: "Download .exe",
   },
   ctaChangelog: {
     id: "Changelog",
@@ -129,18 +129,18 @@ export const RELEASE_NOTES_V013: ReleaseNotes = {
     },
   },
   summary: {
-    id: "Kini resmi tersedia di Microsoft Store, menghapus In-App Auto-Updater untuk mengatasi false positive Microsoft Defender dari v0.1.2, sekaligus membawa Jadwal Sholat & Adzan, Privacy Mic/Kamera, Spaces Switcher, Winamp, dan lokalisasi komunitas.",
-    en: "Now officially available on the Microsoft Store, removes the In-App Auto-Updater to resolve Microsoft Defender false positives from v0.1.2, and ships Prayer Times & Adhan reminders, live Mic/Camera privacy indicators, Spaces Switcher, Winamp support, and community locales.",
+    id: "Menghapus In-App Auto-Updater untuk mengatasi false positive Microsoft Defender dari v0.1.2, sekaligus membawa Jadwal Sholat & Adzan, Privacy Mic/Kamera, Spaces Switcher, Winamp, dan lokalisasi komunitas. Disarankan mengunduh lewat installer web (.exe) untuk stabilitas terbaik.",
+    en: "Removes the In-App Auto-Updater to resolve Microsoft Defender false positives from v0.1.2, while shipping Prayer Times & Adhan reminders, live Mic/Camera privacy indicators, Spaces Switcher, Winamp support, and community locales. Direct web (.exe) download is recommended for best stability.",
   },
   added: [
     {
       title: {
-        id: "Tersedia Resmi di Microsoft Store (v0.1.3)",
-        en: "Officially Available on the Microsoft Store (v0.1.3)",
+        id: "Tersedia di Microsoft Store (Alternatif — Installer Web Tetap Disarankan)",
+        en: "Listed on Microsoft Store (Alternative — Web Installer Recommended)",
       },
       detail: {
-        id: "Wizzly v0.1.3 kini dapat diunduh langsung dari Microsoft Store dengan pemasangan 1-klik yang ditandatangani Microsoft, bebas peringatan SmartScreen, dan pembaruan otomatis resmi melalui Store.",
-        en: "Wizzly v0.1.3 is now published on the Microsoft Store for verified 1-click installation, zero Windows SmartScreen warnings, and seamless automatic updates via the Store.",
+        id: "Wizzly v0.1.3 kini tersedia di Microsoft Store sebagai opsi alternatif. Namun versi Store saat ini masih kurang stabil dan Dock tidak langsung muncul saat pertama kali PC dihidupkan — sangat disarankan menggunakan installer langsung via web (.exe).",
+        en: "Wizzly v0.1.3 is now listed on the Microsoft Store as an alternative. However, the Store build is currently less stable and the Dock does not appear immediately on first PC startup — downloading the direct web (.exe) installer is strongly recommended.",
       },
     },
     {
@@ -825,8 +825,8 @@ export const SYSTEM_REQUIREMENTS = [
     label: { id: "Penyimpanan", en: "Storage" },
     value: "~25 MB Ruang Kosong",
     detail: {
-      id: `Tersedia di Microsoft Store atau installer NSIS ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}, build bersih tanpa auto-updater)`,
-      en: `Available on the Microsoft Store or as a ${WIZZLY_META.installerSize} NSIS installer (v${WIZZLY_META.version} release, clean build without auto-updater)`,
+      id: `Disarankan installer web NSIS ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}, paling stabil & Dock auto-start); tersedia pula alternatif Microsoft Store`,
+      en: `Recommended direct NSIS web installer ${WIZZLY_META.installerSize} (v${WIZZLY_META.version} release, best stability & reliable Dock auto-start); Microsoft Store available as an alternative`,
     },
   },
   {
@@ -973,12 +973,22 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
   },
   {
     q: {
+      id: "Lebih baik download lewat Web (.exe) atau Microsoft Store?",
+      en: "Should I download via the Web (.exe) or Microsoft Store?",
+    },
+    a: {
+      id: "Sangat disarankan download langsung lewat Web (Wizzly_0.1.3_x64-setup.exe) karena jauh lebih stabil dan Dock langsung muncul otomatis saat PC pertama kali dihidupkan. Versi Microsoft Store saat ini masih kurang stabil (Dock sering tidak langsung muncul saat boot pertama) sehingga hanya disediakan sebagai alternatif.",
+      en: "Downloading directly via the Web (Wizzly_0.1.3_x64-setup.exe) is strongly recommended for the best stability and reliable Dock auto-start when your PC boots. The Microsoft Store version is currently less stable and the Dock does not appear immediately on first PC startup, so it is only offered as an alternative.",
+    },
+  },
+  {
+    q: {
       id: "Kenapa Wizzly v0.1.2 berhenti berjalan / dianggap malware oleh Microsoft Defender?",
       en: "Why did Wizzly v0.1.2 stop running or get flagged by Microsoft Defender?",
     },
     a: {
-      id: "Pada v0.1.2 sebelumnya, modul In-App Auto-Updater (tauri-plugin-updater) pada installer unsigned memicu false positive dari Microsoft Defender sehingga aplikasi dihentikan secara otomatis. Di v0.1.3, fitur auto-update telah dihapus sepenuhnya agar Wizzly berjalan lancar, dan kini tersedia resmi di Microsoft Store (dengan pembaruan otomatis lewat Store) serta installer .exe di GitHub.",
-      en: "In v0.1.2, the built-in In-App Auto-Updater (tauri-plugin-updater) inside an unsigned installer triggered a Microsoft Defender false positive, causing Windows to block or stop the app. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly, and it is now officially available on the Microsoft Store (with automatic Store updates) as well as via GitHub Releases.",
+      id: "Pada v0.1.2 sebelumnya, modul In-App Auto-Updater (tauri-plugin-updater) pada installer unsigned memicu false positive dari Microsoft Defender sehingga aplikasi dihentikan secara otomatis. Di v0.1.3, fitur auto-update telah dihapus sepenuhnya agar Wizzly bisa berjalan lancar dan aman. Silakan unduh dan perbarui lewat installer web v0.1.3.",
+      en: "In v0.1.2, the built-in In-App Auto-Updater (tauri-plugin-updater) inside an unsigned installer triggered a Microsoft Defender false positive, causing Windows to block or stop the app. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly. Please download and update using the v0.1.3 web installer.",
     },
   },
   {
@@ -987,8 +997,8 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Why do Windows SmartScreen or 1–2 VirusTotal heuristics flag the installer?",
     },
     a: {
-      id: "Peringatan tersebut hanya muncul pada installer NSIS .exe langsung dari GitHub karena belum memiliki sertifikat Code Signing berbayar (false positive umum pada binary Rust/Tauri indie). Untuk pemasangan bebas SmartScreen dan pembaruan otomatis resmi, kamu bisa mengunduh Wizzly v0.1.3 langsung dari Microsoft Store — atau verifikasi hash SHA-256 jika memilih installer .exe GitHub.",
-      en: "This only affects the direct GitHub NSIS .exe installer, which is currently unsigned (a common false positive on indie Rust/Tauri binaries). For a SmartScreen-free install with official automatic updates, download Wizzly v0.1.3 directly from the Microsoft Store — or verify the SHA-256 checksum if using the GitHub .exe installer.",
+      id: "Ini adalah false positive umum pada installer NSIS web dan binary Rust/Tauri indie yang belum memiliki sertifikat Code Signing berbayar, ditambah penggunaan Win32 API untuk shortcut global (Alt+Space / tombol Win opsional) dan animasi jendela. Installer web (.exe) tetap yang paling disarankan untuk stabilitas penuh — cukup klik More info → Run anyway dan verifikasi hash SHA-256 resmi.",
+      en: "This is a common false positive on unsigned NSIS web installers and indie Rust/Tauri binaries using legitimate Win32 APIs for global shortcuts (Alt+Space / optional Win key) and window animations. The direct web (.exe) installer is still strongly recommended for full stability — simply click More info → Run anyway and verify the official SHA-256 checksum.",
     },
   },
 ];
