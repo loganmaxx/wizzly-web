@@ -11,6 +11,7 @@ import {
   ExternalLink,
   Heart,
   Maximize2,
+  MessageSquareHeart,
   QrCode,
   ShieldCheck,
   Sparkles,
@@ -18,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { COFFEE_TIERS, WIZZLY_META, type CoffeeTier, type Lang } from "@/data/wizzlyData";
+import { DirectContactStrip, DonorConnectPanel } from "@/components/DonorConnectPanel";
 
 function useCopyBinance() {
   const [copied, setCopied] = useState(false);
@@ -322,9 +324,25 @@ export function DonateShowcase({
                 </span>
                 <ExternalLink className="h-3.5 w-3.5 text-zinc-500" />
               </a>
+
+              {/* Jump to Donor Communication Form & Chat Channels */}
+              <a
+                href="#donor-connect"
+                className="mt-2.5 flex w-full items-center justify-between rounded-xl border border-amber-400/30 bg-amber-400/[0.08] px-3.5 py-2.5 text-xs font-medium text-amber-200 transition hover:border-amber-400/55 hover:bg-amber-400/[0.14]"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <MessageSquareHeart className="h-3.5 w-3.5 text-amber-400" />
+                  {lang === "id"
+                    ? "Kirim bukti, ucapan & request fitur"
+                    : "Send proof, note or feature request"}
+                </span>
+                <ArrowUpRight className="h-3.5 w-3.5 text-amber-300" />
+              </a>
             </div>
           </div>
         </div>
+
+        <DonorConnectPanel lang={lang} selectedTier={selectedTier} />
       </motion.div>
     </section>
   );
@@ -419,13 +437,26 @@ export function PostDownloadModal({
                     className="mx-auto h-auto w-full max-w-[230px] rounded-xl object-contain"
                   />
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setShowQris(false)}
-                  className="mt-4 text-xs font-medium text-amber-300 hover:underline"
-                >
-                  {lang === "id" ? "← Kembali ke pilihan dukungan" : "← Back to support options"}
-                </button>
+                <div className="mt-3 text-left">
+                  <DirectContactStrip lang={lang} compact />
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowQris(false)}
+                    className="text-xs font-medium text-zinc-400 hover:text-white"
+                  >
+                    {lang === "id" ? "← Kembali" : "← Back"}
+                  </button>
+                  <a
+                    href="#donor-connect"
+                    onClick={handleClose}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-amber-400/35 bg-amber-400/12 px-3 py-1.5 text-xs font-semibold text-amber-200 transition hover:bg-amber-400/20"
+                  >
+                    <MessageSquareHeart className="h-3.5 w-3.5 text-amber-400" />
+                    {lang === "id" ? "Kirim bukti & request →" : "Send proof & note →"}
+                  </a>
+                </div>
               </div>
             ) : (
               <div className="mt-5">
@@ -497,6 +528,19 @@ export function PostDownloadModal({
                     )}
                   </span>
                 </button>
+
+                <div className="mt-3">
+                  <a
+                    href="#donor-connect"
+                    onClick={handleClose}
+                    className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-amber-400/30 bg-amber-400/[0.08] px-3.5 py-2 text-xs font-medium text-amber-200 transition hover:border-amber-400/55 hover:bg-amber-400/[0.14]"
+                  >
+                    <MessageSquareHeart className="h-3.5 w-3.5 text-amber-400" />
+                    {lang === "id"
+                      ? "Kirim bukti transfer, ucapan / request fitur"
+                      : "Send proof, note or feature request"}
+                  </a>
+                </div>
 
                 <div className="mt-4 flex items-center justify-between pt-1">
                   <a
@@ -579,13 +623,26 @@ export function QrisModal({ open, onClose, lang, selectedTier }: QrisModalProps)
             <p className="mt-3 text-[11px] text-zinc-400">
               GoPay • OVO • DANA • ShopeePay • Mobile Banking
             </p>
-            <button
-              type="button"
-              onClick={onClose}
-              className="mt-4 w-full rounded-xl bg-white py-2.5 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200"
-            >
-              {lang === "id" ? "Selesai" : "Done"}
-            </button>
+            <div className="mt-3 text-left">
+              <DirectContactStrip lang={lang} compact />
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <a
+                href="#donor-connect"
+                onClick={onClose}
+                className="donate-cta-btn inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold transition"
+              >
+                <MessageSquareHeart className="h-3.5 w-3.5" />
+                {lang === "id" ? "Kirim Bukti" : "Send Proof"}
+              </a>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-xl bg-white py-2.5 text-xs font-semibold text-zinc-950 transition hover:bg-zinc-200"
+              >
+                {lang === "id" ? "Selesai" : "Done"}
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       )}

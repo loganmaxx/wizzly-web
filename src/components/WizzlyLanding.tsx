@@ -849,6 +849,20 @@ export function WizzlyLanding() {
                 {lang === "id" ? "Traktir Kopi" : "Donate"}
               </a>
               <a
+                href={WIZZLY_META.donation.contact.telegramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-white"
+              >
+                Telegram ({WIZZLY_META.donation.contact.telegramHandle})
+              </a>
+              <a
+                href={`mailto:${WIZZLY_META.donation.contact.email}`}
+                className="transition hover:text-white"
+              >
+                {WIZZLY_META.donation.contact.email}
+              </a>
+              <a
                 href={WIZZLY_META.msStoreUrl}
                 target="_blank"
                 rel="noopener noreferrer"

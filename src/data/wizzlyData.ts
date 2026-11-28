@@ -23,8 +23,16 @@ export const WIZZLY_META = {
     binancePayId: "977044132",
     qrisImage: "/images/qris.png",
     codeSigningGoal: {
-      raisedUsd: 5,
+      raisedUsd: 11,
       targetUsd: 200,
+    },
+    contact: {
+      telegramHandle: "@ntpsbl",
+      telegramUrl: "https://t.me/ntpsbl",
+      email: "support@wizzly.web.id",
+      discordUsername: "funblue",
+      formSubmitEndpoint: "https://formsubmit.co/ajax/support@wizzly.web.id",
+      formSubmitStandardEndpoint: "https://formsubmit.co/support@wizzly.web.id",
     },
   },
 };
@@ -65,6 +73,34 @@ export interface CoffeeTier {
   tagline: Record<Lang, string>;
   recommended?: boolean;
 }
+
+export type DonationChannel = "qris" | "paypal" | "binance" | "feedback";
+export type SupporterFeatureStatus = "reviewing" | "planned" | "in-progress" | "shipped";
+
+export interface SupporterWallItem {
+  id: string;
+  name: string;
+  tierLabel: Record<Lang, string>;
+  amountText?: string;
+  channel: DonationChannel;
+  date: string;
+  message: string;
+  featureRequest?: string;
+  featureArea?: string;
+  featureStatus?: SupporterFeatureStatus;
+  devReply?: {
+    author: string;
+    date: string;
+    message: string;
+  };
+}
+
+/**
+ * Verified Supporter Wall & Feature Requests.
+ * Add verified donor messages, feature requests, and your developer replies here
+ * after receiving confirmation via Email, Telegram (@ntpsbl), or Discord (funblue).
+ */
+export const SUPPORTER_WALL_ITEMS: SupporterWallItem[] = [];
 
 export const COFFEE_TIERS: CoffeeTier[] = [
   {
