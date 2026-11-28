@@ -12,6 +12,9 @@ export const WIZZLY_META = {
   engine: "Rust + Tauri 2 + Direct2D / D3D11",
   downloadUrl:
     "https://github.com/loganmaxx/wizzly/releases/download/v0.1.3/Wizzly_0.1.3_x64-setup.exe",
+  msStoreUrl:
+    "https://apps.microsoft.com/detail/9P55JHTK8K8K?hl=en-us&gl=ID&ocid=pdpshare",
+  msStoreProductId: "9P55JHTK8K8K",
   releaseUrl: "https://github.com/loganmaxx/wizzly/releases/tag/v0.1.3",
   githubUrl: "https://github.com/loganmaxx/wizzly",
   siteUrl: "https://wizzly.web.id",
@@ -32,20 +35,24 @@ export const V012_SECURITY_ANNOUNCEMENT = {
     en: "Important Notice • v0.1.2 Users",
   },
   title: {
-    id: "Wajib Update ke v0.1.3 — Auto-Update Dihapus karena False Positive Microsoft Defender",
-    en: "Please Update to v0.1.3 — Auto-Updater Removed Due to Microsoft Defender False Positive",
+    id: "Wajib Update ke v0.1.3 — Kini Tersedia di Microsoft Store & Auto-Update Dihapus",
+    en: "Please Update to v0.1.3 — Now on Microsoft Store & Auto-Updater Removed",
   },
   body: {
-    id: "Pada Wizzly v0.1.2 sebelumnya, fitur In-App Auto-Updater dianggap malware (false positive) oleh Microsoft Defender sehingga membuat aplikasi berhenti berjalan. Di versi 0.1.3 ini, fitur auto-update telah dihapus sepenuhnya agar Wizzly bisa berjalan kembali dengan lebih lancar dan aman. Silakan unduh dan pasang ulang v0.1.3 sekarang.",
-    en: "In Wizzly v0.1.2, the built-in In-App Auto-Updater was falsely flagged as malware by Microsoft Defender, causing the app to stop running. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly and reliably. Please download and update to v0.1.3 now.",
+    id: "Pada Wizzly v0.1.2 sebelumnya, fitur In-App Auto-Updater dianggap malware (false positive) oleh Microsoft Defender sehingga aplikasi berhenti berjalan. Di v0.1.3, auto-update telah dihapus sepenuhnya dan Wizzly kini resmi tersedia di Microsoft Store (bebas SmartScreen & update otomatis lewat Store). Segera perbarui ke v0.1.3 agar berjalan lebih lancar.",
+    en: "In Wizzly v0.1.2, the built-in In-App Auto-Updater was falsely flagged as malware by Microsoft Defender, causing the app to stop running. In v0.1.3, auto-update has been completely removed and Wizzly is now officially on the Microsoft Store (no SmartScreen warnings & automatic Store updates). Please update to v0.1.3 now.",
+  },
+  ctaMsStore: {
+    id: "Microsoft Store",
+    en: "Microsoft Store",
   },
   ctaDownload: {
-    id: "Update ke v0.1.3",
-    en: "Update to v0.1.3",
+    id: "Unduh .exe",
+    en: "Download .exe",
   },
   ctaChangelog: {
-    id: "Lihat Changelog",
-    en: "View Changelog",
+    id: "Changelog",
+    en: "Changelog",
   },
 };
 
@@ -122,10 +129,20 @@ export const RELEASE_NOTES_V013: ReleaseNotes = {
     },
   },
   summary: {
-    id: "Menghapus In-App Auto-Updater untuk mengatasi false positive Microsoft Defender dari v0.1.2, sekaligus membawa seluruh fitur baru: Jadwal Sholat & Adzan, Privacy Mic/Kamera, Spaces Switcher, Winamp, dan lokalisasi komunitas.",
-    en: "Removes the In-App Auto-Updater to resolve Microsoft Defender false positives from v0.1.2, while shipping Prayer Times & Adhan reminders, live Mic/Camera privacy indicators, Spaces Switcher, Winamp support, and community locales.",
+    id: "Kini resmi tersedia di Microsoft Store, menghapus In-App Auto-Updater untuk mengatasi false positive Microsoft Defender dari v0.1.2, sekaligus membawa Jadwal Sholat & Adzan, Privacy Mic/Kamera, Spaces Switcher, Winamp, dan lokalisasi komunitas.",
+    en: "Now officially available on the Microsoft Store, removes the In-App Auto-Updater to resolve Microsoft Defender false positives from v0.1.2, and ships Prayer Times & Adhan reminders, live Mic/Camera privacy indicators, Spaces Switcher, Winamp support, and community locales.",
   },
   added: [
+    {
+      title: {
+        id: "Tersedia Resmi di Microsoft Store (v0.1.3)",
+        en: "Officially Available on the Microsoft Store (v0.1.3)",
+      },
+      detail: {
+        id: "Wizzly v0.1.3 kini dapat diunduh langsung dari Microsoft Store dengan pemasangan 1-klik yang ditandatangani Microsoft, bebas peringatan SmartScreen, dan pembaruan otomatis resmi melalui Store.",
+        en: "Wizzly v0.1.3 is now published on the Microsoft Store for verified 1-click installation, zero Windows SmartScreen warnings, and seamless automatic updates via the Store.",
+      },
+    },
     {
       title: {
         id: "Jadwal Sholat & Pengingat Adzan di Wizzly Notch",
@@ -808,8 +825,8 @@ export const SYSTEM_REQUIREMENTS = [
     label: { id: "Penyimpanan", en: "Storage" },
     value: "~25 MB Ruang Kosong",
     detail: {
-      id: `Installer NSIS hanya ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}), build bersih tanpa auto-updater`,
-      en: `NSIS installer is only ${WIZZLY_META.installerSize} (v${WIZZLY_META.version} release), clean build without auto-updater`,
+      id: `Tersedia di Microsoft Store atau installer NSIS ${WIZZLY_META.installerSize} (rilis v${WIZZLY_META.version}, build bersih tanpa auto-updater)`,
+      en: `Available on the Microsoft Store or as a ${WIZZLY_META.installerSize} NSIS installer (v${WIZZLY_META.version} release, clean build without auto-updater)`,
     },
   },
   {
@@ -960,8 +977,8 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Why did Wizzly v0.1.2 stop running or get flagged by Microsoft Defender?",
     },
     a: {
-      id: "Pada v0.1.2 sebelumnya, modul In-App Auto-Updater (tauri-plugin-updater) pada installer unsigned memicu false positive dari Microsoft Defender sehingga aplikasi dihentikan secara otomatis. Di v0.1.3, fitur auto-update telah dihapus sepenuhnya agar Wizzly bisa berjalan lancar dan aman. Silakan unduh dan perbarui ke Wizzly v0.1.3.",
-      en: "In v0.1.2, the built-in In-App Auto-Updater (tauri-plugin-updater) inside an unsigned installer triggered a Microsoft Defender false positive, causing Windows to block or stop the app. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly. Please download and update to Wizzly v0.1.3.",
+      id: "Pada v0.1.2 sebelumnya, modul In-App Auto-Updater (tauri-plugin-updater) pada installer unsigned memicu false positive dari Microsoft Defender sehingga aplikasi dihentikan secara otomatis. Di v0.1.3, fitur auto-update telah dihapus sepenuhnya agar Wizzly berjalan lancar, dan kini tersedia resmi di Microsoft Store (dengan pembaruan otomatis lewat Store) serta installer .exe di GitHub.",
+      en: "In v0.1.2, the built-in In-App Auto-Updater (tauri-plugin-updater) inside an unsigned installer triggered a Microsoft Defender false positive, causing Windows to block or stop the app. In v0.1.3, auto-update has been completely removed so Wizzly runs smoothly, and it is now officially available on the Microsoft Store (with automatic Store updates) as well as via GitHub Releases.",
     },
   },
   {
@@ -970,8 +987,8 @@ export const FAQ_ITEMS: Array<{ q: Record<Lang, string>; a: Record<Lang, string>
       en: "Why do Windows SmartScreen or 1–2 VirusTotal heuristics flag the installer?",
     },
     a: {
-      id: "Ini adalah false positive umum pada installer NSIS dan binary Rust/Tauri indie yang belum memiliki sertifikat Code Signing berbayar, ditambah penggunaan Win32 API untuk shortcut global (Alt+Space / tombol Win opsional) dan animasi jendela. Pastikan kamu mengunduh hanya dari GitHub Releases resmi dan verifikasi hash SHA-256 sebelum dijalankan.",
-      en: "This is a common false positive on unsigned NSIS installers and stripped Rust/Tauri binaries using legitimate Win32 APIs for global shortcuts (Alt+Space / optional Win key) and window animations. Always download only from official GitHub Releases and verify the installer SHA-256 checksum.",
+      id: "Peringatan tersebut hanya muncul pada installer NSIS .exe langsung dari GitHub karena belum memiliki sertifikat Code Signing berbayar (false positive umum pada binary Rust/Tauri indie). Untuk pemasangan bebas SmartScreen dan pembaruan otomatis resmi, kamu bisa mengunduh Wizzly v0.1.3 langsung dari Microsoft Store — atau verifikasi hash SHA-256 jika memilih installer .exe GitHub.",
+      en: "This only affects the direct GitHub NSIS .exe installer, which is currently unsigned (a common false positive on indie Rust/Tauri binaries). For a SmartScreen-free install with official automatic updates, download Wizzly v0.1.3 directly from the Microsoft Store — or verify the SHA-256 checksum if using the GitHub .exe installer.",
     },
   },
 ];

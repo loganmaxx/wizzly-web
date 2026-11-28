@@ -400,8 +400,17 @@ export function PostDownloadModal({
             <div className="mt-4 rounded-xl border border-white/10 bg-black/45 px-3.5 py-2.5 text-xs leading-relaxed text-zinc-300">
               <span className="font-semibold text-white">Windows SmartScreen: </span>
               {lang === "id"
-                ? 'Jika muncul "Windows protected your PC", klik More info → Run anyway. Sertifikat Code Signing masih dikumpulkan.'
-                : 'If "Windows protected your PC" appears, click More info → Run anyway while we fund our Code Signing cert.'}
+                ? 'Jika muncul "Windows protected your PC", klik More info → Run anyway — atau pasang bebas SmartScreen lewat '
+                : 'If "Windows protected your PC" appears, click More info → Run anyway — or install SmartScreen-free via '}
+              <a
+                href={WIZZLY_META.msStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-sky-300 underline decoration-sky-400/50 underline-offset-2 hover:text-sky-200"
+              >
+                Microsoft Store
+              </a>
+              .
             </div>
 
             {showQris ? (
